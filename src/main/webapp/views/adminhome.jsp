@@ -4,14 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Index Page AMS_MVC </title>
+<title>Admin Home</title>
 </head>
 <body>
-
-
-	<a href="userlogin">User Login</a>
-	<a href="user">Create a User</a>
-
-
+	<h1>Admin Dashboard</h1>
+	<h1>Admin Dashboard</h1>
+	<h1>Admin Dashboard</h1>
+	<h1>Admin Dashboard</h1>
+	<h1>Admin Dashboard</h1>
 </body>
 </html>
