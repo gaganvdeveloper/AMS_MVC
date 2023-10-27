@@ -10,12 +10,16 @@
 </head>
 <body>
 
-	<form:form action="savetimesheet" modelAttribute="timesheet">
+	<form:form action="update" modelAttribute="timesheet">
 		<h1>format should be YY-MM-DD</h1>
-		enter the start date <form:input path="start_date" />
-		<form:button>create</form:button>
+		timesheetId<form:input path="timesheetId" />
+	 start date <form:input path="start_date" />
+	start date <form:input path="end_date" />
+		<form:button>update</form:button>
 
 	</form:form>
+
+
 
 </body>
 </html>
