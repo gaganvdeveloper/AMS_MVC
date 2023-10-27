@@ -1,7 +1,11 @@
 package com.tyss.ams_mvc.service;
 
-import com.tyss.ams_mvc.entity.User;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.tyss.ams_mvc.entity.User;
+@Service
 public interface UserService {
 	
 	User saveUser(User user);
@@ -9,6 +13,12 @@ public interface UserService {
 	User updateUser(User user);
 	
 	User findUserById(int id);
+	
+	boolean deleteUserById(int id);
+	
+	User findUserByEmailAndPassword(String email, String password);
+	
+	List<User> findAllUsers();
 	
 	
 }
