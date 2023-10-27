@@ -1,5 +1,7 @@
 package com.tyss.ams_mvc.serviceimp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +31,23 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
+	public boolean deleteUserById(int id) {
+		User user = findUserById(id);
+		if(user!=null) {
+			userDao.deleteUserById(id);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public User findUserByEmailAndPassword(String email, String password) {
 		return userDao.findUserByEmailAndPassword(email, password);
 	}
 
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public List<User> findAllUsers() {
+		return userDao.findAllUsers();
+	}
+
 }
