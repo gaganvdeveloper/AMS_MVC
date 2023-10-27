@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,7 @@
 <title>HR Home</title>
 </head>
 <body>
+<h1>${msg }</h1>
 	<h1>HR Dashboard</h1>
 	<h1>HR Dashboard</h1>
 	<h1>HR Dashboard</h1>

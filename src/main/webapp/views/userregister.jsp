@@ -16,19 +16,27 @@
 		Name : <form:input path="name"/>
 		Email : <form:input path="email"/>
 		Phone : <form:input path="phone"/>
+		Password : <form:input path="password"/>
+		<br>
+		<br>
 		Role : <form:select path="userRole">
+					<form:option value="---Select---"></form:option>
 					<form:option value="TRAINER"></form:option>
 					<form:option value="HR"></form:option>
 					<form:option value="ADMIN"></form:option>
 				</form:select>
 		Status : <form:select path="userStatus">
+					<form:option value="---Select---"></form:option>
 					<form:option value="ACTIVE"></form:option>
 					<form:option value="IN_ACTIVE"></form:option>
 				</form:select>
 		Category : <form:select path="userCategory">
+					<form:option value="---Select---"></form:option>
 					<form:option value="TRAINER"></form:option>
 					<form:option value="LATERAL"></form:option>
 				</form:select>
+				<br>
+				<br>
 		<button type="submit">Create User</button>
 	</form:form>
 	

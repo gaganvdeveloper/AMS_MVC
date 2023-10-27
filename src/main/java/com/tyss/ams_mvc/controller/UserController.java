@@ -10,37 +10,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tyss.ams_mvc.entity.User;
-import com.tyss.ams_mvc.serviceimp.UserServiceImp;
+import com.tyss.ams_mvc.service.UserService;
 import com.tyss.ams_mvc.util.UserRole;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserServiceImp userServiceImp;
+	private UserService userService;
 	@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
 	public ModelAndView gotoSaveUser(ModelAndView mv) {
-		mv.setViewName("userlogin");
+		mv.setViewName("login");
 		return mv;
 	}
 	
-	@RequestMapping(value = "/userloginvalidate")
+	@RequestMapping(value = "/userloginvalidate" , method = RequestMethod.GET)
 	public ModelAndView userVerification(HttpServletRequest req, ModelAndView mv) {
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
-		User user = (User)req;
-		if(user!= null && user.getUserRole() == UserRole.valueOf("TRAINER")) {
+		User user = userService.findUserByEmailAndPassword(req.getParameter("email"), req.getParameter("password"));
+		if(user == null) {
+			mv.setViewName("login");
+			mv.addObject("msg","Login Failed");
+			return mv;
+		}
+		if(user.getUserRole().equals(UserRole.valueOf("TRAINER")) ) {
 			mv.setViewName("trainerhome");
+			mv.addObject("msg","Mr."+user.getName()+" Login Successfull...");
 			mv.addObject("user",user);
 			return mv;
 		}	
-		if(user!= null && user.getUserRole() == UserRole.valueOf("HR")) {
+		if(user.getUserRole().equals(UserRole.valueOf("HR")) ) {
 			mv.setViewName("hrhome");
+			mv.addObject("msg","Mr."+user.getName()+" Login Successfull...");
 			mv.addObject("user",user);
 			return mv;
 		}
-		if(user!= null && user.getUserRole() == UserRole.valueOf("ADMIN")) {
+		if(user.getUserRole().equals(UserRole.valueOf("ADMIN")) ) {
 			mv.setViewName("adminhome");
+			mv.addObject("msg","Mr."+user.getName()+" Login Successfull...");
 			mv.addObject("user",user);
 			return mv;
 		}
@@ -58,7 +64,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/saveuser",method =RequestMethod.POST)
 	public ModelAndView saveUser(@ModelAttribute User user,ModelAndView mv) {
-		userServiceImp.saveUser(user);
+		userService.saveUser(user);
 		mv.addObject("msg","User Created Successfully    User Name : "+user.getName());
 		mv.setViewName("trainerhome");
 		return mv;
