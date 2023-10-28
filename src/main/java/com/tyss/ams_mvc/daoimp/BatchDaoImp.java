@@ -8,12 +8,14 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.tyss.ams_mvc.dao.BatchDao;
 import com.tyss.ams_mvc.entity.Batch;
 import com.tyss.ams_mvc.util.BatchMode;
 import com.tyss.ams_mvc.util.BatchStatus;
 
+@Component
 public class BatchDaoImp implements BatchDao {
 
 	@Autowired

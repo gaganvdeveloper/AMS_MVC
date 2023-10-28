@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.tyss.ams_mvc.util.BatchMode;
@@ -33,10 +34,15 @@ public class Batch {
 	private String subjectName;
 	@Enumerated(EnumType.STRING)
 	private BatchStatus batchStatus;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate batchStartDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate batchEndDate;
+	
 	private LocalTime loginTime;
 	private LocalTime logoutTime;
+//	private String loginTime;
+//	private String logoutTime;
 	private int totalDays;
 	@Enumerated(EnumType.STRING)
 	private BatchMode batchMode;

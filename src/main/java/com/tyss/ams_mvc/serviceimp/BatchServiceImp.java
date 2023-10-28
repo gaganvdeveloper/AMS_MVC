@@ -3,83 +3,85 @@ package com.tyss.ams_mvc.serviceimp;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.tyss.ams_mvc.dao.BatchDao;
 import com.tyss.ams_mvc.entity.Batch;
 import com.tyss.ams_mvc.service.BatchService;
 import com.tyss.ams_mvc.util.BatchMode;
 import com.tyss.ams_mvc.util.BatchStatus;
 
+@Component
 public class BatchServiceImp implements BatchService {
+
+	@Autowired
+	private BatchDao batchDao;
 
 	@Override
 	public Batch findBatchById(int batchId) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchById(batchId);
 	}
 
 	@Override
 	public Batch saveBatch(Batch batch) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.saveBatch(batch);
 	}
 
 	@Override
 	public Batch updateBatch(Batch batch) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.updateBatch(batch);
 	}
 
 	@Override
-	public void deleteBatch(int batchId) {
-		// TODO Auto-generated method stub
-
+	public boolean deleteBatch(int batchId) {
+		Batch batch = batchDao.findBatchById(batchId);
+		if (batch != null) {
+			batchDao.deleteBatch(batchId);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public List<Batch> findAllBatchs() {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findAllBatchs();
 	}
 
 	@Override
 	public Batch findBatchByBatchCode(String batchCode) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return batchDao.findBatchByBatchCode(batchCode);
 	}
 
 	@Override
 	public List<Batch> findBatchBySubjectName(String subjectName) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchBySubjectName(subjectName);
 	}
 
 	@Override
 	public List<Batch> findBatchBySubjectNameAndBatchStatus(String subjectName, BatchStatus status) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchBySubjectNameAndBatchStatus(subjectName, status);
 	}
 
 	@Override
 	public List<Batch> findBatchByStartedDate(LocalDate startDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchByStartedDate(startDate);
 	}
 
 	@Override
 	public List<Batch> findBatchByBatchMode(BatchMode mode) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchByBatchMode(mode);
 	}
 
 	@Override
 	public List<Batch> findByUserUserIdAndBatchStatus(int userId, BatchStatus batchStatus) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findByUserUserIdAndBatchStatus(userId, batchStatus);
 	}
 
 	@Override
 	public List<Batch> findBatchBetweenDates(LocalDate fromDate, LocalDate toDate) {
-		// TODO Auto-generated method stub
-		return null;
+		return batchDao.findBatchBetweenDates(fromDate, toDate);
 	}
 
 }
