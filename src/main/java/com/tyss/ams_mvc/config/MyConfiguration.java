@@ -25,5 +25,10 @@ public class MyConfiguration {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
+	
+	/*@Bean
+	public ViewResolver viewResolverr() {
+		 return new InternalResourceViewResolver("/views/", ".jsp") ;
+	}*/
 
 }

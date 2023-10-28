@@ -11,6 +11,8 @@
 
 	<a href="userlogin">User Login</a>
 	<a href="user">Create a User</a>
+	
+	<a href="createattendance">Create Attendance</a>
 
 
 </body>
