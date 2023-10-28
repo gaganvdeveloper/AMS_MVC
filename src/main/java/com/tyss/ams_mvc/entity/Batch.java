@@ -12,13 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import com.tyss.ams_mvc.util.BatchMode;
 import com.tyss.ams_mvc.util.BatchStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Component
@@ -26,6 +27,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Batch {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +41,7 @@ public class Batch {
 	private LocalDate batchStartDate;
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	private LocalDate batchEndDate;
-	
+
 	private LocalTime loginTime;
 	private LocalTime logoutTime;
 //	private String loginTime;
