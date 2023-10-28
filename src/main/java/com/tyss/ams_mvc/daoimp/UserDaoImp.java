@@ -81,6 +81,7 @@ public class UserDaoImp implements UserDao {
 		return manager.createQuery("from User u").getResultList();
 	}
 
+	
 	@Override
 	public User findUserByPhoneNumber(long phone) {
 		Query q = manager.createQuery("select u from User u where u.phone=?1");
@@ -110,7 +111,7 @@ public class UserDaoImp implements UserDao {
 
 	@Override
 	public User findUserByEmailAndPassword(String email, String password) {
-		Query q = manager.createQuery("select u from User u where u.email=?1 u.password=?2");
+		Query q = manager.createQuery("select u from User u where u.email=?1 and u.password=?2");
 		q.setParameter(1, email);
 		q.setParameter(2, password);
 		List<User> users = q.getResultList();
@@ -121,7 +122,7 @@ public class UserDaoImp implements UserDao {
 
 	@Override
 	public User findUserByPhoneAndPassword(long phone, String password) {
-		Query q = manager.createQuery("select u from User u where u.phone=?1 u.password=?2");
+		Query q = manager.createQuery("select u from User u where u.phone=?1 and u.password=?2");
 		q.setParameter(1, phone);
 		q.setParameter(2, password);
 		List<User> users = q.getResultList();
