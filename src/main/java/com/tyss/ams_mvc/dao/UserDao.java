@@ -2,11 +2,13 @@ package com.tyss.ams_mvc.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.util.UserCategory;
 import com.tyss.ams_mvc.util.UserRole;
 import com.tyss.ams_mvc.util.UserStatus;
-
+@Repository
 public interface UserDao {
 
 	User saveUser(User user);

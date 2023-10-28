@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-    
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>User Registration Page</title>
+<title>Update User Page</title>
 </head>
 <body>
-	<h1>User Regiatration!!!...</h1>
-	<form:form action="saveuser" modelAttribute="user">
-		EMPID : <form:input path="empId"/>
+	<h1>User Update!!!...</h1>
+	<form:form action="updateuserupdate" modelAttribute="user">
+		UserId : <form:input path="userId" type="hidden" />
+		EMPID : <form:input path="empId" readonly="true"/>
 		Name : <form:input path="name"/>
 		Email : <form:input path="email"/>
 		Phone : <form:input path="phone"/>
@@ -37,9 +36,8 @@
 				</form:select>
 				<br>
 				<br>
-		<button type="submit">Create User</button>
+		<button type="submit">Update User</button>
 	</form:form>
-	
 	
 	
 	
