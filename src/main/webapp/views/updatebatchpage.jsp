@@ -1,17 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Update Batch Page</title>
+
+<style>
+#update-form {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	margin: auto;
+	padding: 10px;
+}
+</style>
+
+
 </head>
 <body>
-	
-	
+
+
 	<h1>update Batch Here!!!...</h1>
-	
-		<form action="updatebatchlogic" method="post">
+
+	<%-- <form action="updatebatchlogic" method="post">
 		Batch Id:<input type="text" name="batchid" value="${bat.getBatchId() }" readonly="true">
 		Batch Code : <input type="text" name="batchcode" value="${bat.getBatchCode() }" placeholder="Enter Your name">
 		Subject name : <input type="text" name="subname" value="${bat.getSubjectName() }" placeholder="Enter Your name">
@@ -23,7 +36,7 @@
 		Batch Start Date : 
 		<br>
 		<br>
-		Date : <select name="startday" value="${bat.getBatchStartDate().getDayOfMonth() }">
+		Date : <select id="startday" name="startday" value="${bat.getBatchStartDate().getDayOfMonth() }">
 					<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -56,7 +69,7 @@
 					<option value="30">30</option>
 					<option value="31">31</option>
 				</select>
-		Month : <select name="startmonth" value="${bat.getBatchStartDate().getMonthValue() }">
+		Month : <select id="startmonth" name="startmonth" value="${bat.getBatchStartDate().getMonthValue() }">
 					<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -70,7 +83,7 @@
 					<option value="11">11</option>
 					<option value="12">12</option>
 				</select>
-		Year :	<select name="startyear" value="${bat.getBatchStartDate().getYear() }">
+		Year :	<select id="startyear" name="startyear" value="${bat.getBatchStartDate().getYear() }">
 					<option value="2023">2023</option>
 					<option value="2024">2024</option>
 					<option value="2025">2025</option>
@@ -89,7 +102,7 @@
 		<br>
 		<br>
 		<br>
-		Login Time : <select name="logintime" value="${bat.getLoginTime() }">
+		Login Time : <select id="logintime" name="logintime" value="${bat.getLoginTime() }">
 						<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -109,7 +122,7 @@
 					</select>
 					
 					
-			Logout Time : <select name="logouttime" value="${bat.getLogoutTime() }">
+			Logout Time : <select id="logouttime" name="logouttime" value="${bat.getLogoutTime() }">
 						<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -153,8 +166,68 @@
 	
 	
 	
+	<script>
+	
+	
+	document.getElementById("startday").value="${bat.getBatchStartDate().getDayOfMonth() }";
+	document.getElementById("logintime").value="${bat.getLoginTime() }";
 	
 	
 	
+	
+	
+	
+	
+	</script>
+	 --%>
+
+	<form:form id="update-form" action="updatebatchlogic"
+		modelAttribute="bat">
+	Batch Id : <form:input path="batchId" readonly="true" />
+	Batch Code : <form:input path="batchCode" />
+	Subject Name : <form:input path="subjectName" />
+	Batch Status : <form:select path="batchStatus">
+			<form:option value="NOT_YET_ASSIGNED"></form:option>
+			<form:option value="ON_GOING"></form:option>
+			<form:option value="COMPLETED"></form:option>
+		</form:select>
+	Batch Start Date : <form:input path="batchStartDate" />
+	Login Time : <form:input path="loginTime" />
+	Logout Time : <form:input path="logoutTime" />
+	Total Days : <form:input path="totalDays" />
+	Batch Mode : <form:select path="batchMode">
+			<form:option value="ONLINE"></form:option>
+			<form:option value="OFFLINE"></form:option>
+		</form:select>
+	Institute Name : <form:input path="instituteName" />
+	Institute Location : <form:input path="location" />
+		<button type="submit">Update Batch</button>
+	</form:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tyss.ams_mvc.entity.Batch;
 import com.tyss.ams_mvc.service.BatchService;
+import com.tyss.ams_mvc.util.BatchConversion;
 import com.tyss.ams_mvc.util.BatchMode;
 import com.tyss.ams_mvc.util.BatchStatus;
 
@@ -40,6 +41,7 @@ public class BatchController {
 		batch.setInstituteName(req.getParameter("institutename"));
 		batch.setLocation(req.getParameter("institutelocation"));
 		batchService.saveBatch(batch);
+//		batch.getBatchStartDate().getda
 		mv.setViewName("allbatchs");
 		mv.addObject("msg", "Batch Created Successfully...");
 		return findAllbatchs(mv);
@@ -64,8 +66,8 @@ public class BatchController {
 
 	@RequestMapping("/updatebatch")
 	public ModelAndView updateBatch(ModelAndView mv, HttpServletRequest req) {
-		Batch b = batchService.findBatchById(Integer.parseInt(req.getParameter("id")));
-		mv.addObject("bat", b);
+		Batch batch = batchService.findBatchById(Integer.parseInt(req.getParameter("id")));
+		mv.addObject("bat", BatchConversion.convert(batch));
 		mv.setViewName("updatebatchpage");
 		return mv;
 	}
