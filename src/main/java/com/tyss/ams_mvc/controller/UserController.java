@@ -21,6 +21,7 @@ import com.tyss.ams_mvc.util.UserRole;
 public class UserController {
 
 	@Autowired
+
 	private UserService userService;
 
 	@RequestMapping(value = "/userlogin")

@@ -81,6 +81,7 @@ public class UserDaoImp implements UserDao {
 		return manager.createQuery("from User u").getResultList();
 	}
 
+	
 	@Override
 	public User findUserByPhoneNumber(long phone) {
 		Query q = manager.createQuery("select u from User u where u.phone=?1");
