@@ -405,9 +405,6 @@
         <li>
           <a href="createbatch"><button type="button">Create Batch</button></a>
         </li>
-        <!-- <li>
-            <a href="#"><button type="button">Active Employees</button></a>
-          </li> -->
       </ul>
 
       <input
@@ -487,10 +484,11 @@
     <article class="articl">
       <h2>All Active Employees :</h2>
       <select id="userfilter" >
-      	<option>All Employee</option>
-      	<option>ACTIVE</option>
-      	<option>IN_ACTIVE</option>
- 	      </select>
+      	<option value="" disabled="disabled" selected="selected">Select An Option</option>
+      	<option value="allemployee">All</option>
+      	<option value="activeemployee">Active</option>
+      	<option value="inactivemployee">Inactive</option>
+ 	   </select>
       
       
       <br />
