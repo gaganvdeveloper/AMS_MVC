@@ -403,7 +403,7 @@
           <a href="#"><button type="button">Employees</button></a>
         </li>
         <li>
-          <a href="#"><button type="button">Batchs</button></a>
+          <a href="createbatch"><button type="button">Create Batch</button></a>
         </li>
       </ul>
 
