@@ -1,6 +1,5 @@
 package com.tyss.ams_mvc.daoimp;
 
-import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,12 +16,11 @@ import com.tyss.ams_mvc.util.UserRole;
 import com.tyss.ams_mvc.util.UserStatus;
 
 @Repository
-public class UserDaoImp  implements UserDao{
+public class UserDaoImp implements UserDao {
 
 	@Autowired
 	private EntityManager manager;
-	
-	
+
 	@Override
 	public User saveUser(User user) {
 		EntityTransaction transaction = manager.getTransaction();
@@ -56,73 +54,81 @@ public class UserDaoImp  implements UserDao{
 
 	@Override
 	public User findUserByEmpId(String empId) {
-			Query q =manager.createQuery("select u from User u where u.empid=?1");
-			q.setParameter(1, empId);
-			List<User> users = q.getResultList();
-			if(users.size()>0)
-				return users.get(0);
+		Query q = manager.createQuery("select u from User u where u.empid=?1");
+		q.setParameter(1, empId);
+		List<User> users = q.getResultList();
+		if (users.size() > 0)
+			return users.get(0);
 		return null;
 	}
 
 	@Override
 	public List<User> findUserByRole(UserRole role) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = manager.createQuery("select u from User u where u.userRole=?1");
+		q.setParameter(1, role);
+		return q.getResultList();
 	}
 
 	@Override
 	public List<User> findUserByCategory(UserCategory category) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = manager.createQuery("select u from User u where u.userCategory=?1");
+		q.setParameter(1, category);
+		return q.getResultList();
 	}
 
 	@Override
 	public List<User> findAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return manager.createQuery("from User u").getResultList();
 	}
 
+	
 	@Override
 	public User findUserByPhoneNumber(long phone) {
-		// TODO Auto-generated method stub
+		Query q = manager.createQuery("select u from User u where u.phone=?1");
+		q.setParameter(1, phone);
+		List<User> users = q.getResultList();
+		if (users.size() > 0)
+			return users.get(0);
 		return null;
 	}
 
 	@Override
 	public User findUserByEmail(String email) {
-		// TODO Auto-generated method stub
+		Query q = manager.createQuery("select u from User u where u.email=?1");
+		q.setParameter(1, email);
+		List<User> users = q.getResultList();
+		if (users.size() > 0)
+			return users.get(0);
 		return null;
 	}
 
 	@Override
 	public List<User> findUserByStatus(UserStatus status) {
-		// TODO Auto-generated method stub
-		return null;
+		Query q = manager.createQuery("select u from User u where u.userStatus=?1");
+		q.setParameter(1, status);
+		return q.getResultList();
 	}
 
 	@Override
 	public User findUserByEmailAndPassword(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<LocalTime> findBatchTimingsOfUser(int userId) {
-		// TODO Auto-generated method stub
+		Query q = manager.createQuery("select u from User u where u.email=?1 and u.password=?2");
+		q.setParameter(1, email);
+		q.setParameter(2, password);
+		List<User> users = q.getResultList();
+		if (users.size() > 0)
+			return users.get(0);
 		return null;
 	}
 
 	@Override
 	public User findUserByPhoneAndPassword(long phone, String password) {
-		// TODO Auto-generated method stub
+		Query q = manager.createQuery("select u from User u where u.phone=?1 and u.password=?2");
+		q.setParameter(1, phone);
+		q.setParameter(2, password);
+		List<User> users = q.getResultList();
+		if (users.size() > 0)
+			return users.get(0);
 		return null;
 	}
-
-	@Override
-	public User setUserStatusToInAcativeByUserId(UserStatus userStatus, int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

@@ -34,10 +34,10 @@ public class Batch {
 	private String subjectName;
 	@Enumerated(EnumType.STRING)
 	private BatchStatus batchStatus;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate batchStartDate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate batchEndDate;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	private LocalDate batchEndDate;
 	
 	private LocalTime loginTime;
 	private LocalTime logoutTime;

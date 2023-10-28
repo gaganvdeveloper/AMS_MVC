@@ -1,13 +1,14 @@
 package com.tyss.ams_mvc.dao;
 
-import java.time.LocalTime;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
 
 import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.util.UserCategory;
 import com.tyss.ams_mvc.util.UserRole;
 import com.tyss.ams_mvc.util.UserStatus;
-
+@Repository
 public interface UserDao {
 
 	User saveUser(User user);
@@ -34,10 +35,10 @@ public interface UserDao {
 
 	User findUserByEmailAndPassword(String email, String password);
 
-	List<LocalTime> findBatchTimingsOfUser(int userId);
+//	List<LocalTime> findBatchTimingsOfUser(int userId);
 
 	User findUserByPhoneAndPassword(long phone, String password);
 
-	User setUserStatusToInAcativeByUserId(UserStatus userStatus, int userId);
+//	User setUserStatusToInAcativeByUserId(int userId);
 
 }

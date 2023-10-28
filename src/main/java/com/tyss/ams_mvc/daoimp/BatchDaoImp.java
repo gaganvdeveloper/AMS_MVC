@@ -55,7 +55,7 @@ public class BatchDaoImp implements BatchDao {
 
 	@Override
 	public List<Batch> findAllBatchs() {
-		Query query = manager.createQuery("select b from Batch b");
+		Query query = manager.createQuery("from Batch b");
 		return query.getResultList();
 	}
 

@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Create Batch Page</title>
+<title>Insert title here</title>
 </head>
 <body>
-		
-		<h1>Create Batch Here!!!...</h1>
 	
-		<form action="savebatch" method="post">
-		
-		Batch Code : <input type="text" name="batchcode" placeholder="Enter Your name">
-		Subject name : <input type="text" name="subname" placeholder="Enter Your name">
-		Batch Status : <select name="batchstatus">
+	
+	<h1>update Batch Here!!!...</h1>
+	
+		<form action="updatebatchlogic" method="post">
+		Batch Id:<input type="text" name="batchid" value="${bat.getBatchId() }" readonly="true">
+		Batch Code : <input type="text" name="batchcode" value="${bat.getBatchCode() }" placeholder="Enter Your name">
+		Subject name : <input type="text" name="subname" value="${bat.getSubjectName() }" placeholder="Enter Your name">
+		Batch Status : <select name="batchstatus" value="${bat.getBatchStatus()}">
 			<option value="NOT_YET_ASSIGNED">NOT_YET_ASSIGNED</option>
 			<option value="ON_GOING">ON_GOING</option>
 			<option value="COMPLETED">COMPLETED</option>
@@ -23,7 +23,7 @@
 		Batch Start Date : 
 		<br>
 		<br>
-		Date : <select name="startday">
+		Date : <select name="startday" value="${bat.getBatchStartDate().getDayOfMonth() }">
 					<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -56,7 +56,7 @@
 					<option value="30">30</option>
 					<option value="31">31</option>
 				</select>
-		Month : <select name="startmonth">
+		Month : <select name="startmonth" value="${bat.getBatchStartDate().getMonthValue() }">
 					<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -70,7 +70,7 @@
 					<option value="11">11</option>
 					<option value="12">12</option>
 				</select>
-		Year :	<select name="startyear">
+		Year :	<select name="startyear" value="${bat.getBatchStartDate().getYear() }">
 					<option value="2023">2023</option>
 					<option value="2024">2024</option>
 					<option value="2025">2025</option>
@@ -89,7 +89,7 @@
 		<br>
 		<br>
 		<br>
-		Login Time : <select name="logintime">
+		Login Time : <select name="logintime" value="${bat.getLoginTime() }">
 						<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -109,7 +109,7 @@
 					</select>
 					
 					
-			Logout Time : <select name="logouttime">
+			Logout Time : <select name="logouttime" value="${bat.getLogoutTime() }">
 						<option value="01">01</option>
 					<option value="02">02</option>
 					<option value="03">03</option>
@@ -135,22 +135,26 @@
 					<br>
 					<br>
 					
-			Batch Mode : <select name="batchmode">
+			Batch Mode : <select name="batchmode" value="${bat.getBatchMode() }">
 							<option value="ONLINE">ONLINE</option>
 							<option value="OFFLINE">OFFLINE</option>
 						</select>
 					<br>
 					<br>
 					<br>
-			Institute Name : <input type="text" name="institutename" placeholder="Enter Institute Name" value="J-Spiders">	<br><br>				
-			Institute Location : <input type="text" name="institutelocation" placeholder="Enter Institute Location" value="REMOTE">
-			<button type="submit">Create Batch</button>
+			Institute Name : <input type="text" name="institutename" placeholder="Enter Institute Name" value="${bat.getInstituteName() }">	<br><br>				
+			Institute Location : <input type="text" name="institutelocation" placeholder="Enter Institute Location" value="${bat.getLocation() }">
+			<button type="submit">update Batch</button>
 		</form>
 	
 	
 	
 	
 	
-
+	
+	
+	
+	
+	
 </body>
 </html>
