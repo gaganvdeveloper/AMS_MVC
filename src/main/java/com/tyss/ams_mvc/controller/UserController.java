@@ -126,6 +126,15 @@ public class UserController {
 		mv.setViewName("login");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/login")
+	public ModelAndView userLogin(ModelAndView mv, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.invalidate();
+		mv.setViewName("login");
+		return mv;
+	}
+	
 
 	@RequestMapping(value = "/userdetails")
 	public ModelAndView userDetails(ModelAndView mv, HttpServletRequest req) {
