@@ -371,22 +371,8 @@
         background-color: red;
       }
 
-	#userfilter{
-		float: right;
-		margin-top: -25px;
-		outline: none;
-		background-color: rgb(0,0,0,0.1);
-		color: rgb(0,0,2);
-		font-weight: bold;
-		padding: 8px;
-		border-radius: 10px;'
-	}
 
-	#userfilter>option{
-		color: rgb(0,0,2);
-		font-weight: bold;
-		padding: 10px;
-	}
+
 
 
 
@@ -396,9 +382,6 @@
     <nav class="navbar">
       <h1 class="logo">Alpha.@ndance</h1>
       <ul class="navbar-list">
-      <li>
-          <a href="user"><button type="button">Create Employee</button></a>
-        </li>
         <li>
           <a href="#"><button type="button">Employees</button></a>
         </li>
@@ -486,17 +469,10 @@
 
     <article class="articl">
       <h2>All Active Employees :</h2>
-      <select id="userfilter" >
-      	<option>All Employee</option>
-      	<option>ACTIVE</option>
-      	<option>IN_ACTIVE</option>
- 	      </select>
-      
-      
       <br />
       <table border="1" cellpadding="15" id="table">
         <tr style="background-color: rgb(188, 252, 255)">
-          <!-- <th>Id</th> -->
+          <th>Id</th>
           <th>EMPId</th>
           <th>Name</th>
           <th>Email</th>
@@ -508,7 +484,7 @@
         </tr>
 			<c:forEach var="us" items="${users }">
 				<tr>
-					<%-- <td>${us.getUserId() }</td> --%>
+					<td>${us.getUserId() }</td>
 					<td>${us.getEmpId() }</td>
 					<td>${us.getName() }</td>
 					<td>${us.getEmail() }</td>
@@ -516,7 +492,7 @@
 					<td>${us.getUserRole() }</td>
 					<td> <a href="updateuser?id=${us.getUserId() }"> <button class="updateButton" type="button">Update</button> </a> </td>
 					<td> <a href="deleteuser?id=${us.getUserId() }"> <button class="deleteButton" type="button">Delete</button> </a> </td>
-					<td> <a href="userdetails?id=${us.getUserId() }"> <button class="updateButton" type="button">View</button> </a> </td>
+					<td> <a href="userdetails?id=${us.getUserId() }"> <button class="updateButton" type="button">Details</button> </a> </td>
 				</tr>
 			</c:forEach>
       </table>
