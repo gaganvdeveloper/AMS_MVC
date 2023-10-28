@@ -136,10 +136,8 @@ public class UserController {
 		return mv;
 	}
 	
-
 	@RequestMapping(value = "/userdetails")
 	public ModelAndView userDetails(ModelAndView mv, HttpServletRequest req) {
-
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
 		if (user != null) {
 			mv.addObject("msg", "User details Found");
