@@ -1,6 +1,5 @@
 package com.tyss.ams_mvc.dao;
 
-import java.time.LocalTime;
 import java.util.List;
 
 import com.tyss.ams_mvc.entity.User;
@@ -34,10 +33,10 @@ public interface UserDao {
 
 	User findUserByEmailAndPassword(String email, String password);
 
-	List<LocalTime> findBatchTimingsOfUser(int userId);
+//	List<LocalTime> findBatchTimingsOfUser(int userId);
 
 	User findUserByPhoneAndPassword(long phone, String password);
 
-	User setUserStatusToInAcativeByUserId(UserStatus userStatus, int userId);
+//	User setUserStatusToInAcativeByUserId(int userId);
 
 }
