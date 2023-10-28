@@ -11,17 +11,9 @@
 
 	<h1>User Summary!!!...</h1>
 	<br>
-	<br>
-	<br>
 	<hr>
-
-
-
-
-
-
-
-	<table>
+	
+	<table border="1" cellpadding="10" cellspacing="1">
 
 		<tr>
 			<th>Name</th>
@@ -50,7 +42,7 @@
 
 
 		<tr>
-			<table>
+			<table border="2">
 			
 				<tr>
 					<th>Batch</th>
