@@ -14,14 +14,28 @@
     />
 
     <style>
+    /* .articl{
+    		z-index: 1;
+            width: 100%;
+            height: auto;
+            background: linear-gradient(-45deg, crimson,green,gold, lightgreen,yellow,pink,purple,cyan);
+            background-size: 1000% 1000%;
+            animation: animate 30s ease infinite;
+    } */
+   
+	    a{
+	    	text-decoration: none;
+	    }
       .logo {
-        font-size: 3rem;
+        font-size: 2vw;
         font-family: cursive;
-        color: var(--green);
-        text-shadow: 0px 0px 30px;
+        color: rgb(142, 250, 0);
+        text-shadow: 0px 0px 40px;
+        margin-right:5vw;
+        cursor: pointer;
       }
       .logo:hover {
-        color: rgb(142, 250, 74);
+        color: rgb(142, 250, 70);
       }
 
       /*Google font Poppins*/
@@ -48,25 +62,37 @@
       }
 
       body {
-        height: 100vh;
+        height: auto;
         width: 100%;
-        background-color: var(--primary);
-        /* background: url(../images/tripdairybg.jpg); */
-        background-size: cover;
+        background-image:url(https://www.testyantra.com/sites/default/files/tylog1.png);
+        background-size: 80vw 12vw;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
+       /*  z-index: 1;
+        background: linear-gradient(
+          -45deg,
+          crimson,
+          green,
+          gold,
+          lightgreen,
+          yellow,
+          pink,
+          purple,
+          cyan
+        );
+        background-size: 1000% 1000%;
+        animation: animate 30s ease infinite; */
       }
 
       .navbar {
         display: flex;
         align-items: center;
         height: 70px;
-        background-color: var(--white);
+        background-color: black; 
+        background:linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+/*         background:linear-gradient(to right,rgb(120,40,208,0.8),rgb(59,130,252,0.9)); */
         padding: 0 8%;
-      }
-
-      .logo {
-        cursor: pointer;
       }
 
       .navbar-list {
@@ -74,11 +100,10 @@
         text-align: right;
         padding-right: 2rem;
         margin: 0px 100px 0px 0px ;
-      }
-
-      .navbar-list li {
-        display: inline-block;
-        margin: 0 0.8rem;
+        /* border: 2px solid red; */
+        display: flex;
+        justify-content: space-around;
+        
       }
 
       .navbar-list li a {
@@ -87,22 +112,21 @@
       .navbar-list li a button {
         background-color: white;
         cursor: pointer;
-        color: var(--green);
-        padding: 0.3rem 1rem;
+        color: black;
+        padding: 0.1vw 0.4vw;
         border-radius: 5px;
         border: 1px solid var(--green);
-        /* background-color: var(--primary); */
-        box-shadow: 0px 7px 10px var(--secondary-light);
-        font-weight: bold;
+        background-color: rgb(108,185,184);
+        font-size:1vw;
+        color:white;
         transition: 0.5s;
+        border: 1px solid green;
       }
 
       .navbar-list li a button:hover {
-        background-color: rgb(185, 255, 185);
-        color: green;
         text-shadow: 0px 0px 10px white;
-        box-shadow: 0px 10px 10px var(--secondary);
-        border: 1px solid white;
+        box-shadow: 0vw 0.5vw 0.8vw black;
+        border: 1px solid green;
       }
 
       .profile-dropdown {
@@ -116,57 +140,61 @@
         height: 3rem;
         border-radius: 50%;
         background-size: cover;
+        border: 1px solid black;
+        background-position: center;
       }
 
       .profile-dropdown-btn {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-right: 1rem;
-        font-size: 0.9rem;
-        border: 1px solid var(--secondary);
-        border-radius: 50px;
+        padding-right: 1vw;
+        font-size: 1vw;
+        font-weight:bold;
+        border: 0.1vw solid white;
+        border-radius: 1.8vw;
         cursor: pointer;
         width: auto;
         transition: box-shadow 0.2s background-color 0.2s;
+
       }
 
       .profile-dropdown-btn:hover {
-        background-color: var(--secondary-light-2);
-        box-shadow: var(--shadow);
+      	transition:200ms;
+        color: white;
+        box-shadow: 0.5vw 0.5vw 1vw black;
       }
 
-      .profile-img {
-        background-color: var(--secondary-light);
-      }
+     
 
-      .profile-img i {
+      /* .profile-img i {
         position: relative;
         margin: 10px;
         font-size: 1.6rem;
         color: green;
-      }
+      } */
 
       .profile-dropdown-btn span {
-        margin: 0 0.5rem;
-        margin-right: 0;
+        margin: 0 0.5vw;
+       
       }
 
       .profile-dropdown-list {
         position: absolute;
-        top: 61px;
-        width: 220px;
-        right: 0;
+        top: 4vw;
+        width: 15vw;
+        right: -1vw;
         background-color: var(--white);
-        border-radius: 10px;
+        border-radius: 1vw;
         box-shadow: var(--shadow);
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s;
+        
       }
 
       .profile-dropdown-list.active {
-        max-height: 370px;
+        max-height: 100vw;
       }
 
       .profile-dropdown-list hr {
@@ -174,7 +202,8 @@
       }
 
       .profile-dropdown-list-itms {
-        padding: 0.5rem 0 0.5rem 1rem;
+        /* padding: 0.5rem 0 0.5rem 1rem; */
+        padding:0.5vw 0vw 0.5vw 1vw;
         transition: background-color 0.2s, padding-left 0.2s;
       }
 
@@ -190,11 +219,12 @@
         font-size: 0.9rem;
         font-weight: 500;
         color: var(--black);
+        font-size: 1vw;
       }
 
       .profile-dropdown-list-itms a i {
         margin-right: 1rem;
-        font-size: 1.1rem;
+        font-size: 1vw;
         width: 2.3rem;
         height: 2.3rem;
         background-color: var(--secondary);
@@ -205,15 +235,15 @@
       }
 
       #searchinput {
-        width: 400px;
-        background-color: rgb(255, 255, 255);
+        width: 15vw;
+        background-color: rgb(243, 255, 243);
         outline: none;
-        border: 1px solid var(--green);
-        padding: 5px;
-        padding-left: 10px;
-        border-radius: 7px;
-        margin-right: 2vw;
-        font-size: 17px;
+        border: 0.1vw solid var(--green);
+        padding: 0.2vw;
+        padding-left: 1vw;
+        border-radius: 0.5vw;
+        margin-right: 1vw;
+        font-size: 1vw;
         /* font-weight: bold; */
       }
       #searchinput:hover {
@@ -239,7 +269,7 @@
       article {
         /* border: 2px solid black; */
         margin: auto;
-        margin-top: 40px;
+        margin-top: 0px;
         width: 80%;
         height: 75vh;
         box-shadow: 0px 0px 10px black;
@@ -247,7 +277,7 @@
         border-radius: 10px;
         /* background-color: rgb(59, 59, 59); */
         /* background: linear-gradient(to right, #8bf0ff, #c4e0e5); */
-        background: linear-gradient(to right, #cbbcff, #faaca8);
+        /* background: linear-gradient(to right, #cbbcff, #faaca8); */
       }
       .articl {
         margin: auto;
@@ -257,7 +287,7 @@
         box-shadow: 0px 0px 10px black;
         padding: 20px;
         border-radius: 10px;
-        background-color: aliceblue;
+        background-color: rgb(50,100,50,0.6);
       }
       article > div {
         /* border: 2px solid green; */
@@ -331,31 +361,46 @@
         color: rgb(71, 68, 68);
         font-family: Arial, Helvetica, sans-serif;
       }
-      table {
+      #table {
         border: 1px solid white;
         box-shadow: 0px 0px 5px black;
-        border-radius: 8px;
+        border-radius: 0.5vw;
         margin: auto;
+        width: 80%;
       }
-      tr {
+      #table > tr {
         background-color: antiquewhite;
       }
-      tr:hover {
+      .tr{
+        background-color: antiquewhite;
+      }
+      #table > tr:hover {
         background-color: rgb(255, 255, 255);
       }
-      td,
-      th {
+      .tr:hover {
+        background-color: rgb(255, 255, 255);
+      }
+      #table > td,th {
         padding: 0.5vw 0.8vw;
         font-weight: bold;
+        padding: 1vw 1.5vw;
+        font-size: 1vw;
       }
-      td > a > button {
+      .tr>td,th {
+        padding: 0.5vw 0.8vw;
+        font-weight: bold;
+        padding: 1vw 1.5vw;
+        font-size: 1vw;
+      }
+      .tr >td > a > button {
+      font-size:1vw;
         border: none;
         padding: 0.3vw 0.3vw;
-        border-radius: 5px;
+        border-radius: 0.5vw;
         color: white;
         border: 1px solid white;
       }
-      td > a > button:hover {
+      .tr > td > a > button:hover {
         border: 1px solid black;
       }
       .updateButton {
@@ -373,38 +418,198 @@
 
 	#userfilter{
 		float: right;
-		margin-top: -25px;
+		margin-top: -2vw;
 		outline: none;
 		background-color: rgb(0,0,0,0.1);
 		color: rgb(0,0,2);
 		font-weight: bold;
-		padding: 8px;
-		border-radius: 10px;'
+		font-size:1vw;
+		padding: 0.5vw;
+		border-radius: 0.5vw;'
 	}
 
 	#userfilter>option{
 		color: rgb(0,0,2);
 		font-weight: bold;
-		padding: 10px;
+		font-size:1vw;
+		padding: 0.5vw;
 	}
+	#msg{
+		display: none;
+		position: fixed;
+      	top: 15%;
+      	left: 25%;
+      	width: 50%;
+      	height: 5%;
+      	background-color: rgba(0,0,0, 0.6); 
+      	z-index: 9999; 
+      	text-align: center;
+      	padding: 3px 10px;
+      	font-size: 1.5vw;
+      	color: white;
+      	border-radius: 10px;
+      	box-shadow: 0px 0px 10px black;
+      	border: 1px solid white; 
+	}
+	
+	
+	
+	
+	
+	
+	
+	 @keyframes animate{
+            0%{
+                background-position: 0% 50%;
+            }
+            50%{
+                background-position: 100% 50%;
+            }
+            100%{
+                background-position: 0% 50%;
+            }
+        }
 
+
+      .arti {
+        margin: auto;
+        margin-top: 0vw;
+        width: 95%;
+        height: auto;
+        box-shadow: 0px 0px 10px rgb(50,100,50,0.5);
+        padding: 0.5vw 1vw;
+        padding-top:3vw;
+        border-radius:1vw;
+        background-color:rgb(50,50,50,0.2);
+        /* border-radius: 10px;
+        z-index: 1;
+        background: linear-gradient(
+          -45deg,
+          crimson,
+          green,
+          gold,
+          lightgreen,
+          yellow,
+          pink,
+          purple,
+          cyan
+        );
+        background-size: 1000% 1000%;
+        animation: animate 30s ease infinite; */
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        grid-template-rows: auto;
+        justify-content: space-around;
+        grid-gap: 2vw;
+
+      }
+      .card {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: rgb(84, 111, 84);
+        /* color: black; */
+        padding: 0.8vw 0.7vw;
+        height: auto;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        background: rgba(0,0,0, 0.9);
+        border-radius: 1vw;
+        font-size: 1vw;
+        border: 0.1vw solid silver;
+      }
+
+      .card:hover{
+        box-shadow: 0vw 0vw 1vw black;
+        transition: 300ms ;
+        transform: scale(1.03);
+        background: rgba(255, 255, 255, 0.95);
+        /* background: rgba(0,0,0, 0.95); */
+        color:black;
+      }
+
+      @keyframes animate {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .card-buttons{
+        font-size: 1vw;
+        border: none;
+        color: rgb(60, 80, 60);
+        margin: 0.5vw .5vw;
+        padding: 0.3vw 0.9vw;
+        background-color: rgb(174, 254, 174);
+        border-radius: 0.35vw;
+        cursor: pointer;
+        border: 0.1vw solid green;
+      }
+
+      .card-buttons:hover{
+        box-shadow: 0vw 1vw 1vw darkgreen;
+        transition: 200ms;
+        border: 1px solid white;
+      }
+      .status{
+        writing-mode: vertical-rl; 
+        text-orientation: upright; 
+        float: right; margin-top: -9vw; 
+        background-color: gold; 
+        color: white; 
+        width: auto; 
+        height: auto; 
+        border-radius: 0.5vw; 
+        padding: 0.2vw 0.3vw;
+        /* border: 0.1vw solid white; */
+        font-weight: bold;
+        font-size: 1vw;
+        cursor: pointer;
+        text-shadow: -0.1vw -0.1vw 0.3vw green;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .status:hover{
+        background-color: goldenrod;
+        transition: 200ms;
+      }
+
+      .card-img{
+        width: 5vw;
+        height: 5vw;
+        border-radius: 100%;
+        border: 0.2vw solid white;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+      }
+      a{
+        text-decoration: none;
+      }
+	
 
 
     </style>
   </head>
   <body>
+  	
     <nav class="navbar">
-      <h1 class="logo">Alpha.@ndance</h1>
+      <a href="activeemployee"><h1 class="logo">AlphaAttendance.com</h1></a>
       <ul class="navbar-list">
       <li>
           <a href="user"><button type="button">Create Employee</button></a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#"><button type="button">Employees</button></a>
-        </li>
+        </li> -->
         <li>
-          <a href="#"><button type="button">Batchs</button></a>
+          <a href="createbatch"><button type="button">Create Batch</button></a>
         </li>
+        
       </ul>
 
       <input
@@ -418,7 +623,8 @@
       <div class="profile-dropdown">
         <div class="profile-dropdown-btn" onclick="abc()">
           <div class="profile-img">
-            <i id="profileimage" class="fa-regular fa-user"></i>
+            <!-- <i id="profileimage" class="fa-regular fa-user"></i> -->
+            <img class="profile-img" alt="" src="data:image/jpeg;base64,${user.getImg()}">
           </div>
           <span>${user.getName()}</span>
         </div>
@@ -426,7 +632,7 @@
         <div class="profile-dropdown-list">
           <ul>
             <li class="profile-dropdown-list-itms">
-              <a href="#">
+              <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&followup=https%3A%2F%2Faccounts.google.com%2F&ifkv=AVQVeywd4Qbj_RxuqUuYquPkL95hExwttmIKqsLHcJ5A6fjfTyR4Ee-k4GZOVokY81BdTbhS_ra3&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1325560807%3A1698522311172395&theme=glif">
                 <i class="fa-regular fa-envelope"></i>
                 Notifications
               </a>
@@ -441,13 +647,13 @@
             <li class="profile-dropdown-list-itms">
               <a href="#">
                 <i class="fa-solid fa-chart-line"></i>
-                Analytics
+                TimeSheets
               </a>
             </li>
             <li class="profile-dropdown-list-itms">
-              <a href="#">
+              <a href="updateprofilepic?id=${user.getUserId() }">
                 <i class="fa-solid fa-sliders"></i>
-                Settings
+                Update Profile Picture
               </a>
             </li>
             <li class="profile-dropdown-list-itms">
@@ -473,26 +679,19 @@
         </div>
       </div>
     </nav>
-
-
-
-    <br />
-    <br />
-    <h2>${msg }</h2>
-    <hr />
-
-    <article class="articl">
-      <h2>All Active Employees :</h2>
-      <select id="userfilter" >
-      	<option value="" disabled="disabled" selected="selected">Select An Option</option>
-      	<option value="allemployee">All</option>
-      	<option value="activeemployee">Active</option>
-      	<option value="inactivemployee">Inactive</option>
+    <h2 id="msg">${msg }</h2>
+    <%-- <article class="articl">
+      <h2 style="font-size: 1vw;">Employees :</h2>
+     	<select id="userfilter" >
+      	<option selected="selected" disabled="disabled">Sort</option>
+      	<option value="http://localhost:8080/ams_mvc/allemployee">All</option>
+      	<option value="http://localhost:8080/ams_mvc/activeemployee">Active</option>
+      	<option value="http://localhost:8080/ams_mvc/inactivemployee">Inactive</option>
  	   </select>
       
       
       <br />
-      <table border="1" cellpadding="15" id="table">
+      <table id="table">
         <tr style="background-color: rgb(188, 252, 255)">
           <!-- <th>Id</th> -->
           <th>EMPId</th>
@@ -500,18 +699,20 @@
           <th>Email</th>
           <th>Phone</th>
           <th>Role</th>
+          <th>Status</th>
           <th>Update</th>
           <th>Delete</th>
           <th>Details</th>
         </tr>
 			<c:forEach var="us" items="${users }">
-				<tr>
-					<%-- <td>${us.getUserId() }</td> --%>
+				<tr class="tr">
+					<td>${us.getUserId() }</td>
 					<td>${us.getEmpId() }</td>
 					<td>${us.getName() }</td>
 					<td>${us.getEmail() }</td>
 					<td>${us.getPhone() }</td>
 					<td>${us.getUserRole() }</td>
+					<td>${us.getUserStatus() }</td>
 					<td> <a href="updateuser?id=${us.getUserId() }"> <button class="updateButton" type="button">Update</button> </a> </td>
 					<td> <a href="deleteuser?id=${us.getUserId() }"> <button class="deleteButton" type="button">Delete</button> </a> </td>
 					<td> <a href="userdetails?id=${us.getUserId() }"> <button class="updateButton" type="button">View</button> </a> </td>
@@ -520,11 +721,121 @@
       </table>
       <br />
     </article>
-    <br /><br />
-    <hr />
     <br />
     <br />
     <br />
+    <br />
+    <br /> --%>
+    <br>
+  <h2 style="font-size: 1.5vw; float: left; margin-left: 10vw; margin-bottom: -30vw; ">Employees :</h2>
+	<select  id="userfilter" style="float: right; margin:0vw 10vw; margin-bottom: -20vw; outline: none;background-color: rgb(0,0,0,0.1);color: rgb(0,0,2);font-weight: bold;font-size:1vw;padding: 0.5vw;border-radius: 0.5vw;'" >
+      	<option selected="selected" disabled="disabled">Sort</option>
+      	<option value="http://localhost:8080/ams_mvc/allemployee">All</option>
+      	<option value="http://localhost:8080/ams_mvc/activeemployee">Active</option>
+      	<option value="http://localhost:8080/ams_mvc/inactivemployee">Inactive</option>
+ 	 </select>
+<div class="arti">
+	<c:forEach var="us" items="${users }">
+        <div class="card">
+            <div style="border-bottom: 1px solid black; overflow: auto; display: flex; justify-content: space-between; align-items: center; ">
+                <a href="#"><img class="card-img" src="data:image/jpeg;base64,${us.getImg()}" alt="Profile"></a>
+                <a href="#"><p style="cursor: pointer; text-transform: uppercase; margin-right: 1vw; font-size: 1.4vw; font-weight: bold ;  color: rgb(248, 249, 248); background-color: rgb(58, 193, 0); border-radius: 0.5vw; padding: 0.1vw 0.8vw; box-shadow: 0vw 0vw 0.5vw green; border: 1px solid white; ">
+                    ${us.getName()}
+                </p></a>
+                
+            </div>
+            <table cellpadding="10" cellspacing="10">
+                <tr>
+                    <td>EMPID : </td><td><p style="font-size: 1.2vw; font-weight: bold; line-height: 0.1vw;">${us.getEmpId() }</p></td>
+                </tr>
+                <tr>
+                    <td>Email : </td><td>${us.getEmail() }</td>
+                </tr>
+                <tr>
+                    <td>Phone : </td><td>${us.getPhone() }</td>
+                </tr>
+                <tr>
+                    <td>Status : </td><td>${us.getUserStatus() }</td>
+                </tr>
+                <tr>
+                    <td>Role : </td><td>${us.getUserRole() }</td>
+                </tr>
+                <tr>
+                    <td>Category : </td><td>${us.getUserCategory() }</td>
+                </tr>
+            </table>
+            <p class="status">${us.getUserStatus() }</p>
+            <br>
+            <div style="display: flex; justify-content: space-evenly;">
+                <a href="#"><button class="card-buttons" type="button">Batchs</button></a>
+                <a href="#"><button class="card-buttons" type="button">TimeSheets</button></a>
+                <a href="userdetails?id=${us.getUserId() }"><button class="card-buttons" type="button">View Details</button></a>
+            </div>
+          </div>
+          </c:forEach>
+    </div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -560,6 +871,17 @@
           }
         }
       }
+      
+      
+      document.getElementById("userfilter").addEventListener("change", function() {
+    	    var selectedOption = this.options[this.selectedIndex].value;
+    	    if (selectedOption) {
+    	        window.location.href = selectedOption;
+    	    }
+    	});
+      let msgEle = document.getElementById("msg");
+      msgEle.style.display = "block";
+      setTimeout(()=>{msg.style.display = "none"},1500);
     </script>
   </body>
 </html>

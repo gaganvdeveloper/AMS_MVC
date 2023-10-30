@@ -14,7 +14,7 @@ public interface BatchService {
 
 	Batch updateBatch(Batch batch);
 
-	void deleteBatch(int batchId);
+	boolean deleteBatch(int batchId);
 
 	List<Batch> findAllBatchs();
 

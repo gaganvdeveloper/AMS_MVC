@@ -9,7 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.lang.NonNull;
@@ -48,4 +50,7 @@ public class User {
 	private List<TimeSheet> timeSheets;
 	@OneToMany//(cascade = CascadeType.ALL)
 	private List<Batch> batchs;
+	@Lob
+	private String img;
+	
 }

@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Index Page AMS_MVC</title>
+<meta charset="ISO-8859-1">
+<title>Index Page</title>
+</head>
     <style>
         body {
             background-color: rgb(0,0,0,0.5);

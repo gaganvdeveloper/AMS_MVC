@@ -1,7 +1,10 @@
 package com.tyss.ams_mvc.controller;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tyss.ams_mvc.entity.User;
@@ -47,8 +52,7 @@ public class UserController {
 			return mv;
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("HR"))) {
-			List<User> users = userService.findAllUsers();
-			mv.addObject("users", users);
+			mv.addObject("users", userService.findAllActiveUsers());
 			mv.setViewName("hrhome");
 			mv.addObject("msg", " Login Successfull...");
 			mv.addObject("user", user);
@@ -57,6 +61,37 @@ public class UserController {
 		if (user.getUserRole().equals(UserRole.valueOf("ADMIN"))) {
 			mv.setViewName("adminhome");
 			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("user", user);
+			return mv;
+		}
+		mv.setViewName("login");
+		mv.addObject("user", user);
+		return mv;
+	}
+	
+	public ModelAndView userVerification(ModelAndView mv, User user1) {
+		User user = userService.findUserByEmailAndPassword(user1.getEmail(), user1.getPassword());
+		if (user == null) {
+			mv.setViewName("login");
+			mv.addObject("msg", "Login Failed");
+			return mv;
+		}
+		if (user.getUserRole().equals(UserRole.valueOf("TRAINER"))) {
+			mv.setViewName("trainerhome");
+//			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("user", user);
+			return mv;
+		}
+		if (user.getUserRole().equals(UserRole.valueOf("HR"))) {
+			mv.addObject("users", userService.findAllActiveUsers());
+			mv.setViewName("hrhome");
+//			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("user", user);
+			return mv;
+		}
+		if (user.getUserRole().equals(UserRole.valueOf("ADMIN"))) {
+			mv.setViewName("adminhome");
+//			mv.addObject("msg", " Login Successfull...");
 			mv.addObject("user", user);
 			return mv;
 		}
@@ -96,28 +131,63 @@ public class UserController {
 	@RequestMapping(value = "/updateuserupdate")
 	public ModelAndView updateUser(@ModelAttribute User user, ModelAndView mv, HttpServletRequest req) {
 		userService.updateUser(user);
+		mv.addObject("user1",user);
 		mv.addObject("user", req.getSession().getAttribute("user"));
 		mv.addObject("msg", user.getUserRole() + " Updated Successfully...");
-		mv.setViewName("hrhome");
-		return findAllUsers(mv);
+		mv.setViewName("userdetails");
+		return findAllActiveUsers(mv);
 	}
 
 	@RequestMapping(value = "/deleteuser")
 	public ModelAndView deleteUser(ModelAndView mv, HttpServletRequest req) {
-		if (userService.deleteUserById(Integer.parseInt(req.getParameter("id")))) {
+		if (userService.setUserStatusToInActive(Integer.parseInt(req.getParameter("id")))!=null) {
 			mv.addObject("msg", "User Deleted Successfully...");
 			mv.setViewName("hrhome");
-			return findAllUsers(mv);
+			return findAllActiveUsers(mv);
 		}
 		mv.addObject("msg", "Unable to Delete User...");
 		mv.setViewName("hrhome");
-		return findAllUsers(mv);
+		return findAllActiveUsers(mv);
 	}
-
+	
 	public ModelAndView findAllUsers(ModelAndView mv) {
 		mv.addObject("users", userService.findAllUsers());
 		return mv;
 	}
+	
+	
+	
+	@RequestMapping(value = "/allemployee")
+	public ModelAndView findAllUsers(ModelAndView mv,HttpServletRequest req) {
+		mv.setViewName("hrhome");
+		mv.addObject("users", userService.findAllUsers());
+		mv.addObject("msg", "All Employees Found Successfully...");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/activeemployee")
+	public ModelAndView findAllActiveUsers(ModelAndView mv,HttpServletRequest req) {
+		mv.setViewName("hrhome");
+		mv.addObject("users", userService.findAllActiveUsers());
+		mv.addObject("msg", "All ACTIVE Employees Found Successfully...");
+		return mv;
+	}
+	public ModelAndView findAllActiveUsers(ModelAndView mv) {
+//		mv.setViewName("hrhome");
+		mv.addObject("users", userService.findAllActiveUsers());
+		mv.addObject("msg", "All ACTIVE Employees Found Successfully...");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/inactivemployee")
+	public ModelAndView findAllInActiveUsers(ModelAndView mv,HttpServletRequest req) {
+		mv.addObject("user",req.getSession().getAttribute("user"));
+		mv.setViewName("hrhome");
+		mv.addObject("users", userService.findAllInActiveUsers());
+		mv.addObject("msg", "All IN_ACTIVE Employees Found Successfully...");
+		return mv;
+	}
+	
 
 	@RequestMapping(value = "/logout")
 	public ModelAndView userLogout(ModelAndView mv, HttpServletRequest req) {
@@ -136,20 +206,35 @@ public class UserController {
 		return mv;
 	}
 	
-
 	@RequestMapping(value = "/userdetails")
 	public ModelAndView userDetails(ModelAndView mv, HttpServletRequest req) {
-
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
 		if (user != null) {
 			mv.addObject("msg", "User details Found");
-			mv.addObject("user",user);
+			mv.addObject("user",(User)req.getSession().getAttribute("user"));
+			mv.addObject("user1",user);
 			mv.setViewName("userdetails");
 			return mv;
 		}
-		mv.addObject("msg","Unable to find User Details");
+		mv.addObject("msg","Unable to View User Details");
 		mv.setViewName("hrhome");
+		return findAllActiveUsers(mv);
+	}
+	
+	@RequestMapping(value = "/updateprofilepic")
+	public ModelAndView updateProfilePic(ModelAndView mv,HttpServletRequest req) {
+		mv.addObject("user1", userService.findUserById(Integer.parseInt(req.getParameter("id"))));
+		mv.setViewName("uploadprofilepic");
 		return mv;
 	}
+	
 
+	@RequestMapping(value = "/uploadprofilepic", method = RequestMethod.POST)
+	public ModelAndView uploadProfilePic(HttpServletRequest req,ModelAndView mv, @RequestParam("file") MultipartFile file) throws IOException, ServletException {
+		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
+		user.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+		userService.updateUser(user);
+		mv.addObject("msg","Profile Picture Added Successfully...");
+		return userVerification(mv, user);
+	}
 }
