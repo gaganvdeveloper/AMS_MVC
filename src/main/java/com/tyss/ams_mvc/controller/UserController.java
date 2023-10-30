@@ -47,20 +47,20 @@ public class UserController {
 		session.setAttribute("user", user);
 		if (user.getUserRole().equals(UserRole.valueOf("TRAINER"))) {
 			mv.setViewName("trainerhome");
-			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("msg", " Login Successfull..."+user.getName());
 			mv.addObject("user", user);
 			return mv;
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("HR"))) {
 			mv.addObject("users", userService.findAllActiveUsers());
 			mv.setViewName("hrhome");
-			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("msg", " Login Successfull..."+user.getName());
 			mv.addObject("user", user);
 			return mv;
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("ADMIN"))) {
 			mv.setViewName("adminhome");
-			mv.addObject("msg", " Login Successfull...");
+			mv.addObject("msg", " Login Successfull..."+user.getName());
 			mv.addObject("user", user);
 			return mv;
 		}

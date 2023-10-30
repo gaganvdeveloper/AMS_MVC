@@ -10,7 +10,8 @@
 <body>
 	<h1>User Update!!!...</h1>
 	<form:form action="updateuserupdate" modelAttribute="user">
-		UserId : <form:input path="userId" type="hidden" />
+		<form:input path="userId" type="hidden" />
+		<form:input path="img" type="hidden" />
 		EMPID : <form:input path="empId" readonly="false"/>
 		Name : <form:input path="name"/>
 		Email : <form:input path="email"/>
