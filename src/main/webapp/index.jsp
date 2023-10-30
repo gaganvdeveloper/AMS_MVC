@@ -50,5 +50,9 @@
             <a href="user">Create a User</a>
         </div>
     </div>
+    
+    <div><a href="createattendance">Create Attendance</a></div><br>
+    <div><a href="findAttendance">FindAttendance</a></div>
+    
 </body>
 </html>

@@ -3,12 +3,13 @@ package com.tyss.ams_mvc.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.tyss.ams_mvc.dto.AttendanceDto;
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
 public interface AttendanceService {
 	
-	public Attendance saveAttendance(Attendance attendance);
+	public Attendance saveAttendance(AttendanceDto attendance);
 
 	public Attendance findById(int id);
 
