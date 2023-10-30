@@ -39,6 +39,10 @@ public interface UserDao {
 
 	User findUserByPhoneAndPassword(long phone, String password);
 
+	List<User> findAllActiveUsers();
+
+	List<User> findAllInActiveUsers();
+
 //	User setUserStatusToInAcativeByUserId(int userId);
 
 }
