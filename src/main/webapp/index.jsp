@@ -53,7 +53,9 @@
     </div>
     
     <div><a href="createattendance">Create Attendance</a></div><br>
-    <div><a href="findAttendance">FindAttendance</a></div>
+    <div><a href="findAttendance">FindAttendance</a></div><br>
+    <div><a href= "delete">Delete Attendance</a></div><br>
+    <div><a href= "findstatus">findByStatus</a></div><br>
     
 </body>
 </html>

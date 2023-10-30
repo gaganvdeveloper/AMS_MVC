@@ -50,10 +50,9 @@ public class AttendanceDaoImp implements AttendanceDao {
 	public boolean deleteAttendance(int id) {
 		
 		Attendance attendance = findById(id) ;
-		
 		EntityTransaction transaction = entityManager.getTransaction() ;
 	    transaction.begin();
-	    entityManager.merge(attendance);
+	    entityManager.remove(attendance);
 	    transaction.commit();
 	    return true ;
 	}
@@ -89,7 +88,7 @@ public class AttendanceDaoImp implements AttendanceDao {
 	@Override
 	public List<Attendance> findAllAttendace() {
 		
-		return entityManager.createQuery("select a from Attendance a").getResultList() ;
+		return entityManager.createQuery("from Attendance a").getResultList() ;
 	}
 
 	@Override

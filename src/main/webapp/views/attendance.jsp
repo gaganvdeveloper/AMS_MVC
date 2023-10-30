@@ -9,19 +9,11 @@
 </head>
 <body>
 
-	<form:form action="saveattendance" modelAttribute="attendance">
-	date	<form:input path="current_date" TYPE="date" />
-		<br>
-
-		<%-- 	login time	<form:input path="loginTime" />
-		<br>
-
-	logout time	<form:input path="logoutTime" />
-		<br>
-
-	total working hours	<form:input path="totalWorkingHours" type="text"
-			readonly="true" />
-		<br>
+	<form:form action="saveattendance" modelAttribute="attendance" method="get">
+ 	date <form:input path="current_date" TYPE="date" /><br>
+    login time <form:input path="loginTime" /><br>
+	logout time	<form:input path="logoutTime" /><br>
+	<%-- total working hours	<form:input path="totalWorkingHours" type="text" readonly="true" /><br> --%>
 
 		attendance status<form:select path="attendanceStatus">
 			<form:option value="PRESENT">PRESENT</form:option>
@@ -31,7 +23,7 @@
 			<form:option value="WFH">WFH</form:option>
 			<form:option value="COLLEGE_TRAINING">COLLEGE_TRAINING</form:option>
 		</form:select>
-		<br> --%>
+		<br>
 		<form:button>submit</form:button>
 	</form:form>
 

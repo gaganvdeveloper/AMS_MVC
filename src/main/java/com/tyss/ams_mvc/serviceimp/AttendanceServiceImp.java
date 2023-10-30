@@ -56,6 +56,7 @@ public class AttendanceServiceImp implements AttendanceService {
 	@Override
 	public boolean deleteAttendance(int id) {
 		
+		
 		if (findById(id) != null) {
 			dao.deleteAttendance(id) ;
 			return true ;
