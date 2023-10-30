@@ -78,7 +78,7 @@ public class UserDaoImp implements UserDao {
 
 	@Override
 	public List<User> findAllUsers() {
-		return manager.createQuery("from User u").getResultList();
+		return manager.createQuery("select u from User u where u.userRole='TRAINER'").getResultList();
 	}
 
 	
@@ -129,6 +129,16 @@ public class UserDaoImp implements UserDao {
 		if (users.size() > 0)
 			return users.get(0);
 		return null;
+	}
+
+	@Override
+	public List<User> findAllActiveUsers() {
+		return manager.createQuery("select u from User u where u.userStatus='ACTIVE' and u.userRole='TRAINER'").getResultList();
+	}
+
+	@Override
+	public List<User> findAllInActiveUsers() {
+		return manager.createQuery("select u from User u where u.userStatus='IN_ACTIVE' and u.userRole='TRAINER'").getResultList();
 	}
 
 }

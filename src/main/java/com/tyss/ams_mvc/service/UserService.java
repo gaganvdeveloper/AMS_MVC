@@ -18,7 +18,13 @@ public interface UserService {
 	
 	User findUserByEmailAndPassword(String email, String password);
 	
+	User setUserStatusToInActive(int id);
+	
 	List<User> findAllUsers();
+
+	List<User> findAllActiveUsers();
+
+	List<User> findAllInActiveUsers();
 	
 	
 }
