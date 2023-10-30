@@ -24,6 +24,32 @@
 
 	<h1>update Batch Here!!!...</h1>
 
+	<form:form id="update-form" action="updatebatchlogic"
+		modelAttribute="bat">
+	Batch Id : <form:input path="batchId" readonly="true" />
+	Batch Code : <form:input path="batchCode" />
+	Subject Name : <form:input path="subjectName" />
+	Batch Status : <form:select path="batchStatus">
+			<form:option value="NOT_YET_ASSIGNED"></form:option>
+			<form:option value="ON_GOING"></form:option>
+			<form:option value="COMPLETED"></form:option>
+		</form:select>
+	Batch Start Date : <form:input path="batchStartDate" />
+	Batch End Date : <form:input path="batchEndtDate" />
+	Login Time : <form:input path="loginTime" />
+	Logout Time : <form:input path="logoutTime" />
+	Total Days : <form:input path="totalDays" />
+	Batch Mode : <form:select path="batchMode">
+			<form:option value="ONLINE"></form:option>
+			<form:option value="OFFLINE"></form:option>
+		</form:select>
+	Institute Name : <form:input path="instituteName" />
+	Institute Location : <form:input path="location" />
+		<button type="submit">Update Batch</button>
+	</form:form>
+
+
+
 	<%-- <form action="updatebatchlogic" method="post">
 		Batch Id:<input type="text" name="batchid" value="${bat.getBatchId() }" readonly="true">
 		Batch Code : <input type="text" name="batchcode" value="${bat.getBatchCode() }" placeholder="Enter Your name">
@@ -180,30 +206,6 @@
 	
 	</script>
 	 --%>
-
-	<form:form id="update-form" action="updatebatchlogic"
-		modelAttribute="bat">
-	Batch Id : <form:input path="batchId" readonly="true" />
-	Batch Code : <form:input path="batchCode" />
-	Subject Name : <form:input path="subjectName" />
-	Batch Status : <form:select path="batchStatus">
-			<form:option value="NOT_YET_ASSIGNED"></form:option>
-			<form:option value="ON_GOING"></form:option>
-			<form:option value="COMPLETED"></form:option>
-		</form:select>
-	Batch Start Date : <form:input path="batchStartDate" />
-	Login Time : <form:input path="loginTime" />
-	Logout Time : <form:input path="logoutTime" />
-	Total Days : <form:input path="totalDays" />
-	Batch Mode : <form:select path="batchMode">
-			<form:option value="ONLINE"></form:option>
-			<form:option value="OFFLINE"></form:option>
-		</form:select>
-	Institute Name : <form:input path="instituteName" />
-	Institute Location : <form:input path="location" />
-		<button type="submit">Update Batch</button>
-	</form:form>
-
 
 
 

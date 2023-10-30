@@ -18,6 +18,7 @@ public class BatchDto {
 	private String subjectName;
 	private BatchStatus batchStatus;
 	private String batchStartDate;
+	private String batchEndtDate;
 	private String loginTime;
 	private String logoutTime;
 	private int totalDays;
