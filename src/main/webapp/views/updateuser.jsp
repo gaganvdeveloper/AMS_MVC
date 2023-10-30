@@ -11,7 +11,7 @@
 	<h1>User Update!!!...</h1>
 	<form:form action="updateuserupdate" modelAttribute="user">
 		UserId : <form:input path="userId" type="hidden" />
-		EMPID : <form:input path="empId" readonly="true"/>
+		EMPID : <form:input path="empId" readonly="false"/>
 		Name : <form:input path="name"/>
 		Email : <form:input path="email"/>
 		Phone : <form:input path="phone"/>

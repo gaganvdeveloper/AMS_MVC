@@ -76,8 +76,8 @@ public class BatchController {
 	}
 
 	@RequestMapping("/updatebatchlogic")
-	public ModelAndView updateBatchLogic(HttpServletRequest req, ModelAndView mv,@ModelAttribute BatchDto batchDto) {
-		//converting batchDto to batch and updating it
+	public ModelAndView updateBatchLogic(HttpServletRequest req, ModelAndView mv, @ModelAttribute BatchDto batchDto) {
+		// converting batchDto to batch and updating it
 		batchService.updateBatch(BatchConversion.convert(batchDto));
 		mv.setViewName("allbatchs");
 		mv.addObject("msg", "Batch Updated Successfully...");
