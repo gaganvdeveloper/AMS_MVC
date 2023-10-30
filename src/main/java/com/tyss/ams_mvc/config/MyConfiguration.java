@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -26,9 +28,11 @@ public class MyConfiguration {
 		return resolver;
 	}
 	
-	/*@Bean
-	public ViewResolver viewResolverr() {
-		 return new InternalResourceViewResolver("/views/", ".jsp") ;
-	}*/
-
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(10485760);
+		return resolver;
+	}
+	
 }

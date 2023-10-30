@@ -14,18 +14,11 @@ public interface TimeSheetService {
 
 	public boolean deleteTimeSheetById(int id, int userId);
 
-	public List<TimeSheet> findAllTimeSheetsOfAllUsers();
-
 	public List<TimeSheet> findAllTimeSheetOfUser(int userId);
 
 	public List<TimeSheet> findAllTimeSheetOfAYearOfUser(int year, int userId);
 
 	public TimeSheet findTimeSheetByMonthNameOfUser(String month, int year, int userId);
-
-	public List<TimeSheet> findAllTimeSheetBetweenYearsOfUser(int startYear, int endYear, int userId);
-
-	public List<TimeSheet> findAllTimeSheetBetweenMonthsOfUser(String startMonth, String endMonth, int year,
-			int userId);
 
 	public List<TimeSheet> findTimeSheetByMonthNameOfAllEmployees(String month, int year);
 
