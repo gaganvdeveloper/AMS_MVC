@@ -511,7 +511,7 @@
         height: auto;
         width: 100%;
         background: rgba(255, 255, 255, 0.9);
-        background: rgba(0,0,0, 0.9);
+        /* background: rgba(0,0,0, 0.9); */
         border-radius: 1vw;
         font-size: 1vw;
         border: 0.1vw solid silver;
@@ -522,7 +522,7 @@
         transition: 300ms ;
         transform: scale(1.03);
         background: rgba(255, 255, 255, 0.95);
-        /* background: rgba(0,0,0, 0.95); */
+        /* background: rgba(0,0,0, 0.95);  */
         color:black;
       }
 

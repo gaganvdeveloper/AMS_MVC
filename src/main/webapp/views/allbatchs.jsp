@@ -18,7 +18,7 @@
 			<th>Subject name</th>
 			<th>Batch Status</th>
 			<th>Batch Start Date</th>
-			<!-- <th>Batch End Date</th> -->
+			<th>Batch End Date</th>
 			<th>Login Time</th>
 			<th>Logout Time</th>
 			<th>Total Days</th>
@@ -36,6 +36,7 @@
 				<td>${bat.getSubjectName() }</td>
 				<td>${bat.getBatchStatus() }</td>
 				<td>${bat.getBatchStartDate() }</td>
+				<td>${bat.getBatchEndDate() }</td>
 				<td>${bat.getLoginTime() }</td>
 				<td>${bat.getLogoutTime() }</td>
 				<td>${bat.getTotalDays() }</td>
