@@ -59,7 +59,8 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				}
 			} else {
 				timeSheetDao.saveTimeSheet(timeSheet);
-				user.getTimeSheets().add(timeSheet);
+				List<TimeSheet> sheets = user.getTimeSheets();
+				sheets.add(timeSheet);
 				userDao.saveUser(user);
 				return timeSheet;
 			}
@@ -81,7 +82,7 @@ public class TimeSheetServiceImp implements TimeSheetService {
 
 	@Override
 	public TimeSheet findTimeSheetById(int id) {
-		TimeSheet sheet = timeSheetDao.findTimeSheetById(id);
+		TimeSheet sheet = timeSheetDao.findBytimesheet_id(id);
 		if (sheet != null)
 			return sheet;
 		else
@@ -92,21 +93,12 @@ public class TimeSheetServiceImp implements TimeSheetService {
 	public boolean deleteTimeSheetById(int id, int userId) {
 		try {
 			User user = userDao.findUserById(userId);
-			user.getTimeSheets().remove(timeSheetDao.findTimeSheetById(id));
+			user.getTimeSheets().remove(timeSheetDao.findBytimesheet_id(id));
 			userDao.updateUser(user);
 			timeSheetDao.deleteTimeSheetById(id);
 			return true;
 		} catch (Exception e) {
 			return false;
-		}
-	}
-
-	@Override
-	public List<TimeSheet> findAllTimeSheetsOfAllUsers() {
-		try {
-			return timeSheetDao.findAllTimeSheets();
-		} catch (Exception e) {
-			return null;
 		}
 	}
 
@@ -155,35 +147,6 @@ public class TimeSheetServiceImp implements TimeSheetService {
 	}
 
 	@Override
-	public List<TimeSheet> findAllTimeSheetBetweenYearsOfUser(int startYear, int endYear, int userId) {
-		try {
-			User user = userDao.findUserById(userId);
-			return user.getTimeSheets().stream().filter(timeSheet -> timeSheet.getStart_date().getYear() >= startYear
-					&& timeSheet.getStart_date().getYear() <= endYear).collect(Collectors.toList());
-		} catch (Exception e) {
-			return null;
-
-		}
-	}
-
-	@Override
-	public List<TimeSheet> findAllTimeSheetBetweenMonthsOfUser(String startMonth, String endMonth, int year,
-			int userId) {
-		try {
-			User user = userDao.findUserById(userId);
-			return user.getTimeSheets().stream()
-					.filter(timeSheet -> timeSheet.getStart_date().getYear() == year
-							&& timeSheet.getStart_date().getMonth().getValue() >= Month
-									.valueOf(startMonth.toUpperCase()).getValue()
-							&& timeSheet.getStart_date().getMonth().getValue() <= Month.valueOf(endMonth.toUpperCase())
-									.getValue())
-					.collect(Collectors.toList());
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public List<TimeSheet> findTimeSheetByMonthNameOfAllEmployees(String month, int year) {
 		try {
 			return timeSheetDao.findAllTimeSheets().stream()
@@ -200,11 +163,14 @@ public class TimeSheetServiceImp implements TimeSheetService {
 			int end_year, int user_id) {
 		try {
 			User user = userDao.findUserById(user_id);
-			return user.getTimeSheets().stream().filter(
-					timesheet -> timesheet.getStart_date().getMonth().getValue() == Month.valueOf(startMonth).getValue()
-							&& timesheet.getStart_date().getYear() == start_year
-							&& timesheet.getEnd_date().getMonth().getValue() == Month.valueOf(endMonth).getValue()
-							&& timesheet.getEnd_date().getYear() == end_year)
+			System.out.println("hi");
+			return user.getTimeSheets().stream()
+					.filter(timesheet -> timesheet.getStart_date().getMonth().getValue() >= Month
+							.valueOf(startMonth.toUpperCase()).getValue()
+							&& timesheet.getStart_date().getMonth().getValue() <= Month.valueOf(endMonth.toUpperCase())
+									.getValue()
+							&& timesheet.getStart_date().getYear() >= start_year
+							&& timesheet.getStart_date().getYear() <= end_year)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
@@ -215,11 +181,13 @@ public class TimeSheetServiceImp implements TimeSheetService {
 	public List<TimeSheet> findTimeSheetOnCustomDates(String startMonth, int start_year, String endMonth,
 			int end_year) {
 		try {
-			return timeSheetDao.findAllTimeSheets().stream().filter(
-					timesheet -> timesheet.getStart_date().getMonth().getValue() == Month.valueOf(startMonth).getValue()
-							&& timesheet.getStart_date().getYear() == start_year
-							&& timesheet.getEnd_date().getMonth().getValue() == Month.valueOf(endMonth).getValue()
-							&& timesheet.getEnd_date().getYear() == end_year)
+			return timeSheetDao.findAllTimeSheets().stream()
+					.filter(timesheet -> timesheet.getStart_date().getMonth().getValue() >= Month
+							.valueOf(startMonth.toUpperCase()).getValue()
+							&& timesheet.getStart_date().getMonth().getValue() <= Month.valueOf(endMonth.toUpperCase())
+									.getValue()
+							&& timesheet.getStart_date().getYear() >= start_year
+							&& timesheet.getStart_date().getYear() <= end_year)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			return null;
@@ -231,5 +199,4 @@ public class TimeSheetServiceImp implements TimeSheetService {
 		LocalDate currentDate = LocalDate.now();
 		return findTimeSheetByMonthNameOfAllEmployees(String.valueOf(currentDate.getMonth()), currentDate.getYear());
 	}
-
 }
