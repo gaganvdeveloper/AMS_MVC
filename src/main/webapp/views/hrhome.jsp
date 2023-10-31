@@ -30,12 +30,14 @@
         font-size: 2vw;
         font-family: cursive;
         color: rgb(142, 250, 0);
+        color:darkgreen;
+        color:white;
         text-shadow: 0px 0px 40px;
         margin-right:5vw;
         cursor: pointer;
       }
       .logo:hover {
-        color: rgb(142, 250, 70);
+        text-decoration: underline;
       }
 
       /*Google font Poppins*/
@@ -90,8 +92,10 @@
         align-items: center;
         height: 70px;
         background-color: black; 
-        background:linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+        /* background:linear-gradient(15deg, #13547a 0%, #80d0c7 100%); */
 /*         background:linear-gradient(to right,rgb(120,40,208,0.8),rgb(59,130,252,0.9)); */
+		background-color:rgb(0,0,0,0.2);
+		background-color:rgb(44,157,48);
         padding: 0 8%;
       }
 
@@ -107,10 +111,15 @@
       }
 
       .navbar-list li a {
-        text-decoration: none;
+      /* 	color:white;
+        text-decoration: none; */
+      }
+      .navbar-list li a:hover {
+      	/* color:white;
+        text-decoration: underline; */
       }
       .navbar-list li a button {
-        background-color: white;
+        /* background-color: white;
         cursor: pointer;
         color: black;
         padding: 0.1vw 0.4vw;
@@ -120,13 +129,19 @@
         font-size:1vw;
         color:white;
         transition: 0.5s;
-        border: 1px solid green;
+        border: 1px solid green; */
+        border:none;
+        background-color: rgb(44,157,48);
+        color:white;
+        font-family: sans-serif;
+        
       }
 
       .navbar-list li a button:hover {
-        text-shadow: 0px 0px 10px white;
-        box-shadow: 0vw 0.5vw 0.8vw black;
-        border: 1px solid green;
+       	/* text-shadow: 0px 0px 10px white;
+        box-shadow: 0vw 0.5vw 0.8vw black; */
+        /* border: 1px solid green; */ 
+        text-decoration: underline;
       }
 
       .profile-dropdown {
@@ -136,11 +151,11 @@
 
       .profile-img {
         position: relative;
-        width: 3rem;
-        height: 3rem;
+        width: 3vw;
+        height: 3vw; 
         border-radius: 50%;
-        background-size: cover;
-        border: 1px solid black;
+        /* background-size: 0.2vw 0.2vw; */
+        /* border: 0.1vw solid white; */
         background-position: center;
       }
 
@@ -151,18 +166,22 @@
         padding-right: 1vw;
         font-size: 1vw;
         font-weight:bold;
-        border: 0.1vw solid white;
+        border: 0.2vw solid white;
         border-radius: 1.8vw;
         cursor: pointer;
         width: auto;
+        color:white;
+        color:green;
         transition: box-shadow 0.2s background-color 0.2s;
-
+		background-color: rgb(243, 255, 243);
       }
 
       .profile-dropdown-btn:hover {
       	transition:200ms;
         color: white;
-        box-shadow: 0.5vw 0.5vw 1vw black;
+        box-shadow: 0.25vw 0.25vw 0.5vw white;
+        box-shadow: 0vw 0vw 0.5vw white;
+        background-color: rgb(44,157,48);
       }
 
      
@@ -239,11 +258,11 @@
         background-color: rgb(243, 255, 243);
         outline: none;
         border: 0.1vw solid var(--green);
-        padding: 0.2vw;
+        padding: 0.5vw 1vw;
         padding-left: 1vw;
-        border-radius: 0.5vw;
+        border-radius: 1vw;
         margin-right: 1vw;
-        font-size: 1vw;
+        font-size: 0.8vw;
         /* font-weight: bold; */
       }
       #searchinput:hover {
@@ -472,15 +491,17 @@
 
 
       .arti {
-        margin: auto;
+        
         margin-top: 0vw;
-        width: 95%;
+        width: 100%;
         height: auto;
-        box-shadow: 0px 0px 10px rgb(50,100,50,0.5);
-        padding: 0.5vw 1vw;
-        padding-top:3vw;
-        border-radius:1vw;
-        background-color:rgb(50,50,50,0.2);
+        /* box-shadow: 0px 0px 10px rgb(50,100,50,0.5); */
+        padding: 0vw 1vw;
+        padding-top:1vw;
+        padding-bottom:1vw;
+        border-radius:0vw;
+        background-color:rgb(50,50,50,0.01);
+        background-color:rgb(0,255,0,0.4);
         /* border-radius: 10px;
         z-index: 1;
         background: linear-gradient(
@@ -521,7 +542,7 @@
         box-shadow: 0vw 0vw 1vw black;
         transition: 300ms ;
         transform: scale(1.03);
-        background: rgba(255, 255, 255, 0.95);
+        background: rgb(255, 255, 255, 0.95);
         /* background: rgba(0,0,0, 0.95);  */
         color:black;
       }
@@ -637,12 +658,12 @@
                 Notifications
               </a>
             </li>
-            <li class="profile-dropdown-list-itms">
+           <%--  <li class="profile-dropdown-list-itms">
               <a href="updateuser?id=${user.getUserId() }">
                 <i class="fa-regular fa-user"></i>
                 Update Profile
               </a>
-            </li>
+            </li> --%>
 
             <li class="profile-dropdown-list-itms">
               <a href="#">
@@ -727,7 +748,7 @@
     <br />
     <br /> --%>
     <br>
-  <h2 style="font-size: 1.5vw; float: left; margin-left: 10vw; margin-bottom: -30vw; ">Employees :</h2>
+  <h2 style="font-size: 2vw; float: left; margin-left: 10vw; margin-bottom: 1vw; ">Employees :</h2>
 	<select  id="userfilter" style="float: right; margin:0vw 10vw; margin-bottom: -20vw; outline: none;background-color: rgb(0,0,0,0.1);color: rgb(0,0,2);font-weight: bold;font-size:1vw;padding: 0.5vw;border-radius: 0.5vw;'" >
       	<option selected="selected" disabled="disabled">Sort</option>
       	<option value="http://localhost:8080/ams_mvc/allemployee">All</option>
@@ -883,6 +904,7 @@
       msgEle.style.display = "block";
       setTimeout(()=>{msg.style.display = "none"},1500);
     </script>
+    
   </body>
 </html>
 

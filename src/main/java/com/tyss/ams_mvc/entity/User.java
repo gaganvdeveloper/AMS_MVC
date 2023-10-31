@@ -52,4 +52,5 @@ public class User {
 	private List<Batch> batchs;
 	@Lob
 	private String img;
+	
 }

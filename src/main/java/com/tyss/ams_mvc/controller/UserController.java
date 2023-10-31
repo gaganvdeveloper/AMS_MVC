@@ -67,6 +67,7 @@ public class UserController {
 		mv.addObject("user", user);
 		return mv;
 	}
+	
 	public ModelAndView userVerification(ModelAndView mv, User user1) {
 		User user = userService.findUserByEmailAndPassword(user1.getEmail(), user1.getPassword());
 		if (user == null) {
@@ -117,7 +118,8 @@ public class UserController {
 	public ModelAndView gotoUpdateUser(ModelAndView mv, HttpServletRequest req) {
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
 		if (user != null) {
-			mv.addObject("user", user);
+			mv.addObject("user", req.getSession().getAttribute("user"));
+			mv.addObject("user1", user);
 			mv.setViewName("updateuser");
 			return mv;
 		}
@@ -129,9 +131,10 @@ public class UserController {
 	@RequestMapping(value = "/updateuserupdate")
 	public ModelAndView updateUser(@ModelAttribute User user, ModelAndView mv, HttpServletRequest req) {
 		userService.updateUser(user);
+		mv.addObject("user1",user);
 		mv.addObject("user", req.getSession().getAttribute("user"));
 		mv.addObject("msg", user.getUserRole() + " Updated Successfully...");
-		mv.setViewName("hrhome");
+		mv.setViewName("userdetails");
 		return findAllActiveUsers(mv);
 	}
 
@@ -170,7 +173,7 @@ public class UserController {
 		return mv;
 	}
 	public ModelAndView findAllActiveUsers(ModelAndView mv) {
-		mv.setViewName("hrhome");
+//		mv.setViewName("hrhome");
 		mv.addObject("users", userService.findAllActiveUsers());
 		mv.addObject("msg", "All ACTIVE Employees Found Successfully...");
 		return mv;
@@ -232,12 +235,8 @@ public class UserController {
 		user.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
 		userService.updateUser(user);
 		mv.addObject("msg","Profile Picture Added Successfully...");
-		return userVerification(mv, user);
+		mv.setViewName("userdetails");
+		return userVerification(mv, (User)req.getSession().getAttribute("user"));
+//		return mv;
 	}
-	
-	
-	
-	
-	
-	
 }
