@@ -119,7 +119,8 @@ public class UserController {
 	public ModelAndView gotoUpdateUser(ModelAndView mv, HttpServletRequest req) {
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
 		if (user != null) {
-			mv.addObject("user", user);
+			mv.addObject("user", req.getSession().getAttribute("user"));
+			mv.addObject("user1", user);
 			mv.setViewName("updateuser");
 			return mv;
 		}
@@ -235,6 +236,8 @@ public class UserController {
 		user.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
 		userService.updateUser(user);
 		mv.addObject("msg","Profile Picture Added Successfully...");
-		return userVerification(mv, user);
+		mv.setViewName("userdetails");
+		return userVerification(mv, (User)req.getSession().getAttribute("user"));
+//		return mv;
 	}
 }

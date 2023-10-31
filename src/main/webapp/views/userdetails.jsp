@@ -350,10 +350,10 @@ body {
 						href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&followup=https%3A%2F%2Faccounts.google.com%2F&ifkv=AVQVeywd4Qbj_RxuqUuYquPkL95hExwttmIKqsLHcJ5A6fjfTyR4Ee-k4GZOVokY81BdTbhS_ra3&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1325560807%3A1698522311172395&theme=glif">
 							<i class="fa-regular fa-envelope"></i> Notifications
 					</a></li>
-					<li class="profile-dropdown-list-itms"><a
+					<%-- <li class="profile-dropdown-list-itms"><a
 						href="updateuser?id=${user.getUserId() }"> <i
 							class="fa-regular fa-user"></i> Update Profile
-					</a></li>
+					</a></li> --%>
 
 					<li class="profile-dropdown-list-itms"><a href="#"> <i
 							class="fa-solid fa-chart-line"></i> Analytics
