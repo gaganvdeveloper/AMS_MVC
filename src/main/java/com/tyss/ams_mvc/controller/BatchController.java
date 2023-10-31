@@ -84,4 +84,10 @@ public class BatchController {
 		return findAllbatchs(mv);
 	}
 
+	@RequestMapping("/allnonassignedbatches")
+	public ModelAndView displayAllNotAssignedBatches(ModelAndView mv) {
+		mv.addObject("batchs",batchService.findAllNotAssignedBatches());
+		mv.setViewName("allbatchs");
+		return mv;
+	}
 }
