@@ -2,7 +2,6 @@ package com.tyss.ams_mvc.controller;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
