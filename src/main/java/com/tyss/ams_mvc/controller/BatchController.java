@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tyss.ams_mvc.dto.BatchDto;
 import com.tyss.ams_mvc.entity.Batch;
 import com.tyss.ams_mvc.service.BatchService;
 import com.tyss.ams_mvc.util.BatchConversion;
@@ -36,13 +37,14 @@ public class BatchController {
 		batch.setBatchStatus(BatchStatus.valueOf(req.getParameter("batchstatus")));
 		batch.setBatchStartDate(LocalDate.of(Integer.parseInt(req.getParameter("startyear")),
 				Integer.parseInt(req.getParameter("startmonth")), Integer.parseInt(req.getParameter("startday"))));
+		batch.setBatchEndDate(LocalDate.of(Integer.parseInt(req.getParameter("startyear")),
+				Integer.parseInt(req.getParameter("startmonth")), Integer.parseInt(req.getParameter("startday"))));
 		batch.setLoginTime(LocalTime.of(Integer.parseInt(req.getParameter("logintime")), 00));
 		batch.setLogoutTime(LocalTime.of(Integer.parseInt(req.getParameter("logouttime")), 00));
 		batch.setBatchMode(BatchMode.valueOf(req.getParameter("batchmode")));
 		batch.setInstituteName(req.getParameter("institutename"));
 		batch.setLocation(req.getParameter("institutelocation"));
 		batchService.saveBatch(batch);
-//		batch.getBatchStartDate().getda
 		mv.setViewName("allbatchs");
 		mv.addObject("msg", "Batch Created Successfully...");
 		return findAllbatchs(mv);
@@ -74,19 +76,9 @@ public class BatchController {
 	}
 
 	@RequestMapping("/updatebatchlogic")
-	public ModelAndView updateBatchLogic(HttpServletRequest req, ModelAndView mv,@ModelAttribute Batch batch) {
-		batch.setBatchId(Integer.parseInt(req.getParameter("batchid")));
-		batch.setBatchCode(req.getParameter("batchcode"));
-		batch.setSubjectName(req.getParameter("subname"));
-		batch.setBatchStatus(BatchStatus.valueOf(req.getParameter("batchstatus")));
-		batch.setBatchStartDate(LocalDate.of(Integer.parseInt(req.getParameter("startyear")),
-				Integer.parseInt(req.getParameter("startmonth")), Integer.parseInt(req.getParameter("startday"))));
-		batch.setLoginTime(LocalTime.of(Integer.parseInt(req.getParameter("logintime")), 00));
-		batch.setLogoutTime(LocalTime.of(Integer.parseInt(req.getParameter("logouttime")), 00));
-		batch.setBatchMode(BatchMode.valueOf(req.getParameter("batchmode")));
-		batch.setInstituteName(req.getParameter("institutename"));
-		batch.setLocation(req.getParameter("institutelocation"));
-		batchService.updateBatch(batch);
+	public ModelAndView updateBatchLogic(HttpServletRequest req, ModelAndView mv, @ModelAttribute BatchDto batchDto) {
+		// converting batchDto to batch and updating it
+		batchService.updateBatch(BatchConversion.convert(batchDto));
 		mv.setViewName("allbatchs");
 		mv.addObject("msg", "Batch Updated Successfully...");
 		return findAllbatchs(mv);
