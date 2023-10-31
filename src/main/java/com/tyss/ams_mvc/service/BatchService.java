@@ -32,4 +32,5 @@ public interface BatchService {
 
 	List<Batch> findBatchBetweenDates(LocalDate fromDate, LocalDate toDate);
 
+	List<Batch> findAllNotAssignedBatches();
 }
