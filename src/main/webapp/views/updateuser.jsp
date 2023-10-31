@@ -422,6 +422,7 @@
 
 
 	<h1>User Update!!!...</h1>
+
 	<form:form action="updateuserupdate" modelAttribute="user1">
 		<form:input path="userId" type="hidden" />
 		<form:input path="img" type="hidden"/>
