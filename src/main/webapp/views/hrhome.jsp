@@ -628,7 +628,7 @@
           <a href="#"><button type="button">Employees</button></a>
         </li> -->
         <li>
-          <a href="createbatch"><button type="button">Create Batch</button></a>
+          <a href="createbatch"><button type="button">Batchs</button></a>
         </li>
         
       </ul>
