@@ -25,4 +25,5 @@ public class BatchDto {
 	private BatchMode batchMode;
 	private String instituteName;
 	private String location;
+	private int userId;
 }

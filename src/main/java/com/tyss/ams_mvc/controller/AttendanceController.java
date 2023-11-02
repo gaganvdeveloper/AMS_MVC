@@ -1,9 +1,10 @@
 package com.tyss.ams_mvc.controller;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.format.DateTimeFormatter;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,12 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tyss.ams_mvc.dto.AttendanceDto;
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.entity.TimeSheet;
-import com.tyss.ams_mvc.serviceimp.AttendanceServiceImp;
+import com.tyss.ams_mvc.service.AttendanceService;
+import com.tyss.ams_mvc.service.TimeSheetService;
+import com.tyss.ams_mvc.serviceimp.AttendanceServiceImpl;
 import com.tyss.ams_mvc.serviceimp.TimeSheetServiceImp;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
@@ -26,31 +30,45 @@ import com.tyss.ams_mvc.util.AttendanceStatus;
 public class AttendanceController {
 
 	@Autowired
-	private AttendanceServiceImp service;
+	private AttendanceService attendanceService;
 	
 	@Autowired
-	private TimeSheetServiceImp timeService ;
-
+	private TimeSheetService timeService ;
+	
 	@RequestMapping(value = "/createattendance")
-	public ModelAndView createAttendance(ModelAndView mav, AttendanceDto attendance) {
-		mav.addObject("attendance", attendance);
-		mav.setViewName("attendance");
-		return mav;
+	public ModelAndView gotoCreateAttendance(ModelAndView mv) {
+		mv.setViewName("createattendance");
+		return mv;
 	}
 
-	@RequestMapping(value = "/saveAttendance")
-	public ModelAndView saveAttendance(ModelAndView mav, HttpServletRequest request, Attendance attendance) {
-		attendance.setDate(LocalDate.parse(request.getParameter("date")));
-		attendance.setLoginTime(LocalTime.parse(request.getParameter("loginTime"))) ;
-		attendance.setLogoutTime(LocalTime.parse(request.getParameter("logoutTime"))) ;
-		attendance.setAttendanceStatus(AttendanceStatus.valueOf(request.getParameter("attendanceStatus")));
-		attendance.setTotalWorkingHours(Integer.valueOf(request.getParameter("totalWorkingHours"))) ;
-		service.saveAttendance(attendance) ;
-//		attendance.setBatchs(List<Batch> list) ;
-		mav.setViewName("attendance");
-		return mav;
+	@ResponseBody
+	@RequestMapping(value = "/createattendancecreate")
+	public String createAttendance(HttpServletRequest req, Attendance attendance) {
+
+		attendance.setDate(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+		attendance.setLoginTime(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")));
+		attendance.setLogoutTime(LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
+		attendance.setAttendanceStatus(AttendanceStatus.valueOf(req.getParameter("batchStatus")));
+		
+		LocalTime inTime = LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm"));
+		LocalTime outTime = LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm"));
+		Duration duration = Duration.between(
+				LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")),
+				LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
+		int hours = (int) duration.toHours();
+		int minutes = (int) duration.toMinutes();
+		long min = MINUTES.between(inTime, outTime);
+		attendance.setTotalWorkingHours(getHourandMin(min));
+		attendanceService.saveAttendance(attendance);
+		return "Printed";
+	}
+
+	private LocalTime getHourandMin(long min) {
+		return LocalTime.of((int) min / 60, (int) min % 60);
 	}
 	
+
 	@RequestMapping(value = "/findAttendance")
 	public ModelAndView findAttendance(ModelAndView mav ) {
 		mav.setViewName("findAttendace") ;
@@ -60,7 +78,7 @@ public class AttendanceController {
 	
 	@RequestMapping(value = "/getattendance")
 	public ModelAndView getAttendance(ModelAndView mav, HttpServletRequest req ) {
-		mav.addObject("att", service.findById(Integer.parseInt(req.getParameter("id")))) ;
+		mav.addObject("att", attendanceService.findById(Integer.parseInt(req.getParameter("id")))) ;
 		mav.setViewName("showattendance") ;
 		return mav ;
 	}
@@ -73,7 +91,7 @@ public class AttendanceController {
 	
 	@RequestMapping(value = "/delAttendance")
 	public ModelAndView delAttendance(ModelAndView mav, HttpServletRequest request) {
-		service.deleteAttendance(Integer.parseInt(request.getParameter("id"))) ;
+		attendanceService.deleteAttendance(Integer.parseInt(request.getParameter("id"))) ;
 		mav.setViewName("findAttendace") ;
 		return mav ;
 	}
@@ -89,7 +107,7 @@ public class AttendanceController {
 	@RequestMapping(value = "/found")
 	public ModelAndView attendanceByStatus(ModelAndView mav, HttpServletRequest request) {
 		
-		mav.addObject("list", service.findAllAttendanceByAttendanceStatus(AttendanceStatus.valueOf(request.getParameter("stat")))) ;
+		mav.addObject("list", attendanceService.findAllAttendanceByAttendanceStatus(AttendanceStatus.valueOf(request.getParameter("stat")))) ;
 		mav.setViewName("showattendance");
 		
 //		mav.addObject("list", service.findAllAttendace().stream().filter(
@@ -107,7 +125,7 @@ public class AttendanceController {
 	
 	@RequestMapping(value = "/foundbydate")
 	public ModelAndView getAttendanceByDate(ModelAndView mav, HttpServletRequest req) {
-		mav.addObject("list", service.findAllAttendenceByDate(LocalDate.parse(req.getParameter("date")))) ;
+		mav.addObject("list", attendanceService.findAllAttendenceByDate(LocalDate.parse(req.getParameter("date")))) ;
 		mav.addObject("msg", "Based On the Date") ;
 		mav.setViewName("displayattendance2") ;
 		return mav ;
@@ -122,7 +140,7 @@ public class AttendanceController {
 	@RequestMapping(value = "/getattendancebydateandstatus")
 	public ModelAndView getattendancebydateandstatus(ModelAndView mav, HttpServletRequest request) {
 		mav.addObject("msg", "Based On the status and Date") ;
-		mav.addObject("list", service.findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus.valueOf(request.getParameter("stat")), LocalDate.parse(request.getParameter("date")))) ;
+		mav.addObject("list", attendanceService.findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus.valueOf(request.getParameter("stat")), LocalDate.parse(request.getParameter("date")))) ;
 		mav.setViewName("displayattendance2") ;
 		return mav ;
 	}
@@ -139,4 +157,5 @@ public class AttendanceController {
 		
 		return null;
 	}
+
 }

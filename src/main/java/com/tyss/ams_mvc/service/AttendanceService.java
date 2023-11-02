@@ -28,5 +28,5 @@ public interface AttendanceService {
 	public List<Attendance> findAttendanceByTimeSheetId(int attendanceStatus) ;
 	
 	public Attendance saveAttendanceBydate(LocalDate date, int timesheetId) ;
-	
 }
+

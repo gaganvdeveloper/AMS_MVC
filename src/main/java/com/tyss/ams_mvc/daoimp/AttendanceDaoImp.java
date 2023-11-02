@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tyss.ams_mvc.dao.AttendanceDao;
+import com.tyss.ams_mvc.dao.TimeSheetDao;
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.util.AttendanceStatus;
@@ -20,7 +21,7 @@ import com.tyss.ams_mvc.util.AttendanceStatus;
 public class AttendanceDaoImp implements AttendanceDao {
 	
 	@Autowired
-	private TimeSheetDaoImp dao ;
+	private TimeSheetDao dao ;
 	
 	@Autowired
 	EntityManager entityManager;

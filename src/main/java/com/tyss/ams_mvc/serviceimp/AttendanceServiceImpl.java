@@ -16,7 +16,7 @@ import com.tyss.ams_mvc.service.AttendanceService;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
 @Service
-public class AttendanceServiceImp implements AttendanceService {
+public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
 	private AttendanceDaoImp dao ;

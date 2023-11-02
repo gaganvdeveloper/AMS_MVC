@@ -1,12 +1,16 @@
 package com.tyss.ams_mvc.dao;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
+@Service
 public interface AttendanceDao {
 	
 	public Attendance saveAttendance(Attendance attendance);
@@ -26,5 +30,4 @@ public interface AttendanceDao {
 	public List<Attendance> findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus status, LocalDate date);
 	
 	public List<Attendance> findAttendanceByTimeSheetId(int attendanceStatus) ;
-	
 }

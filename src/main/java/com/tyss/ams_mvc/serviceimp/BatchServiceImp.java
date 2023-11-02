@@ -1,6 +1,7 @@
 package com.tyss.ams_mvc.serviceimp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,16 @@ public class BatchServiceImp implements BatchService {
 	}
 
 	@Override
+	public List<Batch> findAllOnGoingBatchs() {
+		return batchDao.findAllOnGoingBatchs();
+	}
+
+	@Override
+	public List<Batch> findAllCompletedBatchs() {
+		return batchDao.findAllCompletedBatchs();
+	}
+	
+	@Override
 	public Batch findBatchByBatchCode(String batchCode) {
 
 		return batchDao.findBatchByBatchCode(batchCode);
@@ -84,4 +95,18 @@ public class BatchServiceImp implements BatchService {
 		return batchDao.findBatchBetweenDates(fromDate, toDate);
 	}
 
+	@Override
+	public List<Batch> findAllNotAssignedBatches() {
+//		List<Batch> nonAssignedBatches = new ArrayList<Batch>();
+//		List<Batch> batchs = batchDao.findAllBatchs();
+//		for (Batch batch : batchs) {
+//			if (batch.getBatchStatus().toString().equals("NOT_YET_ASSIGNED")) {
+//				nonAssignedBatches.add(batch);
+//			}
+//		}
+//		return nonAssignedBatches;
+		return batchDao.findAllNotAssignedBatchs();
+	}
+
+	
 }

@@ -38,7 +38,7 @@ public class Attendance {
 	private LocalTime logoutTime;
 	@Enumerated(EnumType.STRING)
 	private AttendanceStatus attendanceStatus;
-	private double totalWorkingHours;
+	private LocalTime totalWorkingHours;
 	@ManyToMany
 	private List<Batch> batchs; 
 	
