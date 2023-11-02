@@ -58,6 +58,17 @@ public class BatchDaoImp implements BatchDao {
 		Query query = manager.createQuery("from Batch b");
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Batch> findAllOnGoingBatchs() {
+		return manager.createQuery("select b from Batch b where b.batchStatus='ON_GOING'").getResultList();
+	}
+
+
+	@Override
+	public List<Batch> findAllCompletedBatchs() {
+		return manager.createQuery("select b from Batch b where b.batchStatus='COMPLETED'").getResultList();
+	}
 
 	@Override
 	public Batch findBatchByBatchCode(String batchCode) {
@@ -109,6 +120,11 @@ public class BatchDaoImp implements BatchDao {
 		query.setParameter(1, batchStartDate);
 		query.setParameter(2, batchEndDate);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Batch> findAllNotAssignedBatchs() {
+		return manager.createQuery("select b from Batch b where b.batchStatus='NOT_YET_ASSIGNED'").getResultList();
 	}
 
 }

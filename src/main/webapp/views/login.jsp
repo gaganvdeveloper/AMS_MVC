@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>User Login Page</title>
+<title>Login Page</title>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@ button[type="submit"]:hover {
 </style>
 </head>
 <body>
-	<h1>User Login Page</h1>
+	<h1 style="font-size: 4vw;font-family: cursive;color: rgb(142, 250, 0);color:darkgreen;text-shadow: 0px 0px 40px;margin-left:3%;cursor: pointer;">AlphaAttendance.com</h1>
 	<p>${msg }</p>
 	<h2>Login Here!!!...</h2>
 	<form action="userloginvalidate">

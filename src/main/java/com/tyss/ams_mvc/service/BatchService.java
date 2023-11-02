@@ -17,6 +17,10 @@ public interface BatchService {
 	boolean deleteBatch(int batchId);
 
 	List<Batch> findAllBatchs();
+	
+	List<Batch> findAllOnGoingBatchs();
+
+	List<Batch> findAllCompletedBatchs();
 
 	Batch findBatchByBatchCode(String batchCode);
 
