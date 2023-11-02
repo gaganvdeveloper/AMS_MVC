@@ -11,6 +11,7 @@ import com.tyss.ams_mvc.daoimp.AttendanceDaoImp;
 import com.tyss.ams_mvc.daoimp.TimeSheetDaoImp;
 import com.tyss.ams_mvc.dto.AttendanceDto;
 import com.tyss.ams_mvc.entity.Attendance;
+import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.service.AttendanceService;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
@@ -24,11 +25,11 @@ public class AttendanceServiceImp implements AttendanceService {
 	private TimeSheetDaoImp sheetDao ;
 
 	@Override
-	public Attendance saveAttendance(AttendanceDto attendance) {
+	public Attendance saveAttendance(Attendance attendance) {
 		
-		System.out.println("Attendance Enterd");
 		
 		if (attendance != null) {
+			dao.saveAttendance(attendance) ;
 			return null ;
 		}
 		
@@ -92,6 +93,18 @@ public class AttendanceServiceImp implements AttendanceService {
 	public List<Attendance> findAttendanceByTimeSheetId(int attendanceStatus) {
 		
 		return sheetDao.findBytimesheet_id(attendanceStatus).getAttendences() ;
+	}
+
+	@Override
+	public Attendance saveAttendanceBydate(LocalDate date, int timesheetId) {
+		TimeSheet timesheet = sheetDao.findBytimesheet_id(timesheetId) ;
+		
+		if ((date.isAfter(timesheet.getStart_date())&& date.isBefore(timesheet.getEnd_date()))) {
+			
+			
+		}
+		
+		return null;
 	}
 
 }

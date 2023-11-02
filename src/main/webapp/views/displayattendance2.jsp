@@ -9,6 +9,7 @@
 <body>
 
 <h2>Attendance List</h2>
+<h3>${msg}</h3>
 
 <table border="1">
     <tr>

@@ -40,5 +40,7 @@ public class Attendance {
 	private AttendanceStatus attendanceStatus;
 	private double totalWorkingHours;
 	@ManyToMany
-	private List<Batch> batchs;
+	private List<Batch> batchs; 
+	
+	
 }

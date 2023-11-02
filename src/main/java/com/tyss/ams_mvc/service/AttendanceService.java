@@ -9,7 +9,7 @@ import com.tyss.ams_mvc.util.AttendanceStatus;
 
 public interface AttendanceService {
 	
-	public Attendance saveAttendance(AttendanceDto attendance);
+	public Attendance saveAttendance(Attendance attendance);
 
 	public Attendance findById(int id);
 
@@ -26,5 +26,7 @@ public interface AttendanceService {
 	public List<Attendance> findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus status, LocalDate date);
 	
 	public List<Attendance> findAttendanceByTimeSheetId(int attendanceStatus) ;
+	
+	public Attendance saveAttendanceBydate(LocalDate date, int timesheetId) ;
 	
 }

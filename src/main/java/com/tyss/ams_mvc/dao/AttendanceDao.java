@@ -26,4 +26,5 @@ public interface AttendanceDao {
 	public List<Attendance> findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus status, LocalDate date);
 	
 	public List<Attendance> findAttendanceByTimeSheetId(int attendanceStatus) ;
+	
 }

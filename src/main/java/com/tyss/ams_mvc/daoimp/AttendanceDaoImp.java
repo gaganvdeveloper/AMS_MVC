@@ -20,6 +20,9 @@ import com.tyss.ams_mvc.util.AttendanceStatus;
 public class AttendanceDaoImp implements AttendanceDao {
 	
 	@Autowired
+	private TimeSheetDaoImp dao ;
+	
+	@Autowired
 	EntityManager entityManager;
 
 
@@ -60,16 +63,17 @@ public class AttendanceDaoImp implements AttendanceDao {
 	@Override
 	public List<Attendance> findAllAttendanceByAttendanceStatus(AttendanceStatus attendanceStatus) {
 		
-		Query query = entityManager.createQuery("select a Attendance from a where a.attendanceStatus = ?1");
-		query.setParameter(1, attendanceStatus) ;
-		return query.getResultList() ;
+		Query query = entityManager.createQuery("select a from Attendance a where a.attendanceStatus = ?1");
+		query.setParameter(1, attendanceStatus);
+		return query.getResultList();
+
 		
 	}
 
 	@Override
 	public List<Attendance> findAllAttendenceByDate(LocalDate date) {
 		
-		Query query = entityManager.createQuery("select a Attendance from a where a.date = ?1");
+		Query query = entityManager.createQuery("select a from Attendance a where a.date = ?1");
 		query.setParameter(1, date) ;
 		return query.getResultList() ;
 		
@@ -78,7 +82,7 @@ public class AttendanceDaoImp implements AttendanceDao {
 	@Override
 	public  List<Attendance> findAllAttendanceByAttendanceStatusAndDate(AttendanceStatus status, LocalDate date) {
 		
-		Query query = entityManager.createQuery("select a Attendance from a where a.attendanceStatus = ?1 and a.date = ?2");
+		Query query = entityManager.createQuery("select a from Attendance a where a.attendanceStatus = ?1 and a.date = ?2");
 		query.setParameter(1, status) ;
 		query.setParameter(2, date) ;
 		return query.getResultList() ;
