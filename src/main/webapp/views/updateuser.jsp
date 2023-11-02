@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -14,20 +14,21 @@
       referrerpolicy="no-referrer"
     />
  <style>
- 
- 		    a{
+		    a{
 	    	text-decoration: none;
 	    }
       .logo {
         font-size: 2vw;
         font-family: cursive;
         color: rgb(142, 250, 0);
+        color:darkgreen;
+        color:white;
         text-shadow: 0px 0px 40px;
         margin-right:5vw;
         cursor: pointer;
       }
       .logo:hover {
-        color: rgb(142, 250, 70);
+        text-decoration: underline;
       }
 
       /*Google font Poppins*/
@@ -61,20 +62,6 @@
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-       /*  z-index: 1;
-        background: linear-gradient(
-          -45deg,
-          crimson,
-          green,
-          gold,
-          lightgreen,
-          yellow,
-          pink,
-          purple,
-          cyan
-        );
-        background-size: 1000% 1000%;
-        animation: animate 30s ease infinite; */
       }
 
       .navbar {
@@ -82,8 +69,8 @@
         align-items: center;
         height: 70px;
         background-color: black; 
-        background:linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
-/*         background:linear-gradient(to right,rgb(120,40,208,0.8),rgb(59,130,252,0.9)); */
+		background-color:rgb(0,0,0,0.2);
+		background-color:rgb(44,157,48);
         padding: 0 8%;
       }
 
@@ -92,33 +79,24 @@
         text-align: right;
         padding-right: 2rem;
         margin: 0px 100px 0px 0px ;
-        /* border: 2px solid red; */
         display: flex;
         justify-content: space-around;
         
       }
 
-      .navbar-list li a {
-        text-decoration: none;
-      }
       .navbar-list li a button {
-        background-color: white;
         cursor: pointer;
-        color: black;
-        padding: 0.1vw 0.4vw;
-        border-radius: 5px;
-        border: 1px solid var(--green);
-        background-color: rgb(108,185,184);
-        font-size:1vw;
+        border:none;
+        background-color: rgb(44,157,48);
         color:white;
-        transition: 0.5s;
-        border: 1px solid green;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 1vw;
+        
+        
       }
 
       .navbar-list li a button:hover {
-        text-shadow: 0px 0px 10px white;
-        box-shadow: 0vw 0.5vw 0.8vw black;
-        border: 1px solid green;
+        text-decoration: underline;
       }
 
       .profile-dropdown {
@@ -128,11 +106,9 @@
 
       .profile-img {
         position: relative;
-        width: 3rem;
-        height: 3rem;
+        width: 3vw;
+        height: 3vw; 
         border-radius: 50%;
-        background-size: cover;
-        border: 1px solid black;
         background-position: center;
       }
 
@@ -143,28 +119,23 @@
         padding-right: 1vw;
         font-size: 1vw;
         font-weight:bold;
-        border: 0.1vw solid white;
+        border: 0.2vw solid white;
         border-radius: 1.8vw;
         cursor: pointer;
         width: auto;
+        color:white;
+        color:green;
         transition: box-shadow 0.2s background-color 0.2s;
-
+		background-color: rgb(243, 255, 243);
       }
 
       .profile-dropdown-btn:hover {
       	transition:200ms;
         color: white;
-        box-shadow: 0.5vw 0.5vw 1vw black;
+        box-shadow: 0.25vw 0.25vw 0.5vw white;
+        box-shadow: 0vw 0vw 0.5vw white;
+        background-color: rgb(44,157,48);
       }
-
-     
-
-      /* .profile-img i {
-        position: relative;
-        margin: 10px;
-        font-size: 1.6rem;
-        color: green;
-      } */
 
       .profile-dropdown-btn span {
         margin: 0 0.5vw;
@@ -194,7 +165,6 @@
       }
 
       .profile-dropdown-list-itms {
-        /* padding: 0.5rem 0 0.5rem 1rem; */
         padding:0.5vw 0vw 0.5vw 1vw;
         transition: background-color 0.2s, padding-left 0.2s;
       }
@@ -231,12 +201,11 @@
         background-color: rgb(243, 255, 243);
         outline: none;
         border: 0.1vw solid var(--green);
-        padding: 0.2vw;
+        padding: 0.5vw 1vw;
         padding-left: 1vw;
-        border-radius: 0.5vw;
+        border-radius: 1vw;
         margin-right: 1vw;
-        font-size: 1vw;
-        /* font-weight: bold; */
+        font-size: 0.8vw;
       }
       #searchinput:hover {
         background-color: rgb(243, 255, 243);
@@ -245,112 +214,57 @@
         box-shadow: 0px 10px 10px var(--secondary);
         border: 1px solid white;
         transition: 200ms;
-        /* font-size: 20px; */
       }
 
- 	
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-        /* body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+	#userfilter{
+		float: right;
+		margin-top: -2vw;
+		outline: none;
+		background-color: rgb(0,0,0,0.1);
+		color: rgb(0,0,2);
+		font-weight: bold;
+		font-size:1vw;
+		padding: 0.5vw;
+		border-radius: 0.5vw;'
+	}
 
-        form {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        input[type="text"],
-        input[type="password"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        } */
+	#userfilter>option{
+		color: rgb(0,0,2);
+		font-weight: bold;
+		font-size:1vw;
+		padding: 0.5vw;
+	}
+	#msg{
+		display: none;
+		position: fixed;
+      	top: 10%;
+      	left:30%;
+      	width: 40%;
+      	height: 4%;
+      	background-color: rgba(0,0,0, 0.8); 
+      	z-index: 9999; 
+      	text-align: center;
+      	padding: 0.2vw 1vw;
+      	font-size: 1vw;
+      	color: white;
+      	border-radius: 1vw;
+	}
+	 	
     </style>
 
 </head>
 <body>
 
-    <nav class="navbar">
-      <a href="activeemployee"><h1 class="logo">AlphaAttendance.com</h1></a>
-     <ul class="navbar-list">
-      <li>
-          <a href="user"><button type="button">.</button></a>
+<nav class="navbar">
+      <a href="hrhome"><h1 class="logo">AlphaAttendance.com</h1></a>
+      <ul class="navbar-list">
+       <li>
+          <a href="userdetails?id=${user1.getUserId()}"><button type="button">Back</button></a>
         </li>
-        <li>
-          <a href="#"><button type="button">.</button></a>
-        </li>
-        <li>
-          <a href="createbatch"><button type="button">.</button></a>
-        </li>
-        
-      </ul> 
-
+       <!-- <li>
+          <a href="updateuser?id=${user1.getUserId() }"><button type="button" style="text-transform: capitalize;">Update ${user1.getName() }</button></a>
+        </li>-->
+      </ul>
       <input
         type="text"
         name="search"
@@ -358,16 +272,13 @@
         placeholder="Type to Search"
         onkeyup="searchTable()"
       />
-
       <div class="profile-dropdown">
         <div class="profile-dropdown-btn" onclick="abc()">
           <div class="profile-img">
-            <!-- <i id="profileimage" class="fa-regular fa-user"></i> -->
             <img class="profile-img" alt="" src="data:image/jpeg;base64,${user.getImg()}">
           </div>
           <span>${user.getName()}</span>
         </div>
-
         <div class="profile-dropdown-list">
           <ul>
             <li class="profile-dropdown-list-itms">
@@ -376,23 +287,10 @@
                 Notifications
               </a>
             </li>
-           <%--  <li class="profile-dropdown-list-itms">
-              <a href="updateuser?id=${user.getUserId() }">
-                <i class="fa-regular fa-user"></i>
-                Update Profile
-              </a>
-            </li> --%>
-
             <li class="profile-dropdown-list-itms">
               <a href="#">
                 <i class="fa-solid fa-chart-line"></i>
                 TimeSheets
-              </a>
-            </li>
-            <li class="profile-dropdown-list-itms">
-              <a href="updateprofilepic?id=${user.getUserId() }">
-                <i class="fa-solid fa-sliders"></i>
-                Update Profile Picture
               </a>
             </li>
             <li class="profile-dropdown-list-itms">
@@ -418,7 +316,6 @@
         </div>
       </div>
     </nav>
-
 
 
 	<h1>User Update!!!...</h1>
@@ -451,6 +348,9 @@
 				</form:select>
 				<br>
 				<br>
+				<form:input path="batchs"/>
+				<form:input path="timeSheets"  />
+				<br>
 		<button type="submit">Update User</button>
 	</form:form>
 	
@@ -458,20 +358,7 @@
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	    <script>
+	<script>
       let profileDropdownList = document.querySelector(
         ".profile-dropdown-list"
       );
@@ -511,13 +398,15 @@
     	        window.location.href = selectedOption;
     	    }
     	});
-      let msgEle = document.getElementById("msg");
-      msgEle.style.display = "block";
-      setTimeout(()=>{msg.style.display = "none"},1500);
+      
     </script>
     
 	
-	
+	<script>
+		let msgEle = document.getElementById("msg");
+	    msgEle.style.display = "block";
+	    setTimeout(()=>{msg.style.display = "none"},1500);
+	</script>
 	
 	
 	

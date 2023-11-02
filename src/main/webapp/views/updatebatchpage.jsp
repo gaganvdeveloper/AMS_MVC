@@ -24,9 +24,9 @@
 
 	<h1>update Batch Here!!!...</h1>
 
-	<form:form id="update-form" action="updatebatchlogic"
-		modelAttribute="bat">
-	Batch Id : <form:input path="batchId" readonly="true" />
+	<form:form id="update-form" action="updatebatchlogic" modelAttribute="bat">
+	<form:input path="batchId" readonly="true" />
+	<form:input path="userId" type="hidden"/>
 	Batch Code : <form:input path="batchCode" />
 	Subject Name : <form:input path="subjectName" />
 	Batch Status : <form:select path="batchStatus">
