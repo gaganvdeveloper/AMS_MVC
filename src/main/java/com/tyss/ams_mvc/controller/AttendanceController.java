@@ -40,11 +40,8 @@ public class AttendanceController {
 
 	@RequestMapping(value = "/createattendance")
 	public ModelAndView gotoCreateAttendance(ModelAndView mv,HttpServletRequest req) {
-		
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
-		
 		List<TimeSheet> timesheets = user.getTimeSheets();
-		
 		List<TimeSheet> ts = timesheets.stream().filter(t-> t.getStart_date().getMonthValue()==LocalDate.now().getMonthValue() && t.getStart_date().getYear()==LocalDate.now().getYear()).collect(Collectors.toList());
 		mv.addObject("userId",user.getUserId());
 		mv.addObject("timeSheetId",ts.get(0).getTimesheetId());
@@ -77,7 +74,12 @@ public class AttendanceController {
 		long min = MINUTES.between(inTime, outTime);
 		attendance.setTotalWorkingHours(getHourandMin(min));
 		attendanceService.saveAttendance(attendance);
-		List<Attendance> ats = timeSheet.getAttendences();
+		List<Attendance> ats =null;
+		try {
+		ats = timeSheet.getAttendences();
+		}catch(Exception e) {
+			ats = new ArrayList<Attendance>();
+		}
 		ats.add(attendance);
 		timeSheet.setAttendences(ats);
 		timeSheet = timeSheetService.updateTimeSheet(timeSheet);
