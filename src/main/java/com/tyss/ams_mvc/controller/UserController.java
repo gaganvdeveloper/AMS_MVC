@@ -47,7 +47,7 @@ public class UserController {
 		User user = userService.findUserByEmailAndPassword(req.getParameter("email"), req.getParameter("password"));
 		if (user == null) {
 			mv.setViewName("login");
-			mv.addObject("msg", "Login Failed");
+			mv.addObject("msg", "Invalid Credentials");
 			return mv;
 		}
 		HttpSession session = req.getSession();
@@ -71,7 +71,6 @@ public class UserController {
 			return mv;
 		}
 		mv.setViewName("login");
-		mv.addObject("user", user);
 		return mv;
 	}
 
@@ -84,20 +83,17 @@ public class UserController {
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("TRAINER"))) {
 			mv.setViewName("trainerhome");
-//			mv.addObject("msg", " Login Successfull...");
 			mv.addObject("user", user);
 			return mv;
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("HR"))) {
 			mv.addObject("users", userService.findAllActiveUsers());
 			mv.setViewName("hrhome");
-//			mv.addObject("msg", " Login Successfull...");
 			mv.addObject("user", user);
 			return mv;
 		}
 		if (user.getUserRole().equals(UserRole.valueOf("ADMIN"))) {
 			mv.setViewName("adminhome");
-//			mv.addObject("msg", " Login Successfull...");
 			mv.addObject("user", user);
 			return mv;
 		}
@@ -146,12 +142,15 @@ public class UserController {
 
 	@RequestMapping(value = "/updateuserupdate")
 	public ModelAndView updateUser(@ModelAttribute User user, ModelAndView mv, HttpServletRequest req) {
-		userService.updateUser(user);
+		User exestingUser = userService.findUserById(user.getUserId());
+		user.setBatchs(exestingUser.getBatchs());
+		user.setTimeSheets(exestingUser.getTimeSheets());
+		user = userService.updateUser(user);
 		mv.addObject("user1", user);
 		mv.addObject("user", req.getSession().getAttribute("user"));
 		mv.addObject("msg", user.getUserRole() + " Updated Successfully...");
 		mv.setViewName("userdetails");
-		return mv;
+		return userDetails(mv, user);
 	}
 
 	@RequestMapping(value = "/deleteuser")
@@ -211,8 +210,6 @@ public class UserController {
 		return mv;
 	}
 
-	
-
 	@RequestMapping(value = "/login")
 	public ModelAndView userLogin(ModelAndView mv, HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -229,9 +226,11 @@ public class UserController {
 			mv.addObject("user", (User) req.getSession().getAttribute("user"));
 			mv.addObject("user1", user);
 			try {
-				mv.addObject("completedbatchs",user.getBatchs().stream().filter(b->b.getBatchStatus().toString().equals("COMPLETED")).collect(Collectors.toList()));
-				mv.addObject("ongoingbatchs",user.getBatchs().stream().filter(b->b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
-			}catch(Exception e) {
+				mv.addObject("completedbatchs", user.getBatchs().stream()
+						.filter(b -> b.getBatchStatus().toString().equals("COMPLETED")).collect(Collectors.toList()));
+				mv.addObject("ongoingbatchs", user.getBatchs().stream()
+						.filter(b -> b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
+			} catch (Exception e) {
 				mv.setViewName("userdetails");
 				return mv;
 			}
@@ -242,16 +241,19 @@ public class UserController {
 		mv.setViewName("allemployees");
 		return findAllActiveUsers(mv);
 	}
-	public ModelAndView userDetails(ModelAndView mv,User user) {
-			try {
-				mv.addObject("completedbatchs",user.getBatchs().stream().filter(b->b.getBatchStatus().toString().equals("COMPLETED")).collect(Collectors.toList()));
-				mv.addObject("ongoingbatchs",user.getBatchs().stream().filter(b->b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
-			}catch(Exception e) {
-				mv.setViewName("userdetails");
-				return mv;
-			}
+
+	public ModelAndView userDetails(ModelAndView mv, User user) {
+		try {
+			mv.addObject("completedbatchs", user.getBatchs().stream()
+					.filter(b -> b.getBatchStatus().toString().equals("COMPLETED")).collect(Collectors.toList()));
+			mv.addObject("ongoingbatchs", user.getBatchs().stream()
+					.filter(b -> b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
+		} catch (Exception e) {
 			mv.setViewName("userdetails");
 			return mv;
+		}
+		mv.setViewName("userdetails");
+		return mv;
 	}
 
 	@RequestMapping(value = "/updateprofilepic")
@@ -262,7 +264,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/uploadprofilepic", method = RequestMethod.POST)
-	public ModelAndView uploadProfilePic(HttpServletRequest req, ModelAndView mv, @RequestParam("file") MultipartFile file) throws IOException, ServletException {
+	public ModelAndView uploadProfilePic(HttpServletRequest req, ModelAndView mv,
+			@RequestParam("file") MultipartFile file) throws IOException, ServletException {
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
 		user.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
 		userService.updateUser(user);
@@ -291,8 +294,7 @@ public class UserController {
 		List<Batch> batchs = user1.getBatchs();
 		if (!batchs.isEmpty()) {
 			batchs.add(batch);
-		}
-		else {
+		} else {
 			batchs = new ArrayList<>();
 			batchs.add(batch);
 		}
@@ -307,11 +309,6 @@ public class UserController {
 		return userDetails(mv, user1);
 	}
 
-	
-	
-	
-	
-	
 	@RequestMapping(value = "/logout")
 	public ModelAndView userLogout(ModelAndView mv, HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -320,6 +317,5 @@ public class UserController {
 		mv.setViewName("login");
 		return mv;
 	}
-	
-	
+
 }

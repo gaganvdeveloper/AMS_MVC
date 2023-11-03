@@ -129,12 +129,10 @@ public class BatchController {
 			batch = BatchConversion.convert(batchDto);
 			batch.setUser(userService.findUserById(batchDto.getUserId()));
 			System.out.println("User : "+userService.findUserById(batchDto.getUserId()));
-			System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"+batch.getBatchId());
 		}catch(Exception e) {
 			batch = BatchConversion.convert1(batchDto);
-			System.out.println("cccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
 		}
-		batchService.updateBatch(batch);
+		batch = batchService.updateBatch(batch);
 		mv.addObject("user",req.getSession().getAttribute("user"));
 		mv.addObject("msg", "Batch Updated");
 		mv.setViewName("allbatchs");
