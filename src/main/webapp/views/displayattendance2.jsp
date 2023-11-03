@@ -19,6 +19,7 @@
         <th>Logout Time</th>
         <th>Attendance Status</th>
         <th>Total Working Hours</th>
+        <th>Update</th>
     </tr>
 
     <c:forEach var="attendance" items="${list}">
@@ -29,9 +30,10 @@
             <td>${attendance.logoutTime}</td>
             <td>${attendance.attendanceStatus}</td>
             <td>${attendance.totalWorkingHours}</td>
+            <td> <button> <a href="getupdate?id=${attendance.attendanceId}">Update</a> </button> </td>
         </tr>
     </c:forEach>
 </table>
-
+<button><a href="trainerhome">Back</a></button>
 </body>
 </html>
