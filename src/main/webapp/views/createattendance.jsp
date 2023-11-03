@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>	
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -97,6 +98,9 @@
   <body>
     <h2>Mark Your Attendance Here!!!...</h2>
     <form id="attendanceform" action="createattendancecreate" method="get">
+    	
+    	<input type="hidden" value="${userId }" name="userId">
+    	<input type="hidden" value="${timeSheetId }" name="timeSheetId">
       <label for="date">Date:</label>
       <input type="date" name="date" id="date" />
 
