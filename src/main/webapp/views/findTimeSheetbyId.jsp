@@ -20,7 +20,7 @@
 	end date <form:input type="date" path="end_date" readonly="true" />
 		<br>
 		<br>
-		<form:button>update</form:button>
+		
 
 	</form:form>
 

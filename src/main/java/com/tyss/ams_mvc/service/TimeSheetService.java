@@ -28,4 +28,6 @@ public interface TimeSheetService {
 	public List<TimeSheet> findTimeSheetOnCustomDates(String startMonth, int start_year, String endMonth, int end_year);
 
 	public List<TimeSheet> fetchCurrentMonthTimeSheet();
+
+	TimeSheet fetchCurrentMonthTimeSheetofUser(int userId);
 }
