@@ -16,7 +16,6 @@
 			<th>S.No</th>
 			<th>Started Date</th>
 			<th>Ended Date</th>
-			<th>update</th>
 			<th>fetch Attendances</th>
 		</tr>
 		<c:forEach var="timesheet" items="${findAllTimeSheetOfUser}">
@@ -24,9 +23,7 @@
 				<td>${timesheet.getTimesheetId() }</td>
 				<td>${timesheet.getStart_date() }</td>
 				<td>${timesheet.getEnd_date() }</td>
-				<td><a href="timesheetById?id=${timesheet.getTimesheetId() }">update</a></td>
-				<td><a href="delete?id=${timesheet.getTimesheetId()}&user_id=1">get
-						attendance</a></td>
+				<td><a href="#">attendance</a></td>
 			</tr>
 		</c:forEach>
 
