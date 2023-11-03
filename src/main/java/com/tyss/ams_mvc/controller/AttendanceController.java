@@ -1,28 +1,26 @@
 package com.tyss.ams_mvc.controller;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import static java.time.temporal.ChronoUnit.MINUTES;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tyss.ams_mvc.dto.AttendanceDto;
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.service.AttendanceService;
 import com.tyss.ams_mvc.service.TimeSheetService;
-import com.tyss.ams_mvc.serviceimp.AttendanceServiceImpl;
-import com.tyss.ams_mvc.serviceimp.TimeSheetServiceImp;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
 @Controller
@@ -41,9 +39,10 @@ public class AttendanceController {
 		return mv;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/createattendancecreate")
-	public String createAttendance(HttpServletRequest req, Attendance attendance) {
+	public ModelAndView createAttendance(HttpServletRequest req, ModelAndView mav) {
+		
+		Attendance attendance = new Attendance() ;
 
 		attendance.setDate(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
@@ -61,7 +60,8 @@ public class AttendanceController {
 		long min = MINUTES.between(inTime, outTime);
 		attendance.setTotalWorkingHours(getHourandMin(min));
 		attendanceService.saveAttendance(attendance);
-		return "Printed";
+		mav.setViewName("trainerhome") ;
+		return mav ;
 	}
 
 	private LocalTime getHourandMin(long min) {
@@ -157,5 +157,54 @@ public class AttendanceController {
 		
 		return null;
 	}
+	
+	@RequestMapping(value = "/update")
+	public ModelAndView updateAttendance(ModelAndView mav) {
+		
+		Attendance attendance = new Attendance() ;
+		mav.addObject("attendance", attendance) ;
+		mav.setViewName("updateAttendance");
+		return mav ;
+	}
+	
+	@RequestMapping(value = "/getupdate")
+	public ModelAndView getUpdate(ModelAndView mav, HttpServletRequest request) {
+		
+		mav.addObject("attendance" , attendanceService.findById(Integer.parseInt(request.getParameter("id")))) ;
+		mav.setViewName("saveupdate") ;
+		return mav ;
+	}
 
+	@RequestMapping(value = "/saveupdate")
+	public ModelAndView saveUpdate(ModelAndView mav, HttpServletRequest req) {
+		
+		Attendance attendance = attendanceService.findById(Integer.parseInt(req.getParameter("attendanceId"))) ;
+		
+		attendance.setLoginTime(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")));
+		attendance.setLogoutTime(LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
+		attendance.setAttendanceStatus(AttendanceStatus.valueOf(req.getParameter("batchStatus")));
+		
+		LocalTime inTime = LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm"));
+		LocalTime outTime = LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm"));
+		Duration duration = Duration.between(
+				LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")),
+				LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
+//		int hours = (int) duration.toHours();
+//		int minutes = (int) duration.toMinutes();
+		long min = MINUTES.between(inTime, outTime);
+		attendance.setTotalWorkingHours(getHourandMin(min));
+		System.out.println("After the updation"+getHourandMin(min));
+		attendanceService.updateAttendance(attendance) ;
+		mav.setViewName("login") ;
+		return mav ;
+	}
+	
+	@RequestMapping(value = "/findAllattendance")
+	public ModelAndView findAllAttendance(ModelAndView mav) {
+		
+		mav.addObject("list", attendanceService.findAllAttendace()) ;
+		mav.addObject("msg", "All Attendance") ;
+		mav.setViewName("displayattendance2") ;
+		return mav ;
+	}
 }

@@ -28,6 +28,10 @@ public class MyConfiguration {
 		return resolver;
 	}
 	
+//	@Bean
+//	public ViewResolver viewResolver2() {
+//		return new InternalResourceViewResolver("/views/", ".jsp") ;
+//	}
 	@Bean
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();

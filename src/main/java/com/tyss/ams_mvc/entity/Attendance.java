@@ -30,11 +30,11 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int attendanceId;
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+//	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
-	@DateTimeFormat(pattern = "HH:mm")
+//	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime loginTime;
-	@DateTimeFormat(pattern = "HH:mm")
+//	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime logoutTime;
 	@Enumerated(EnumType.STRING)
 	private AttendanceStatus attendanceStatus;

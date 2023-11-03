@@ -28,7 +28,6 @@ public class AttendanceDaoImp implements AttendanceDao {
 
 
 	public Attendance saveAttendance(Attendance attendance) {
-		
 	    EntityTransaction transaction = entityManager.getTransaction() ;
 	    transaction.begin();
 	    entityManager.persist(attendance);

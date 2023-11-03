@@ -3,10 +3,13 @@ package com.tyss.ams_mvc.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.tyss.ams_mvc.dto.AttendanceDto;
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.util.AttendanceStatus;
 
+@Service
 public interface AttendanceService {
 	
 	public Attendance saveAttendance(Attendance attendance);

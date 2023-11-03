@@ -1,6 +1,5 @@
 package com.tyss.ams_mvc.dao;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

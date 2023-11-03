@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tyss.ams_mvc.dao.AttendanceDao;
 import com.tyss.ams_mvc.daoimp.AttendanceDaoImp;
 import com.tyss.ams_mvc.daoimp.TimeSheetDaoImp;
 import com.tyss.ams_mvc.dto.AttendanceDto;
@@ -19,21 +20,14 @@ import com.tyss.ams_mvc.util.AttendanceStatus;
 public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
-	private AttendanceDaoImp dao ;
+	private AttendanceDao dao ;
 	
 	@Autowired
 	private TimeSheetDaoImp sheetDao ;
 
 	@Override
 	public Attendance saveAttendance(Attendance attendance) {
-		
-		
-		if (attendance != null) {
-			dao.saveAttendance(attendance) ;
-			return null ;
-		}
-		
-		return null;
+		return dao.saveAttendance(attendance) ;
 	}
 
 	@Override
