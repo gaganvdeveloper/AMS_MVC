@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Update User Page</title>
-<link
+<html lang="en">
+  <head>
+    <title>Assigning Batch To Trainer</title>
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
- <style>
-		    a{
+
+    <style>
+	    a{
 	    	text-decoration: none;
 	    }
       .logo {
@@ -62,6 +62,20 @@
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
+       /*  z-index: 1;
+        background: linear-gradient(
+          -45deg,
+          crimson,
+          green,
+          gold,
+          lightgreen,
+          yellow,
+          pink,
+          purple,
+          cyan
+        );
+        background-size: 1000% 1000%;
+        animation: animate 30s ease infinite; */
       }
 
       .navbar {
@@ -91,8 +105,7 @@
         color:white;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         font-size: 1vw;
-        
-        
+         
       }
 
       .navbar-list li a button:hover {
@@ -136,12 +149,10 @@
         box-shadow: 0vw 0vw 0.5vw white;
         background-color: rgb(44,157,48);
       }
-
       .profile-dropdown-btn span {
         margin: 0 0.5vw;
        
       }
-
       .profile-dropdown-list {
         position: absolute;
         top: 4vw;
@@ -225,7 +236,7 @@
 		font-weight: bold;
 		font-size:1vw;
 		padding: 0.5vw;
-		border-radius: 0.5vw;'
+		border-radius: 0.5vw;
 	}
 
 	#userfilter>option{
@@ -235,7 +246,7 @@
 		padding: 0.5vw;
 	}
 	#msg{
-		display: none;
+		display: block;
 		position: fixed;
       	top: 10%;
       	left:30%;
@@ -249,21 +260,130 @@
       	color: white;
       	border-radius: 1vw;
 	}
-	 	
+	
+      .arti {
+        width: 100%;
+        height: auto;
+        padding-top:1vw;
+        padding-bottom:1vw;
+        border-radius:0vw;
+        background-color:rgb(0,255,0,0.2);
+        /* border-radius: 10px;
+        z-index: 1;
+        background: linear-gradient(
+          -45deg,
+          crimson,
+          green,
+          gold,
+          lightgreen,
+          yellow,
+          pink,
+          purple,
+          cyan
+        );
+        background-size: 1000% 1000%;
+        animation: animate 30s ease infinite; */
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        grid-template-rows: auto;
+        justify-content: space-evenly;
+        align-items:center;
+        grid-gap: 2.5vw 0vw;
+
+      }
+      .card {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: rgb(84, 111, 84);
+        padding: 0.8vw 0.9vw;
+        height: auto;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 1vw;
+        font-size: 1vw;
+        border: 0.1vw solid silver;
+      }
+
+      .card:hover{
+        box-shadow: 0vw 0vw 1vw black;
+        transition: 300ms ;
+        transform: scale(1.03);
+        background: rgb(255, 255, 255, 0.95);
+        color:black;
+      }
+
+      @keyframes animate {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .card-buttons{
+        font-size: 1vw;
+        border: none;
+        color: rgb(60, 80, 60);
+        margin: 0.5vw .5vw;
+        padding: 0.3vw 0.9vw;
+        background-color: rgb(174, 254, 174);
+        border-radius: 0.35vw;
+        cursor: pointer;
+        border: 0.1vw solid green;
+      }
+
+      .card-buttons:hover{
+        box-shadow: 0vw 1vw 1vw darkgreen;
+        transition: 200ms;
+        border: 1px solid white;
+      }
+      .status{
+        writing-mode: vertical-rl; 
+        text-orientation: upright; 
+        float: right; 
+        margin-top: -16vw; 
+        background-color: rgb(44,157,48,0.5); 
+        color: white; 
+        width: auto; 
+        height: auto; 
+        border-radius: 0.5vw; 
+        padding: 0.2vw 0.3vw;
+        font-weight: bold;
+        font-size: 1vw;
+        cursor: pointer;
+        text-shadow: -0.1vw -0.1vw 0.3vw green;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .status:hover{
+        background-color: green;
+        transition: 200ms;
+      }
+
+      .card-img{
+        width: 5vw;
+        height: 5vw;
+        border-radius: 100%;
+        border: 0.2vw solid white;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+      }
     </style>
-
-</head>
-<body>
-
-<nav class="navbar">
+  </head>
+  <body>
+    <nav class="navbar">
       <a href="hrhome"><h1 class="logo">AlphaAttendance.com</h1></a>
       <ul class="navbar-list">
-       <li>
-          <a href="userdetails?id=${user1.getUserId()}"><button type="button">Back</button></a>
+      <li>
+          <a href="createbatch"><button type="button">Create Batch</button></a>
         </li>
-       <!-- <li>
-          <a href="updateuser?id=${user1.getUserId() }"><button type="button" style="text-transform: capitalize;">Update ${user1.getName() }</button></a>
-        </li>-->
+        <li>
+          <a href="userdetails?id=${user1.getUserId() }"><button type="button">Back</button></a>
+        </li>
       </ul>
       <input
         type="text"
@@ -316,47 +436,86 @@
         </div>
       </div>
     </nav>
+    <h2 id="msg">${msg }</h2>
+    <div style="  overflow: auto; display: flex; align-items: center; justify-content: space-between;">
+	 	<h2 style="font-size: 1.3vw; float: left; margin-left: 10vw; margin-bottom: 0vw; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; ">Batchs :</h2>
+ 	 </div>
+<div class="arti">
+	<c:forEach var="batch" items="${batchs }">
+        <div class="card">
+            <div style="border-bottom: 0.15vw solid grey; padding-bottom:0.5vw ; overflow: auto; display: flex; justify-content: space-between; align-items: center; ">
+				<a href="">
+					<p style="cursor: pointer; text-transform: uppercase; margin-right: 1vw; font-size: 1.4vw; font-weight: bold ;  color: rgb(44,157,48); padding: 0.5vw 1vw; text-shadow: 0vw 0vw 0vw green;">${batch.getSubjectName()}</p>
+                </a>
+                <p style="font-weight: bold; color: goldenrod; font-size: 1.3vw; ">Date : ${batch.getBatchStartDate() }</p>
+            </div>
+            <table cellpadding="10" cellspacing="10">
+                <tr>
+                    <td>Bathc Code : </td><td><p style="font-size: 1.2vw; font-weight: bold; line-height: 0.1vw;">${batch.getBatchCode() }</p></td>
+                </tr>
+                <tr>
+                    <td>Start Date : </td><td>${batch.getBatchStartDate() }</td>
+                </tr>
+                <tr>
+                    <td>End Date : </td><td>${batch.getBatchEndDate() }</td>
+                </tr>
+                <tr>
+                    <td>Batch Status : </td><td>${batch.getBatchStatus() }</td>
+                </tr>
+                <tr>
+                    <td>Start Time : </td><td>${batch.getLoginTime() }</td>
+                </tr>
+                <tr>
+                    <td>Batch Mode : </td><td>${batch.getBatchMode() }</td>
+                </tr>
+                <tr>
+                    <td>Institute Name : </td><td>${batch.getInstituteName() }</td>
+                </tr>
+                <tr>
+                    <td>Institute Location : </td><td>${batch.getLocation() }</td>
+                </tr>
+                 <tr>
+                    <td>${trainername}</td>
+                </tr>
+                <tr>
+                    <td>${trainerphone}</td>
+                </tr>
+            </table>
+            <p class="status">${batch.getBatchStatus() }</p>
+            <br>
+            <div style="display: flex; justify-content: space-evenly;">
+                <a href="assignbatch?id=${batch.getBatchId() }&user1id=${user1.getUserId() }"><button title="Assign ${batch.getSubjectName() } batch to ${user1.getName() }" class="card-buttons" type="button">Assign</button></a>
+            </div>
+          </div>
+          </c:forEach>
+    </div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
 
-	<h1>User Update!!!...</h1>
-
-	<form:form action="updateuserupdate" modelAttribute="user1">
-		<form:input path="userId" type="hidden" />
-		<form:input path="img" type="hidden"/>
-		EMPID : <form:input path="empId" readonly="true"/>
-		Name : <form:input path="name"/>
-		Email : <form:input path="email"/>
-		Phone : <form:input path="phone"/>
-		Password : <form:input path="password"/>
-		<br>
-		<br>
-		Role : <form:select path="userRole">
-					<form:option value="---Select---"></form:option>
-					<form:option value="TRAINER"></form:option>
-					<form:option value="HR"></form:option>
-					<form:option value="ADMIN"></form:option>
-				</form:select>
-		Status : <form:select path="userStatus">
-					<form:option value="---Select---"></form:option>
-					<form:option value="ACTIVE"></form:option>
-					<form:option value="IN_ACTIVE"></form:option>
-				</form:select>
-		Category : <form:select path="userCategory">
-					<form:option value="---Select---"></form:option>
-					<form:option value="TRAINER"></form:option>
-					<form:option value="LATERAL"></form:option>
-				</form:select>
-				<br>
-				<br>
-				<br>
-		<button type="submit">Update User</button>
-	</form:form>
-	
-	
-	
-	
-	
-	<script>
+    <script>
       let profileDropdownList = document.querySelector(
         ".profile-dropdown-list"
       );
@@ -389,7 +548,6 @@
         }
       }
       
-      
       document.getElementById("userfilter").addEventListener("change", function() {
     	    var selectedOption = this.options[this.selectedIndex].value;
     	    if (selectedOption) {
@@ -399,20 +557,14 @@
       
     </script>
     
-	
-	<script>
-		let msgEle = document.getElementById("msg");
+    <script>
+	    let msgEle = document.getElementById("msg");
 	    msgEle.style.display = "block";
-	    setTimeout(()=>{msg.style.display = "none"},1500);
-	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</body>
+	    setTimeout(()=>{msg.style.display = "none"},3000);
+    </script>
+    
+    
+  </body>
 </html>
+
+
