@@ -52,7 +52,7 @@ public class TimeSheetDaoImp implements TimeSheetDao {
 
 	@Override
 	public TimeSheet findBytimesheet_id(int id) {
-		return (TimeSheet) entityManager.createQuery("select t TimeSheet t where timesheetId='" + id + "'")
+		return (TimeSheet) entityManager.createQuery("select t from TimeSheet t where t.timesheetId=" + id )
 				.getSingleResult();
 	}
 

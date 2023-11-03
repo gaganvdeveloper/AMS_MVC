@@ -46,7 +46,7 @@ public class AttendanceController {
 		List<TimeSheet> timesheets = user.getTimeSheets();
 		
 		List<TimeSheet> ts = timesheets.stream().filter(t-> t.getStart_date().getMonthValue()==LocalDate.now().getMonthValue() && t.getStart_date().getYear()==LocalDate.now().getYear()).collect(Collectors.toList());
-		mv.addObject("userID",user.getUserId());
+		mv.addObject("userId",user.getUserId());
 		mv.addObject("timeSheetId",ts.get(0).getTimesheetId());
 		mv.setViewName("createattendance");
 		return mv;
@@ -54,7 +54,9 @@ public class AttendanceController {
 
 	@RequestMapping(value = "/createattendancecreate")
 	public ModelAndView createAttendance(HttpServletRequest req,ModelAndView mv) {
-		User user = userService.findUserById(Integer.parseInt(req.getParameter("userID")));
+		System.out.println(Integer.parseInt(req.getParameter("userId")));
+		System.out.println(Integer.parseInt(req.getParameter("timeSheetId")));
+		User user = userService.findUserById(Integer.parseInt(req.getParameter("userId")));
 		TimeSheet timeSheet = timeSheetService.findTimeSheetById(Integer.parseInt(req.getParameter("timeSheetId")));
 		if(user == null && timeSheet == null) {
 			mv.setViewName("login");

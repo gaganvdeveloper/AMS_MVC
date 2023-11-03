@@ -96,7 +96,10 @@
   </head>
   <body>
     <h2>Mark Your Attendance Here!!!...</h2>
-    <form id="attendanceform" action="createattendancecreate?userID=${userID }&timeSheetId=${timeSheetId }" method="get">
+    <form id="attendanceform" action="createattendancecreate" method="get">
+    	
+    	<input type="hidden" value="${userId }" name="userId">
+    	<input type="hidden" value="${timeSheetId }" name="timeSheetId">
       <label for="date">Date:</label>
       <input type="date" name="date" id="date" />
 
@@ -150,7 +153,7 @@
         .addEventListener("submit", function (e) {
           e.preventDefault(); 
           calculateWorkingHours();
-          setTimeout(()=>{document.getElementById("attendanceform").submit();},2000);
+          setTimeout(()=>{document.getElementById("attendanceform").submit();},1000);
           
         });
     </script>
