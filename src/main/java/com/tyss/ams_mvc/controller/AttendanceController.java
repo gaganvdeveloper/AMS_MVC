@@ -78,10 +78,12 @@ public class AttendanceController {
 		List<Attendance> ats =null;
 		try {
 		ats = timeSheet.getAttendences();
+		ats.add(attendance);
 		}catch(Exception e) {
 			ats = new ArrayList<Attendance>();
+			ats.add(attendance);
 		}
-		ats.add(attendance);
+		
 		timeSheet.setAttendences(ats);
 		timeSheet = timeSheetService.updateTimeSheet(timeSheet);
 		
@@ -111,7 +113,7 @@ public class AttendanceController {
 		return mav ;
 	}
 	
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/deleteAttendance")
 	public ModelAndView deleteAttendance(ModelAndView mav) {
 		mav.setViewName("deleteAttendance") ;
 		return mav ;
@@ -186,14 +188,14 @@ public class AttendanceController {
 		return null;
 	}
 	
-	@RequestMapping(value = "/update")
-	public ModelAndView updateAttendance(ModelAndView mav) {
-		
-		Attendance attendance = new Attendance() ;
-		mav.addObject("attendance", attendance) ;
-		mav.setViewName("updateAttendance");
-		return mav ;
-	}
+//	@RequestMapping(value = "/update")
+//	public ModelAndView updateAttendance(ModelAndView mav) {
+//		
+//		Attendance attendance = new Attendance() ;
+//		mav.addObject("attendance", attendance) ;
+//		mav.setViewName("updateAttendance");
+//		return mav ;
+//	}
 	
 	@RequestMapping(value = "/getupdate")
 	public ModelAndView getUpdate(ModelAndView mav, HttpServletRequest request) {
@@ -223,14 +225,24 @@ public class AttendanceController {
 		attendance.setTotalWorkingHours(getHourandMin(min));
 		System.out.println("After the updation"+getHourandMin(min));
 		attendanceService.updateAttendance(attendance) ;
-		mav.setViewName("login") ;
+		mav.setViewName("trainerhome") ;
 		return mav ;
 	}
 	
 	@RequestMapping(value = "/findAllattendance")
-	public ModelAndView findAllAttendance(ModelAndView mav) {
+	public ModelAndView findAllAttendanceOfaTimeSheet(ModelAndView mav, HttpServletRequest request) {
 		
-		mav.addObject("list", attendanceService.findAllAttendace()) ;
+		TimeSheet ts = timeSheetService.findTimeSheetById(Integer.parseInt(request.getParameter("id"))) ;
+		
+		List<Attendance> list ;
+		
+		try {
+			list = ts.getAttendences();
+		} catch (Exception e) {
+			list = new ArrayList<Attendance>() ;
+		}
+		
+		mav.addObject("list", list) ;
 		mav.addObject("msg", "All Attendance") ;
 		mav.setViewName("displayattendance2") ;
 		return mav ;

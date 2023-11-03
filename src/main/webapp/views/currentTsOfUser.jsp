@@ -51,7 +51,7 @@ nav a:hover {
 			<td>${timeSheet.getStart_date()}</td>
 			<td>${timeSheet.getEnd_date() }</td>
 			<c:if test="${timeSheet.getTimesheetId()!= null}">
-				<td><a href="#">attendance</a></td>
+				<td><a href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 			</c:if>
 
 		</tr>

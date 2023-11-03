@@ -171,7 +171,6 @@ public class TimeSheetServiceImp implements TimeSheetService {
 			int end_year, int user_id) {
 		try {
 			User user = userDao.findUserById(user_id);
-			System.out.println("hi");
 			return user.getTimeSheets().stream()
 					.filter(timesheet -> timesheet.getStart_date().getMonth().getValue() >= Month
 							.valueOf(startMonth.toUpperCase()).getValue()
