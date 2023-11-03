@@ -134,11 +134,12 @@ public class TimeSheetController {
 	@RequestMapping(value = "ByMon/All", method = RequestMethod.GET)
 	public ModelAndView findTimeSheetByMonthNameOfAllEmployees(
 			@SessionAttribute(name = "user", required = false) User user, HttpServletRequest req, ModelAndView mv) {
-		System.out.println("triggered");
 		if (user != null) {
 			mv.addObject("timeSheets", timeSheetService.findTimeSheetByMonthNameOfAllEmployees(
 					req.getParameter("month"), Integer.parseInt(req.getParameter("year"))));
-			mv.setViewName("findAllTimeSheetsOfAllUsers");
+			mv.addObject("month", req.getParameter("month"));
+			mv.addObject("year", req.getParameter("year"));
+			mv.setViewName("ts-all-monName");
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("login");
@@ -170,13 +171,16 @@ public class TimeSheetController {
 	@RequestMapping(value = "custom-All", method = RequestMethod.GET)
 	public ModelAndView findTimeSheetOnCustomDates(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
-		System.out.println("triggered");
 		if (user != null) {
 			mv.addObject("timeSheets",
 					timeSheetService.findTimeSheetOnCustomDates(req.getParameter("fMonth"),
 							Integer.parseInt(req.getParameter("fYear")), req.getParameter("tMonth"),
 							Integer.parseInt(req.getParameter("tYear"))));
-			mv.setViewName("findAllTimeSheetsOfAllUsers");
+			mv.addObject("fMonth", req.getParameter("fMonth"));
+			mv.addObject("fYear", req.getParameter("fYear"));
+			mv.addObject("tMonth", req.getParameter("tMonth"));
+			mv.addObject("tYear", req.getParameter("tYear"));
+			mv.setViewName("ts-all-custom");
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("login");
@@ -190,7 +194,7 @@ public class TimeSheetController {
 			@SessionAttribute(name = "user", required = false) User user) {
 		if (user != null) {
 			mv.addObject("timeSheets", timeSheetService.fetchCurrentMonthTimeSheet());
-			mv.setViewName("findAllTimeSheetsOfAllUsers");
+			mv.setViewName("current-all");
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("login");

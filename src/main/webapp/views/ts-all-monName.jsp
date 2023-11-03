@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,21 +11,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${not empty timeSheets}">
+	<c:if test="${ not empty timeSheets}">
 		<p>
-			Time sheet based on from Year <strong>: ${fYear}</strong> and month:
-			<strong>${fMonth}</strong> month: <strong>${tMonth}</strong> to Year:
-			<strong>: ${tYear}</strong> and
-
+			All employees timeSheets are fetched month: <strong>${month }</strong>
+			and year : <strong>${year }</strong>
 		</p>
 	</c:if>
 	<c:if test="${ empty timeSheets}">
 		<p>
-			Time sheet based on from Year <strong>: ${fYear}</strong> and month:
-			<strong>${fMonth}</strong> to Year: <strong>: ${tYear}</strong> and
-			month: <strong>${tMonth} was not presented</strong>
+			timeSheets for month: <strong>${month }</strong> and year : <strong>${year }</strong>
+			were not there
 		</p>
 	</c:if>
+
+
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>S.No</th>
@@ -35,11 +37,11 @@
 				<td>${timesheet.getTimesheetId() }</td>
 				<td>${timesheet.getStart_date() }</td>
 				<td>${timesheet.getEnd_date() }</td>
-				<c:if test="${timesheet.getTimesheetId()!=null}">
-					<td><a href="#">attendance</a></td>
-				</c:if>
+				<td><a href="#">attendance</a></td>
 			</tr>
 		</c:forEach>
+
+
 	</table>
 </body>
 </html>

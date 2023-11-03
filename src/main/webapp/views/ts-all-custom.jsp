@@ -8,12 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<c:if test="${not empty timeSheets}">
 		<p>
 			Time sheet based on from Year <strong>: ${fYear}</strong> and month:
-			<strong>${fMonth}</strong> month: <strong>${tMonth}</strong> to Year:
-			<strong>: ${tYear}</strong> and
-
+			<strong>${fMonth}</strong> to Year: <strong>: ${tYear}</strong> and
+			month: <strong>${tMonth}</strong>
 		</p>
 	</c:if>
 	<c:if test="${ empty timeSheets}">
