@@ -1,10 +1,11 @@
 package com.tyss.ams_mvc.controller;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import static java.time.temporal.ChronoUnit.MINUTES;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,45 +32,27 @@ public class AttendanceController {
 		return mv;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/createattendancecreate")
-	public String createAttendance(HttpServletRequest req, Attendance attendance) {
-//		Attendance attendance = new Attendance();
-		// Printing Values
-//		System.out.println(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-//		System.out.println(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")));
-//		System.out.println(LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
-//		System.out.println(AttendanceStatus.valueOf(req.getParameter("batchStatus")));
-		// Checking Type
-//		System.out.println(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-//				.getClass().getName());
-//		System.out.println(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm"))
-//				.getClass().getName());
-//		System.out.println(LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm"))
-//				.getClass().getName());
-//		System.out.println(AttendanceStatus.valueOf(req.getParameter("batchStatus")).getClass().getName());
-
+	public ModelAndView createAttendance(HttpServletRequest req,ModelAndView mv) {
+		Attendance attendance = new Attendance();
 		attendance.setDate(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
 		attendance.setLoginTime(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")));
 		attendance.setLogoutTime(LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
 		attendance.setAttendanceStatus(AttendanceStatus.valueOf(req.getParameter("batchStatus")));
-		
 		LocalTime inTime = LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm"));
 		LocalTime outTime = LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm"));
 		Duration duration = Duration.between(
 				LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")),
 				LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
-//		System.out.println(duration);
 		int hours = (int) duration.toHours();
 		int minutes = (int) duration.toMinutes();
-//		System.out.println(minutes);
-//		System.out.println();
 		long min = MINUTES.between(inTime, outTime);
-//		System.out.println(getHourandMin(min));
 		attendance.setTotalWorkingHours(getHourandMin(min));
 		attendanceService.saveAttendance(attendance);
-		return "Printed";
+		mv.setViewName("trainerhome");
+		mv.addObject("msg","Attendance Marked");
+		mv.addObject("user",(User)req.getSession().getAttribute("user"));
+		return mv;
 	}
 
 	private LocalTime getHourandMin(long min) {

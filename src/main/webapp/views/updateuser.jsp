@@ -348,8 +348,6 @@
 				</form:select>
 				<br>
 				<br>
-				<form:input path="batchs"/>
-				<form:input path="timeSheets"  />
 				<br>
 		<button type="submit">Update User</button>
 	</form:form>
