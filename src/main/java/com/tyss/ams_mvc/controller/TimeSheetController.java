@@ -20,24 +20,24 @@ import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.service.TimeSheetService;
 
 @Controller
-@RequestMapping("/timesheet")
 public class TimeSheetController {
 
 	@Autowired
 	TimeSheetService timeSheetService;
 
-	@PostMapping("/create")
+	@GetMapping("/create")
 	public ModelAndView createTimeSheet(TimeSheet timeSheet,
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
-
 		if (user != null) {
-			timeSheet.setStart_date(LocalDate.now());
-			TimeSheet sheet = timeSheetService.saveTimeSheet(timeSheet, user.getUserId());
 			try {
+				timeSheet.setStart_date(LocalDate.now());
+				TimeSheet sheet = timeSheetService.saveTimeSheet(timeSheet, user.getUserId());
 				mv.addObject("msg", "timesheet saved successfully");
+				mv.setViewName("trainerhome");
 			} catch (Exception e) {
+				e.printStackTrace();
 				mv.addObject("msg", "timesheet already existed");
-				mv.setViewName("timesheet");
+				mv.setViewName("trainerhome");
 			}
 		} else {
 			mv.addObject("msg", "user not existed");
@@ -183,7 +183,6 @@ public class TimeSheetController {
 		if (user != null) {
 			mv.addObject("timeSheets", timeSheetService.fetchCurrentMonthTimeSheet());
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
-
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("index");
@@ -193,15 +192,15 @@ public class TimeSheetController {
 
 	@RequestMapping(value = "/current-user", method = RequestMethod.GET)
 	public ModelAndView fetchCurrentMonthTimeSheetofUser(ModelAndView mv,
-			@SessionAttribute(name = "user", required = false) User user, @RequestParam int id) {
+			@SessionAttribute(name = "user", required = false) User user, @RequestParam(name = "userId") int id) {
 		if (user != null) {
 			mv.addObject("timeSheet", timeSheetService.fetchCurrentMonthTimeSheetofUser(id));
 			mv.addObject("userId", id);
+			mv.addObject("userName", user.getName());
 			mv.setViewName("currentTsOfUser");
-
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("/ams_mvc/index");
+			mv.setViewName("index");
 		}
 		return mv;
 	}

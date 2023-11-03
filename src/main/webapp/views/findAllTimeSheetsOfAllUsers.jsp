@@ -11,7 +11,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
+	<h1>time sheet based on custom Dates</h1>
+	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>S.No</th>
 			<th>Started Date</th>
@@ -27,10 +28,14 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td>${monthtimeSheet.getTimesheetId() }</td>
-			<td>${monthtimeSheet.getStart_date() }</td>
-			<td>${monthtimeSheet.getEnd_date() }</td>
-			<td><a href="#">attendance</a></td>
+			<c:if test="${monthtimeSheet.getTimesheetId()!= null}">
+				<td>${monthtimeSheet.getTimesheetId() }</td>
+				<td>${monthtimeSheet.getStart_date() }</td>
+				<td>${monthtimeSheet.getEnd_date() }</td>
+				<c:if test="${timeSheet.getTimesheetId()!= null}">
+					<td><a href="#">attendance</a></td>
+				</c:if>
+			</c:if>
 		</tr>
 	</table>
 

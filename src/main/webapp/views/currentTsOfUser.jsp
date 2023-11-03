@@ -1,13 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+* {
+	box-sizing: border-box;
+}
+
+nav .ts-user {
+	text-decoration: none;
+	color: green;
+	width: 150px;
+	height: 30px;
+	display: block;
+	background-color: black;
+	text-align: center;
+	padding-top: 5px;
+	border: 3px solid green;
+}
+
+nav a:hover {
+	text-decoration: none;
+	color: white;
+	background-color: green;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	font-size: 15px;
+	border: 3px solid black;
+}
+</style>
+
 </head>
 <body>
-	<table>
+	<h1>${userName }'s&rArr;Current-MonthTimeSheet</h1>
+	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>timesheet id</th>
 			<th>timesheet start date</th>
@@ -15,24 +46,33 @@
 			<th>attendence details</th>
 		</tr>
 		<tr>
+
 			<td>${timeSheet.getTimesheetId() }</td>
 			<td>${timeSheet.getStart_date()}</td>
 			<td>${timeSheet.getEnd_date() }</td>
-			<td><a href="#">attendance</a></td>
+			<c:if test="${timeSheet.getTimesheetId()!= null}">
+				<td><a href="#">attendance</a></td>
+			</c:if>
+
 		</tr>
+
 	</table>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<h3>Fetch your Time Sheet by :</h3>
+	<nav>
+		<a class="ts-user"
+			href="/ams_mvc/views/TSOfUserOnCustomDate.jsp?id=${userId }">custom
+			dates</a> <br> <br> <a class="ts-user"
+			href="/ams_mvc/display/user?id=${userId }">find all</a> <br> <br>
+		<a class="ts-user"
+			href="/ams_mvc/views/tSByMonthOfUser.jsp?id=${userId }">month and
+			year</a> <br> <br>
+	</nav>
 
-	<a href="/ams_mvc/views/TSOfUserOnCustomDate.jsp?id=${ userId }">custom
-		dates</a>
-	<br>
-	<br>
-
-	<a href="/ams_mvc/timesheet/display/user?id=${ userId }">find all</a>
-	<br>
-	<br>
-	<a href="/ams_mvc/views/tSByMonthOfUser.jsp?id=${ userId }">by
-		month</a>
-	<br>
-	<br>
 </body>
 </html>

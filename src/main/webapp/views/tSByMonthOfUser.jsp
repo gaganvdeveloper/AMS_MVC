@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/ams_mvc/timesheet/byMonth/User">
+	<form action="/ams_mvc/byMonth/User">
 		<input readonly="readonly" value=${param.id } name="id"> Month
 		<input type="text" name="month" placeholder="month"> Year <input
 			type="text" name="year" placeholder="YYYY">

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/ams_mvc/timesheet/custom-user" method="get">
+	<form action="/ams_mvc/custom-user" method="get">
 		<h1>From:</h1>
 		<input type="hidden" name="id" value="${param.id}"> Month<input
 			type="text" name="fMonth" placeholder="enter full month name"><br>

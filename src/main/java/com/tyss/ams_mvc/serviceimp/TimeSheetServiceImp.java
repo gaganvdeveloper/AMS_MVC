@@ -3,6 +3,7 @@ package com.tyss.ams_mvc.serviceimp;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -39,28 +40,18 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				if (timesheet.isPresent()) {
 					throw new TimeSheetAlreadyExists();
 				} else {
-					int month = timeSheet.getStart_date().getMonthValue();
-					int year = timeSheet.getStart_date().getYear();
-					if (month == 12) {
-						month = 1;
-						year += 1;
-						timeSheet.setEnd_date(LocalDate.parse(year + "-0" + month + "-" + 25));
-					} else if (month >= 1 && month <= 9) {
-						month += 1;
-						timeSheet.setEnd_date(LocalDate.parse(year + "-0" + month + "-" + 25));
-					} else {
-						month += 1;
-						timeSheet.setEnd_date(LocalDate.parse(year + "-" + month + "-" + 25));
-					}
+					timeSheet.setEnd_date(endDate(timeSheet));
 					timeSheetDao.saveTimeSheet(timeSheet);
 					user.getTimeSheets().add(timeSheet);
 					userDao.saveUser(user);
 					return timeSheet;
 				}
 			} else {
+				timeSheet.setEnd_date(endDate(timeSheet));
 				timeSheetDao.saveTimeSheet(timeSheet);
-				List<TimeSheet> sheets = user.getTimeSheets();
+				List<TimeSheet> sheets = new ArrayList<TimeSheet>();
 				sheets.add(timeSheet);
+				user.setTimeSheets(sheets);
 				userDao.saveUser(user);
 				return timeSheet;
 			}
@@ -68,6 +59,23 @@ public class TimeSheetServiceImp implements TimeSheetService {
 			return null;
 		}
 
+	}
+
+	public LocalDate endDate(TimeSheet timeSheet) {
+		int month = timeSheet.getStart_date().getMonthValue();
+		int year = timeSheet.getStart_date().getYear();
+		if (month == 12) {
+			month = 1;
+			year += 1;
+			LocalDate.parse(year + "-0" + month + "-" + 25);
+		} else if (month >= 1 && month <= 9) {
+			month += 1;
+			return LocalDate.parse(year + "-0" + month + "-" + 25);
+		} else {
+			month += 1;
+			return LocalDate.parse(year + "-" + month + "-" + 25);
+		}
+		return null;
 	}
 
 	@Override
