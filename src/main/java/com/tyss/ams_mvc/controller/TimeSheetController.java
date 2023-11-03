@@ -18,12 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.service.TimeSheetService;
+import com.tyss.ams_mvc.service.UserService;
 
 @Controller
 public class TimeSheetController {
 
 	@Autowired
 	TimeSheetService timeSheetService;
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/create")
 	public ModelAndView createTimeSheet(TimeSheet timeSheet,
@@ -41,7 +44,7 @@ public class TimeSheetController {
 			}
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}
@@ -54,7 +57,7 @@ public class TimeSheetController {
 			mv.setViewName("displayTimeSheet");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}
@@ -82,18 +85,17 @@ public class TimeSheetController {
 	public ModelAndView deleteTimeSheetById(@RequestParam int id,
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
 		if (user != null) {
-
+			try {
+				timeSheetService.deleteTimeSheetById(id, user.getUserId());
+				mv.addObject("msg", "time sheet with id :'" + id + "' deleted successfully");
+			} catch (Exception e) {
+				mv.addObject("msg", "time sheet with id :'" + id + "' got error while deleting ");
+			}
+			mv.setViewName("displayTimeSheet");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
-		try {
-			timeSheetService.deleteTimeSheetById(id, user.getUserId());
-			mv.addObject("msg", "time sheet with id :'" + id + "' deleted successfully");
-		} catch (Exception e) {
-			mv.addObject("msg", "time sheet with id :'" + id + "' got error while deleting ");
-		}
-		mv.setViewName("displayTimeSheet");
 		return mv;
 	}
 
@@ -107,7 +109,7 @@ public class TimeSheetController {
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}
@@ -118,12 +120,14 @@ public class TimeSheetController {
 		if (user != null) {
 			mv.addObject("monthtimeSheet", timeSheetService.findTimeSheetByMonthNameOfUser(month,
 					Integer.parseInt(req.getParameter("year")), Integer.parseInt(req.getParameter("id"))));
-			mv.setViewName("findAllTimeSheetsOfAllUsers");
+			mv.setViewName("user-ts-month");
+			mv.addObject("month", month);
+			mv.addObject("year", year);
+			mv.addObject(mv);
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
-
 		return mv;
 	}
 
@@ -137,7 +141,7 @@ public class TimeSheetController {
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 
 		return mv;
@@ -151,10 +155,14 @@ public class TimeSheetController {
 					timeSheetService.findTimeSheetOfUserOnCustomDates(req.getParameter("fMonth"),
 							Integer.parseInt(req.getParameter("fYear")), req.getParameter("tMonth"),
 							Integer.parseInt(req.getParameter("tYear")), Integer.parseInt(req.getParameter("id"))));
-			mv.setViewName("findAllTimeSheetsOfAllUsers");
+			mv.addObject("fMonth", req.getParameter("fMonth"));
+			mv.addObject("fYear", req.getParameter("fYear"));
+			mv.addObject("tMonth", req.getParameter("tMonth"));
+			mv.addObject("tYear", req.getParameter("tYear"));
+			mv.setViewName("user-ty-custom-dates");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("ams_mvc/index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}
@@ -171,7 +179,7 @@ public class TimeSheetController {
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 
 		return mv;
@@ -185,7 +193,7 @@ public class TimeSheetController {
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}
@@ -196,11 +204,16 @@ public class TimeSheetController {
 		if (user != null) {
 			mv.addObject("timeSheet", timeSheetService.fetchCurrentMonthTimeSheetofUser(id));
 			mv.addObject("userId", id);
-			mv.addObject("userName", user.getName());
+			if (user.getUserRole().equals("TRAINER")) {
+				mv.addObject("userName", user.getName());
+			} else {
+				mv.addObject("userName", userService.findUserById(id).getName());
+
+			}
 			mv.setViewName("currentTsOfUser");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("login");
 		}
 		return mv;
 	}

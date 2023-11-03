@@ -11,7 +11,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
+	<h1>Displaying all time sheets</h1>
+	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>S.No</th>
 			<th>Started Date</th>
