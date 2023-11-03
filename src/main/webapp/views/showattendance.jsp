@@ -20,16 +20,15 @@
         <th>Total Working Hours</th>
     </tr>
 
-    <c:forEach var="attendance" items="${list}">
+    
         <tr>
-            <td>${attendance.attendanceId}</td>
-            <td>${attendance.date}</td>
-            <td>${attendance.loginTime}</td>
-            <td>${attendance.logoutTime}</td>
-            <td>${attendance.attendanceStatus}</td>
-            <td>${attendance.totalWorkingHours}</td>
+            <td>${att.getAttendanceId()}</td>
+            <td>${att.getDate()}</td>
+            <td>${att.getLoginTime()}</td>
+            <td>${att.getLogoutTime()}</td>
+            <td>${att.getAttendanceStatus()}</td>
+            <td>${att.getTotalWorkingHours()}</td>
         </tr>
-    </c:forEach>
 </table>
 
 </body>
