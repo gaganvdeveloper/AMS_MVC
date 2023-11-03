@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/ams_mvc/TSOfCustomDateofAll" method="post">
+	<form action="/ams_mvc/timesheet/custom-All">
 		<h1>From:</h1>
 		Month<input type="text" name="fMonth"
 			placeholder="enter full month name"><br> <br> Year

@@ -199,4 +199,10 @@ public class TimeSheetServiceImp implements TimeSheetService {
 		LocalDate currentDate = LocalDate.now();
 		return findTimeSheetByMonthNameOfAllEmployees(String.valueOf(currentDate.getMonth()), currentDate.getYear());
 	}
+
+	@Override
+	public TimeSheet fetchCurrentMonthTimeSheetofUser(int userId) {
+		LocalDate currentDate = LocalDate.now();
+		return findTimeSheetByMonthNameOfUser(String.valueOf(currentDate.getMonth()), currentDate.getYear(), userId);
+	}
 }

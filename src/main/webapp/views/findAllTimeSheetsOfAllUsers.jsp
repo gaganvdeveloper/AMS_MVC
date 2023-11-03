@@ -16,17 +16,22 @@
 			<th>S.No</th>
 			<th>Started Date</th>
 			<th>Ended Date</th>
+			<th>AttendenceDetails</th>
 		</tr>
 		<c:forEach var="timesheet" items="${timeSheets}">
 			<tr>
 				<td>${timesheet.getTimesheetId() }</td>
 				<td>${timesheet.getStart_date() }</td>
 				<td>${timesheet.getEnd_date() }</td>
+				<td><a href="#">attendance</a></td>
 			</tr>
 		</c:forEach>
-		<td>${monthtimeSheet.getTimesheetId() }</td>
-		<td>${monthtimeSheet.getStart_date() }</td>
-		<td>${monthtimeSheet.getEnd_date() }</td>
+		<tr>
+			<td>${monthtimeSheet.getTimesheetId() }</td>
+			<td>${monthtimeSheet.getStart_date() }</td>
+			<td>${monthtimeSheet.getEnd_date() }</td>
+			<td><a href="#">attendance</a></td>
+		</tr>
 	</table>
 
 

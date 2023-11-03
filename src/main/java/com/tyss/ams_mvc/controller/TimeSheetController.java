@@ -29,6 +29,7 @@ public class TimeSheetController {
 	@PostMapping("/create")
 	public ModelAndView createTimeSheet(TimeSheet timeSheet,
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
+
 		if (user != null) {
 			timeSheet.setStart_date(LocalDate.now());
 			TimeSheet sheet = timeSheetService.saveTimeSheet(timeSheet, user.getUserId());
@@ -47,9 +48,9 @@ public class TimeSheetController {
 
 	@GetMapping("/display/user")
 	public ModelAndView displayTimesheetByUserId(@SessionAttribute(name = "user", required = false) User user,
-			ModelAndView mv) {
+			ModelAndView mv, @RequestParam int id) {
 		if (user != null) {
-			mv.addObject("findAllTimeSheetOfUser", timeSheetService.findAllTimeSheetOfUser(user.getUserId()));
+			mv.addObject("findAllTimeSheetOfUser", timeSheetService.findAllTimeSheetOfUser(id));
 			mv.setViewName("displayTimeSheet");
 		} else {
 			mv.addObject("msg", "user not existed");
@@ -96,6 +97,7 @@ public class TimeSheetController {
 		return mv;
 	}
 
+	// not required
 	@RequestMapping(value = "byYear/User", method = RequestMethod.GET)
 	public ModelAndView findAllTimeSheetOfAYearOfUser(HttpServletRequest req, int year,
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
@@ -115,7 +117,7 @@ public class TimeSheetController {
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
 		if (user != null) {
 			mv.addObject("monthtimeSheet", timeSheetService.findTimeSheetByMonthNameOfUser(month,
-					Integer.parseInt(req.getParameter("year")), user.getUserId()));
+					Integer.parseInt(req.getParameter("year")), Integer.parseInt(req.getParameter("id"))));
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
@@ -128,6 +130,7 @@ public class TimeSheetController {
 	@RequestMapping(value = "ByMon/All", method = RequestMethod.GET)
 	public ModelAndView findTimeSheetByMonthNameOfAllEmployees(
 			@SessionAttribute(name = "user", required = false) User user, HttpServletRequest req, ModelAndView mv) {
+		System.out.println("triggered");
 		if (user != null) {
 			mv.addObject("timeSheets", timeSheetService.findTimeSheetByMonthNameOfAllEmployees(
 					req.getParameter("month"), Integer.parseInt(req.getParameter("year"))));
@@ -140,18 +143,18 @@ public class TimeSheetController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/Custom-user", method = RequestMethod.GET)
+	@RequestMapping(value = "/custom-user", method = RequestMethod.GET)
 	public ModelAndView findTimeSheetOfUserOnCustomDates(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
 		if (user != null) {
 			mv.addObject("timeSheets",
 					timeSheetService.findTimeSheetOfUserOnCustomDates(req.getParameter("fMonth"),
 							Integer.parseInt(req.getParameter("fYear")), req.getParameter("tMonth"),
-							Integer.parseInt(req.getParameter("tYear")), user.getUserId()));
+							Integer.parseInt(req.getParameter("tYear")), Integer.parseInt(req.getParameter("id"))));
 			mv.setViewName("findAllTimeSheetsOfAllUsers");
 		} else {
 			mv.addObject("msg", "user not existed");
-			mv.setViewName("index");
+			mv.setViewName("ams_mvc/index");
 		}
 		return mv;
 	}
@@ -159,6 +162,7 @@ public class TimeSheetController {
 	@RequestMapping(value = "custom-All", method = RequestMethod.GET)
 	public ModelAndView findTimeSheetOnCustomDates(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
+		System.out.println("triggered");
 		if (user != null) {
 			mv.addObject("timeSheets",
 					timeSheetService.findTimeSheetOnCustomDates(req.getParameter("fMonth"),
@@ -183,6 +187,21 @@ public class TimeSheetController {
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("index");
+		}
+		return mv;
+	}
+
+	@RequestMapping(value = "/current-user", method = RequestMethod.GET)
+	public ModelAndView fetchCurrentMonthTimeSheetofUser(ModelAndView mv,
+			@SessionAttribute(name = "user", required = false) User user, @RequestParam int id) {
+		if (user != null) {
+			mv.addObject("timeSheet", timeSheetService.fetchCurrentMonthTimeSheetofUser(id));
+			mv.addObject("userId", id);
+			mv.setViewName("currentTsOfUser");
+
+		} else {
+			mv.addObject("msg", "user not existed");
+			mv.setViewName("/ams_mvc/index");
 		}
 		return mv;
 	}

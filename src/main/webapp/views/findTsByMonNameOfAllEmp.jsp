@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/ams_mvc/findTsByMonNameOfAllEmp" method="post">
+	<form action="/ams_mvc/timesheet/ByMon/All">
 		Month <input type="text" name="month" placeholder="month">
 		Year <input type="text" name="year" placeholder="YYYY">
 		<button type="submit">submit</button>

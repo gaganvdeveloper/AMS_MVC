@@ -9,30 +9,25 @@
 <body>
 	<h1>HR</h1>
 	<h1>${msg}</h1>
+	<!-- <a href="create">create timesheet</a> -->
+
+
+	<!-- <a href="display">display timesheet by user id</a> -->
+
+	<!-- <a href="views/timeSheetByYearOfUser.jsp">findAllTimeSheetOfAYearOfUser</a> -->
+
+	<!-- <a href="views/timeSheetByMonthOfUser.jsp">findtimeSheetByMonthOfUser</a> -->
+
+	<a href="findTsByMonNameOfAllEmp.jsp">findTimeSheetByMonthNameOfAllEmployees</a>
 	<br>
 	<br>
-	<a href="create">create timesheet</a>
+	<!-- <a href="views/TSOfUserOnCustomDate.jsp">findTimeSheetOfUserOnCustomDates</a> -->
 	<br>
 	<br>
-	<a href="display">display timesheet by user id</a>
+	<a href="TSOnCustomDatesOfAll.jsp">findTSOnCustomDatesOfAll</a>
 	<br>
 	<br>
-	<a href="views/timeSheetByYearOfUser.jsp">findAllTimeSheetOfAYearOfUser</a>
-	<br>
-	<br>
-	<a href="views/timeSheetByMonthOfUser.jsp">findtimeSheetByMonthOfUser</a>
-	<br>
-	<br>
-	<a href="views/findTsByMonNameOfAllEmp.jsp">findTimeSheetByMonthNameOfAllEmployees</a>
-	<br>
-	<br>
-	<a href="views/TSOfUserOnCustomDate.jsp">findTimeSheetOfUserOnCustomDates</a>
-	<br>
-	<br>
-	<a href="views/TSOnCustomDatesOfAll.jsp">findTSOnCustomDatesOfAll</a>
-	<br>
-	<br>
-	<a href="/ams_mvc/currentmonth">fetchCurrentMonthTimeSheet</a>
+	<a href="/ams_mvc/timesheet/current">fetchCurrentMonthTimeSheet</a>
 	<br>
 	<br>
 </body>
