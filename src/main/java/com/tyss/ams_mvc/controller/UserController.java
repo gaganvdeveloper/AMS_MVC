@@ -110,6 +110,14 @@ public class UserController {
 		mv.setViewName("hrhome");
 		return mv;
 	}
+	@RequestMapping(value = "/trainerhome")
+	public ModelAndView gotoTrainerHomePage(ModelAndView mv, HttpServletRequest req) {
+		User user = (User) req.getSession().getAttribute("user");
+		mv.addObject("user", user);
+		mv.addObject("msg", "Welcome Back " + user.getName());
+		mv.setViewName("trainerhome");
+		return mv;
+	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public ModelAndView gotosaveUser(User user, ModelAndView mv) {

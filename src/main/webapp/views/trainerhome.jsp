@@ -255,7 +255,7 @@ body {
 	<nav class="navbar">
 		<a href="trainerhome"><h1 class="logo">AlphaAttendance.com</h1></a>
 		<ul class="navbar-list">
-			<li><a href="createattendance"><button type="button">Mark
+			<li><a href="createattendance?id=${user.getUserId()	 }"><button type="button">Mark
 						Attendance</button></a></li>
 			<li><a href="create"><button type="button">create
 						Time Sheet</button></a></li>
