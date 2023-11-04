@@ -11,15 +11,28 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Displaying all time sheets</h1>
+	<c:if test="${ not empty timeSheets}">
+		<p>
+			All employees timeSheets are fetched month: <strong>${month }</strong>
+			and year : <strong>${year }</strong>
+		</p>
+	</c:if>
+	<c:if test="${ empty timeSheets}">
+		<p>
+			timeSheets for month: <strong>${month }</strong> and year : <strong>${year }</strong>
+			were not there
+		</p>
+	</c:if>
+
+
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>S.No</th>
 			<th>Started Date</th>
 			<th>Ended Date</th>
-			<th>fetch Attendances</th>
+			<th>AttendenceDetails</th>
 		</tr>
-		<c:forEach var="timesheet" items="${findAllTimeSheetOfUser}">
+		<c:forEach var="timesheet" items="${timeSheets}">
 			<tr>
 				<td>${timesheet.getTimesheetId() }</td>
 				<td>${timesheet.getStart_date() }</td>
@@ -27,6 +40,7 @@
 				<td><a href="#">attendance</a></td>
 			</tr>
 		</c:forEach>
+
 
 	</table>
 </body>

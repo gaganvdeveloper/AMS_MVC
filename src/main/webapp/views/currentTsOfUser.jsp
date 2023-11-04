@@ -14,6 +14,7 @@
 
 nav .ts-user {
 	text-decoration: none;
+	font-weight: bold;
 	color: green;
 	width: 150px;
 	height: 30px;
@@ -22,6 +23,7 @@ nav .ts-user {
 	text-align: center;
 	padding-top: 5px;
 	border: 3px solid green;
+	color: green;
 }
 
 nav a:hover {
@@ -67,13 +69,13 @@ nav a:hover {
 	<h3>Fetch your Time Sheet by :</h3>
 	<nav>
 		<a class="ts-user"
-			href="/ams_mvc/views/TSOfUserOnCustomDate.jsp?id=${userId }">custom
-			dates</a> <br> <br> <a class="ts-user"
-			href="/ams_mvc/display/user?id=${userId }">find all</a> <br> <br>
-		<a class="ts-user"
-			href="/ams_mvc/views/tSByMonthOfUser.jsp?id=${userId }">month and
-			year</a> <br> <br>
-			
+
+			href="/ams_mvc/views/TSOfUserOnCustomDate.jsp?id=${userId }">
+			Custom Dates</a> <br> <br> <a class="ts-user"
+			href="/ams_mvc/display/user?id=${userId }">All TimeSheets</a> <br>
+		<br> <a class="ts-user"
+			href="/ams_mvc/views/tSByMonthOfUser.jsp?id=${userId }">Month and
+			Year</a> <br> <br>
 	</nav>
 
 </body>

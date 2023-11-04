@@ -7,16 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>HR</h1>
+	<h1>Fetch All Employees Time Sheet By</h1>
 	<h1>${msg}</h1>
 
-	<a href="findTsByMonNameOfAllEmp.jsp">findTimeSheetByMonthNameOfAllEmployees</a>
+	<a href="findTsByMonNameOfAllEmp.jsp">MonthName</a>
 	<br>
 	<br>
-	<a href="TSOnCustomDatesOfAll.jsp">findTSOnCustomDatesOfAll</a>
+	<a href="TSOnCustomDatesOfAll.jsp">CustomDates</a>
 	<br>
 	<br>
-	<a href="/ams_mvc/current">fetchCurrentMonthTimeSheet</a>
+	<a href="/ams_mvc/current">CurrentMonth</a>
 	<br>
 	<br>
 </body>

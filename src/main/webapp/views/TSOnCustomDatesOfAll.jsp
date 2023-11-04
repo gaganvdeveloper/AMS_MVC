@@ -7,12 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>fetch time-sheet between custom Dates</h2>
 	<form action="/ams_mvc/custom-All">
-		<h1>From:</h1>
+		<h4>From:</h4>
 		Month<input type="text" name="fMonth"
 			placeholder="enter full month name"><br> <br> Year
 		<input type="text" name="fYear" placeholder="YYYY"><br>
-		<h1>TO:</h1>
+		<h4>TO:</h4>
 		Month<input type="text" name="tMonth"
 			placeholder="enter full month name"><br> <br> Year
 		<input type="text" name="tYear" placeholder="YYYY"><br> <br>
