@@ -1,7 +1,5 @@
 package com.tyss.ams_mvc.controller;
 
-import java.time.LocalDate;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +26,19 @@ public class TimeSheetController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/create")
-	public ModelAndView createTimeSheet(TimeSheet timeSheet,
-			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
-		if (user != null) {
-			try {
-				timeSheet.setStart_date(LocalDate.now());
-				TimeSheet sheet = timeSheetService.saveTimeSheet(timeSheet, user.getUserId());
-				mv.addObject("msg", "timesheet saved successfully");
-				mv.setViewName("trainerhome");
-			} catch (Exception e) {
-				e.printStackTrace();
-				mv.addObject("msg", "timesheet already existed");
-				mv.setViewName("trainerhome");
-			}
-		} else {
-			mv.addObject("msg", "user not existed");
-			mv.setViewName("login");
-		}
-		return mv;
-	}
+	/*
+	 * @GetMapping("/create") public ModelAndView createTimeSheet(TimeSheet
+	 * timeSheet,
+	 * 
+	 * @SessionAttribute(name = "user", required = false) User user, ModelAndView
+	 * mv) { if (user != null) { try { timeSheet.setStart_date(LocalDate.now());
+	 * TimeSheet sheet = timeSheetService.saveTimeSheet(timeSheet,
+	 * user.getUserId()); mv.addObject("msg", "timesheet saved successfully");
+	 * mv.setViewName("trainerhome"); } catch (Exception e) { mv.addObject("msg",
+	 * "timesheet already existed"); mv.setViewName("trainerhome"); } } else {
+	 * mv.addObject("msg", "user not existed"); mv.setViewName("login"); } return
+	 * mv; }
+	 */
 
 	@GetMapping("/display/user")
 	public ModelAndView displayTimesheetByUserId(@SessionAttribute(name = "user", required = false) User user,

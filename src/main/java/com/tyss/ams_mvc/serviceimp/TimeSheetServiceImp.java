@@ -18,6 +18,7 @@ import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.exceptionclasses.timesheet.TimeSheetAlreadyExists;
 import com.tyss.ams_mvc.service.TimeSheetService;
+import com.tyss.ams_mvc.util.UserRole;
 
 @Service
 public class TimeSheetServiceImp implements TimeSheetService {
@@ -29,6 +30,8 @@ public class TimeSheetServiceImp implements TimeSheetService {
 
 	@Override
 	public TimeSheet saveTimeSheet(TimeSheet timeSheet, int userId) {
+		List<User> users = userDao.findUserByRole(UserRole.ADMIN);
+		Optional<User> admin = users.stream().findAny();
 		User user = userDao.findUserById(userId);
 		if (user != null) {
 			List<TimeSheet> listOfTimeSheets = user.getTimeSheets();
@@ -40,14 +43,18 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				if (timesheet.isPresent()) {
 					throw new TimeSheetAlreadyExists();
 				} else {
-					timeSheet.setEnd_date(endDate(timeSheet));
+					timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
+							admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+					timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
 					timeSheetDao.saveTimeSheet(timeSheet);
 					user.getTimeSheets().add(timeSheet);
 					userDao.saveUser(user);
 					return timeSheet;
 				}
 			} else {
-				timeSheet.setEnd_date(endDate(timeSheet));
+				timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
+						admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+				timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
 				timeSheetDao.saveTimeSheet(timeSheet);
 				List<TimeSheet> sheets = new ArrayList<TimeSheet>();
 				sheets.add(timeSheet);
@@ -58,22 +65,22 @@ public class TimeSheetServiceImp implements TimeSheetService {
 		} else {
 			return null;
 		}
-
 	}
 
-	public LocalDate endDate(TimeSheet timeSheet) {
+	public LocalDate endDate(TimeSheet timeSheet, User admin) {
 		int month = timeSheet.getStart_date().getMonthValue();
 		int year = timeSheet.getStart_date().getYear();
+		Optional<TimeSheet> adminTimeSheet = admin.getTimeSheets().stream().findAny();
 		if (month == 12) {
 			month = 1;
 			year += 1;
-			LocalDate.parse(year + "-0" + month + "-" + 25);
+			LocalDate.parse(year + "-0" + month + "-" + adminTimeSheet.get().getEnd_date().getDayOfMonth());
 		} else if (month >= 1 && month <= 9) {
 			month += 1;
-			return LocalDate.parse(year + "-0" + month + "-" + 25);
+			return LocalDate.parse(year + "-0" + month + "-" + adminTimeSheet.get().getEnd_date().getDayOfMonth());
 		} else {
 			month += 1;
-			return LocalDate.parse(year + "-" + month + "-" + 25);
+			return LocalDate.parse(year + "-" + month + "-" + adminTimeSheet.get().getEnd_date().getDayOfMonth());
 		}
 		return null;
 	}
