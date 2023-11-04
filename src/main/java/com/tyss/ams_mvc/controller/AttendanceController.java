@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tyss.ams_mvc.entity.Attendance;
@@ -230,21 +231,26 @@ public class AttendanceController {
 	}
 	
 	@RequestMapping(value = "/findAllattendance")
-	public ModelAndView findAllAttendanceOfaTimeSheet(ModelAndView mav, HttpServletRequest request) {
-		
+	public ModelAndView findAllAttendanceOfaTimeSheet(ModelAndView mav, HttpServletRequest request,
+			
+			@SessionAttribute(name = "user", required = false) User user) {
 		TimeSheet ts = timeSheetService.findTimeSheetById(Integer.parseInt(request.getParameter("id"))) ;
-		
 		List<Attendance> list ;
-		
 		try {
 			list = ts.getAttendences();
 		} catch (Exception e) {
 			list = new ArrayList<Attendance>() ;
 		}
-		
+		if (user.getUserRole().toString().equals("TRAINER")) {
+			mav.addObject("list", list) ;
+			mav.addObject("msg", "All Attendance") ;
+			mav.setViewName("displayattendance2") ;
+			return mav ;
+		}
 		mav.addObject("list", list) ;
 		mav.addObject("msg", "All Attendance") ;
-		mav.setViewName("displayattendance2") ;
+		mav.setViewName("displayattendance1") ;
 		return mav ;
+		
 	}
 }
