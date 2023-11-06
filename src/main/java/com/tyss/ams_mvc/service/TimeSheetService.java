@@ -3,8 +3,10 @@ package com.tyss.ams_mvc.service;
 import java.util.List;
 
 import com.tyss.ams_mvc.entity.TimeSheet;
+import com.tyss.ams_mvc.entity.User;
 
 public interface TimeSheetService {
+	public TimeSheet saveAdminTimeSheet(int startDate, int endDate, User user);
 
 	public TimeSheet saveTimeSheet(TimeSheet timeSheet, int userId);
 

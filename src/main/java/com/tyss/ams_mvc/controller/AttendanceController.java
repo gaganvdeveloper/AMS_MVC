@@ -37,62 +37,37 @@ public class AttendanceController {
 	@RequestMapping(value = "/createattendance")
 	public ModelAndView gotoCreateAttendance(ModelAndView mv, HttpServletRequest req) {
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
-		List<TimeSheet> timesheets = user.getTimeSheets();
-		List<TimeSheet> ts = timesheets.stream()
-				.filter(t -> t.getStart_date().getMonthValue() == LocalDate.now().getMonthValue()
-						&& t.getStart_date().getYear() == LocalDate.now().getYear())
-				.collect(Collectors.toList());
+
+		TimeSheet timesheet = timeSheetService.fetchCurrentMonthTimeSheetofUser(user.getUserId());
+		if (timesheet == null) {
+			timesheet = timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
+		}
+//		List<TimeSheet> timesheets = user.getTimeSheets();
+//		List<TimeSheet> ts = timesheets.stream()
+//				.filter(t -> t.getStart_date().getMonthValue() == LocalDate.now().getMonthValue()
+//						&& t.getStart_date().getYear() == LocalDate.now().getYear())
+//				.collect(Collectors.toList());
+//		if (ts.isEmpty()) {
+//			timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
+//		}
 		mv.addObject("userId", user.getUserId());
-		mv.addObject("timeSheetId", ts.get(0).getTimesheetId());
+		mv.addObject("timeSheetId", timesheet.getTimesheetId());
 		mv.setViewName("createattendance");
 		return mv;
 	}
 
-//	@RequestMapping(value = "/createattendancecreate")
-//	public ModelAndView createAttendance(HttpServletRequest req, ModelAndView mv,
-//			@SessionAttribute(name = "user") User user) {
-//		TimeSheet sheet = timeSheetService.fetchCurrentMonthTimeSheetofUser(user.getUserId());
-//		if (sheet == null) {
-//			TimeSheet timesheet = new TimeSheet();
-//			timeSheetService.saveTimeSheet(timesheet, user.getUserId());
-//			List<Attendance> attendances = new ArrayList<Attendance>();
-//			timesheet.setAttendences(null);
-//			Attendance attendance = new Attendance();
-//			attendance.setDate(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-//			attendance
-//					.setLoginTime(LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")));
-//			attendance.setLogoutTime(
-//					LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
-//			attendance.setAttendanceStatus(AttendanceStatus.valueOf(req.getParameter("batchStatus")));
-//			LocalTime inTime = LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm"));
-//			LocalTime outTime = LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm"));
-//			Duration duration = Duration.between(
-//					LocalTime.parse(req.getParameter("logintime"), DateTimeFormatter.ofPattern("HH:mm")),
-//					LocalTime.parse(req.getParameter("logouttime"), DateTimeFormatter.ofPattern("HH:mm")));
-//			int hours = (int) duration.toHours();
-//			int minutes = (int) duration.toMinutes();
-//			long min = MINUTES.between(inTime, outTime);
-//			attendance.setTotalWorkingHours(getHourandMin(min));
-//			attendanceService.saveAttendance(attendance);
-//
-//			// here i have to set the timesheet for attendance object or else-->birectional
-//
-//			// i have to do save attendance and set attendance to timesheet and update
-//			mv.setViewName("trainerhome");
-//			mv.addObject("msg", "Attendance Marked");
-//			mv.addObject("user", (User) req.getSession().getAttribute("user"));
-//		} else {
-//
-//		}
 	@RequestMapping(value = "/createattendancecreate")
 	public ModelAndView createAttendance(HttpServletRequest req, ModelAndView mv) {
 		System.out.println(Integer.parseInt(req.getParameter("userId")));
 		System.out.println(Integer.parseInt(req.getParameter("timeSheetId")));
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("userId")));
 		TimeSheet timeSheet = timeSheetService.findTimeSheetById(Integer.parseInt(req.getParameter("timeSheetId")));
-		if (user == null && timeSheet == null) {
+		if (user == null) {
 			mv.setViewName("login");
 			return mv;
+		}
+		if (timeSheet == null) {
+			timeSheet = timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
 		}
 		Attendance attendance = new Attendance();
 		attendance.setDate(LocalDate.parse(req.getParameter("date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -107,7 +82,8 @@ public class AttendanceController {
 		int hours = (int) duration.toHours();
 		int minutes = (int) duration.toMinutes();
 		long min = MINUTES.between(inTime, outTime);
-		attendance.setTotalWorkingHours(getHourandMin(min));
+//		attendance.setTotalWorkingHours(getHourandMin(min));
+		attendance.setTotalWorkingHours(LocalTime.now());
 		attendanceService.saveAttendance(attendance);
 		List<Attendance> ats = null;
 		try {

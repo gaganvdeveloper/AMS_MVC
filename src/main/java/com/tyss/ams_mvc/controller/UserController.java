@@ -36,6 +36,13 @@ public class UserController {
 	@Autowired
 	private BatchService batchService;
 
+	@RequestMapping(value = "/adminhome")
+	public ModelAndView gotoAdminHome(HttpServletRequest req, ModelAndView mv) {
+		mv.setViewName("createtimesheet");
+		mv.addObject("user", (User) req.getSession().getAttribute("user"));
+		return mv;
+	}
+
 	@RequestMapping(value = "/userlogin")
 	public ModelAndView gotoUserLogin(ModelAndView mv) {
 		mv.setViewName("login");
@@ -110,6 +117,7 @@ public class UserController {
 		mv.setViewName("hrhome");
 		return mv;
 	}
+
 	@RequestMapping(value = "/trainerhome")
 	public ModelAndView gotoTrainerHomePage(ModelAndView mv, HttpServletRequest req) {
 		User user = (User) req.getSession().getAttribute("user");
