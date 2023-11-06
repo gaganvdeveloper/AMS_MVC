@@ -11,7 +11,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>time sheet based on custom Dates</h1>
+	<c:choose>
+		<c:when test="${not empty timeSheets && empty monthtimeSheet}">
+			<p>
+				time sheet based of from Year <strong>:${fYear }</strong> and month:<strong>${fMonth }</strong>
+				to Year :<strong>:${tYear }</strong> and month:<strong>:${tMonth }</strong>
+			</p>
+		</c:when>
+		<c:otherwise>
+			<p>
+				time sheet based of from Year <strong>:${fYear }</strong> and month:<strong>${fMonth }</strong>
+				to Year :<strong>:${tYear }</strong> and month:<strong>:${tMonth }
+					was not presented</strong>
+			</p>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${not empty monthtimeSheet}">
+			<p>
+				TimeSheet of Month <Strong>${ month} </Strong>and Year:<Strong>${year}
+				</Strong>
+			</p>
+		</c:when>
+		<c:otherwise>
+			<p>
+				TimeSheet of Month <Strong>${ month} </Strong>and Year:<Strong>${year}
+					was not existed </Strong>
+			</p>
+		</c:otherwise>
+	</c:choose>
+
+
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>S.No</th>
@@ -32,7 +63,7 @@
 				<td>${monthtimeSheet.getTimesheetId() }</td>
 				<td>${monthtimeSheet.getStart_date() }</td>
 				<td>${monthtimeSheet.getEnd_date() }</td>
-				<c:if test="${timeSheet.getTimesheetId()!= null}">
+				<c:if test="${monthtimeSheet.getTimesheetId()!= null}">
 					<td><a href="#">attendance</a></td>
 				</c:if>
 			</c:if>
