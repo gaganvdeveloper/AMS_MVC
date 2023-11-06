@@ -1,18 +1,21 @@
 package com.tyss.ams_mvc.controller;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.tyss.ams_mvc.entity.Attendance;
 import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.entity.User;
@@ -42,14 +45,6 @@ public class AttendanceController {
 		if (timesheet == null) {
 			timesheet = timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
 		}
-//		List<TimeSheet> timesheets = user.getTimeSheets();
-//		List<TimeSheet> ts = timesheets.stream()
-//				.filter(t -> t.getStart_date().getMonthValue() == LocalDate.now().getMonthValue()
-//						&& t.getStart_date().getYear() == LocalDate.now().getYear())
-//				.collect(Collectors.toList());
-//		if (ts.isEmpty()) {
-//			timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
-//		}
 		mv.addObject("userId", user.getUserId());
 		mv.addObject("timeSheetId", timesheet.getTimesheetId());
 		mv.setViewName("createattendance");
@@ -82,8 +77,7 @@ public class AttendanceController {
 		int hours = (int) duration.toHours();
 		int minutes = (int) duration.toMinutes();
 		long min = MINUTES.between(inTime, outTime);
-//		attendance.setTotalWorkingHours(getHourandMin(min));
-		attendance.setTotalWorkingHours(LocalTime.now());
+		attendance.setTotalWorkingHours(getHourandMin(min));
 		attendanceService.saveAttendance(attendance);
 		List<Attendance> ats = null;
 		try {
@@ -145,11 +139,6 @@ public class AttendanceController {
 		mav.addObject("list", attendanceService
 				.findAllAttendanceByAttendanceStatus(AttendanceStatus.valueOf(request.getParameter("stat"))));
 		mav.setViewName("showattendance");
-
-//		mav.addObject("list", service.findAllAttendace().stream().filter(
-//				a->a.getAttendanceStatus()
-//				.equals(AttendanceStatus.valueOf(request.getParameter("status")))).collect(Collectors.toList()));
-//				mav.setViewName("displayAttedance1");
 		return mav;
 	}
 
@@ -194,15 +183,6 @@ public class AttendanceController {
 
 		return null;
 	}
-
-//	@RequestMapping(value = "/update")
-//	public ModelAndView updateAttendance(ModelAndView mav) {
-//		
-//		Attendance attendance = new Attendance() ;
-//		mav.addObject("attendance", attendance) ;
-//		mav.setViewName("updateAttendance");
-//		return mav ;
-//	}
 
 	@RequestMapping(value = "/getupdate")
 	public ModelAndView getUpdate(ModelAndView mav, HttpServletRequest request) {
