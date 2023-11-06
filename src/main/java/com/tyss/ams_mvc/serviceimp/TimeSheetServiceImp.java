@@ -94,27 +94,34 @@ public class TimeSheetServiceImp implements TimeSheetService {
 		int month = timeSheet.getStart_date().getMonthValue();
 		int year = timeSheet.getStart_date().getYear();
 		int endDate = adminTimeSheet.get().getEnd_date().getDayOfMonth();
+		System.out.println(month);
 		DateTimeFormatter inputFormatter = null;
 		if (month <= 9 && month >= 1 && endDate <= 9 && endDate >= 1) {
+			System.out.println(1);
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d");
 		}
 
 		if (month <= 9 && month >= 1 && endDate >= 10 && endDate <= 31) {
+			System.out.println(2);
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd");
 		}
 
 		if (month == 10 || month == 11 && endDate >= 10 && endDate <= 31) {
+			System.out.println(2);
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		}
 		if (month == 10 || month == 11 && endDate <= 9 && endDate >= 1) {
+			System.out.println(3);
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
 		}
 		if (month == 12 && endDate <= 9 && endDate >= 1) {
+			System.out.println(4);
 			month = 1;
 			year += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
 		}
 		if (month == 12 && endDate >= 10 && endDate <= 31) {
+			System.out.println(5);
 			month = 1;
 			year += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
