@@ -30,6 +30,7 @@ public class TimeSheetController {
 
 	@GetMapping("/create")
 	public ModelAndView createTimeSheet(TimeSheet timeSheet,
+
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
 		if (user != null) {
 			try {
@@ -38,10 +39,38 @@ public class TimeSheetController {
 				mv.addObject("msg", "timesheet saved successfully");
 				mv.setViewName("trainerhome");
 			} catch (Exception e) {
-				e.printStackTrace();
 				mv.addObject("msg", "timesheet already existed");
 				mv.setViewName("trainerhome");
 			}
+		} else {
+			mv.addObject("msg", "user not existed");
+			mv.setViewName("login");
+		}
+		return mv;
+	}
+
+//	@RequestMapping(value = "/adminhome")
+//	public ModelAndView gotoAdminHome(HttpServletRequest req, ModelAndView mv) {
+//		mv.setViewName("createtimesheet");
+//		mv.addObject("user", (User) req.getSession().getAttribute("user"));
+//		return mv;
+//	}
+
+//	@RequestMapping(value = "/createtimesheet1")
+//	public ModelAndView gotoCreateTimeSheet(ModelAndView mv, HttpServletRequest req) {
+//		mv.addObject("user", (User) req.getSession().getAttribute("user"));
+//		mv.addObject("msg", "Update The TimeSheet Dates");
+//		mv.setViewName("createtimesheet");
+//		return mv;
+//	}
+	@GetMapping("/saveAdminTs")
+	public ModelAndView createAdminTimeSheet(HttpServletRequest req, ModelAndView mv,
+			@SessionAttribute(name = "user", required = false) User user) {
+		if (user != null) {
+			timeSheetService.saveAdminTimeSheet(Integer.parseInt(req.getParameter("startDate")),
+					Integer.parseInt(req.getParameter("endDate")), user);
+			mv.addObject("msg", "time sheet generated");
+			mv.setViewName("adminhome");
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("login");

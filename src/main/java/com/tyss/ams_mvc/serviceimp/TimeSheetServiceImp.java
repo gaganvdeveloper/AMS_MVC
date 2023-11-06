@@ -2,8 +2,10 @@ package com.tyss.ams_mvc.serviceimp;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import com.tyss.ams_mvc.entity.TimeSheet;
 import com.tyss.ams_mvc.entity.User;
 import com.tyss.ams_mvc.exceptionclasses.timesheet.TimeSheetAlreadyExists;
 import com.tyss.ams_mvc.service.TimeSheetService;
+import com.tyss.ams_mvc.util.UserRole;
 
 @Service
 public class TimeSheetServiceImp implements TimeSheetService {
@@ -27,8 +30,30 @@ public class TimeSheetServiceImp implements TimeSheetService {
 	@Autowired
 	UserDao userDao;
 
+	public TimeSheet saveAdminTimeSheet(int startDate, int endDate, User user) {
+		List<TimeSheet> sheets = user.getTimeSheets();
+		if (sheets.isEmpty()) {
+			TimeSheet timesheet = new TimeSheet();
+			timesheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), startDate));
+			timesheet.setEnd_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), endDate));
+			timeSheetDao.saveTimeSheet(timesheet);
+			user.setTimeSheets(Arrays.asList(timesheet));
+			userDao.updateUser(user);
+			return timesheet;
+		} else {
+			TimeSheet sheet = user.getTimeSheets().stream().findAny().get();
+			sheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), startDate));
+			sheet.setEnd_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), endDate));
+			timeSheetDao.updateTimeSheet(sheet);
+//			userDao.updateUser(user);
+			return sheet;
+		}
+	}
+
 	@Override
 	public TimeSheet saveTimeSheet(TimeSheet timeSheet, int userId) {
+		List<User> users = userDao.findUserByRole(UserRole.ADMIN);
+		Optional<User> admin = users.stream().findAny();
 		User user = userDao.findUserById(userId);
 		if (user != null) {
 			List<TimeSheet> listOfTimeSheets = user.getTimeSheets();
@@ -40,42 +65,61 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				if (timesheet.isPresent()) {
 					throw new TimeSheetAlreadyExists();
 				} else {
-					timeSheet.setEnd_date(endDate(timeSheet));
+					timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
+							admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+					timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
 					timeSheetDao.saveTimeSheet(timeSheet);
 					user.getTimeSheets().add(timeSheet);
 					userDao.saveUser(user);
 					return timeSheet;
 				}
 			} else {
-				timeSheet.setEnd_date(endDate(timeSheet));
+				timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
+						admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+				timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
 				timeSheetDao.saveTimeSheet(timeSheet);
 				List<TimeSheet> sheets = new ArrayList<TimeSheet>();
 				sheets.add(timeSheet);
 				user.setTimeSheets(sheets);
-				userDao.saveUser(user);
+				userDao.updateUser(user);
 				return timeSheet;
 			}
 		} else {
 			return null;
 		}
-
 	}
 
-	public LocalDate endDate(TimeSheet timeSheet) {
+	public LocalDate endDate(TimeSheet timeSheet, User admin) {
+		Optional<TimeSheet> adminTimeSheet = admin.getTimeSheets().stream().findAny();
 		int month = timeSheet.getStart_date().getMonthValue();
 		int year = timeSheet.getStart_date().getYear();
-		if (month == 12) {
+		int endDate = adminTimeSheet.get().getEnd_date().getDayOfMonth();
+		DateTimeFormatter inputFormatter = null;
+		if (month <= 9 && month >= 1 && endDate <= 9 && endDate >= 1) {
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+		}
+
+		if (month <= 9 && month >= 1 && endDate >= 10 && endDate <= 31) {
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd");
+		}
+
+		if (month == 10 || month == 11 && endDate >= 10 && endDate <= 31) {
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		}
+		if (month == 10 || month == 11 && endDate <= 9 && endDate >= 1) {
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+		}
+		if (month == 12 && endDate <= 9 && endDate >= 1) {
 			month = 1;
 			year += 1;
-			LocalDate.parse(year + "-0" + month + "-" + 25);
-		} else if (month >= 1 && month <= 9) {
-			month += 1;
-			return LocalDate.parse(year + "-0" + month + "-" + 25);
-		} else {
-			month += 1;
-			return LocalDate.parse(year + "-" + month + "-" + 25);
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
 		}
-		return null;
+		if (month == 12 && endDate >= 10 && endDate <= 31) {
+			month = 1;
+			year += 1;
+			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		}
+		return LocalDate.parse(year + "-" + month + "-" + endDate, inputFormatter);
 	}
 
 	@Override
