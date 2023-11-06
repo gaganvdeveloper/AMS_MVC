@@ -2,20 +2,26 @@ package com.tyss.ams_mvc.controller;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -251,6 +257,66 @@ public class AttendanceController {
 		mav.addObject("msg", "All Attendance") ;
 		mav.setViewName("displayattendance1") ;
 		return mav ;
-		
 	}
+	
+	@RequestMapping("/converttoxl")
+		public void getXlSheet(HttpServletRequest request, HttpServletResponse response,
+				
+				@SessionAttribute(name = "user", required = false) User user)throws IOException{
+			
+			TimeSheet timesheet = timeSheetService.findTimeSheetById(Integer.valueOf(request.getParameter("id"))) ;
+			
+			List<Attendance> infoList = timesheet.getAttendences() ;
+			
+			try (HSSFWorkbook workbook = new HSSFWorkbook()) {
+				HSSFSheet sheet = workbook.createSheet("Attendance Data");
+				HSSFRow headerRow = sheet.createRow(0);
+				headerRow.createCell(0).setCellValue("Sl NO");
+				headerRow.createCell(1).setCellValue("Date");
+				headerRow.createCell(2).setCellValue("Login Time");
+				headerRow.createCell(3).setCellValue("Logout Time");
+				headerRow.createCell(4).setCellValue("Attendance Status");
+				headerRow.createCell(5).setCellValue("Total Working Hours");
+//				headerRow.createCell(6).setCellValue("batchs");
+				int rowNum = 1, slno = 1;
+				
+				for (Attendance attendance : infoList) {
+					HSSFRow dataRow = sheet.createRow(rowNum++);
+					dataRow.createCell(0).setCellValue(slno++);
+					dataRow.createCell(1).setCellValue(convertDate(attendance.getDate()));
+					dataRow.createCell(2).setCellValue(String.valueOf(convertTime(attendance.getLoginTime())));
+					dataRow.createCell(3).setCellValue(String.valueOf(convertTime(attendance.getLogoutTime())));
+					dataRow.createCell(4).setCellValue(String.valueOf(attendance.getAttendanceStatus()));
+					dataRow.createCell(5).setCellValue(String.valueOf(attendance.getTotalWorkingHours()));
+//					dataRow.createCell(1).setCellValue(attendance.get);
+				}
+				response.setContentType("application/vnd.ms-excel");
+				response.setHeader("Content-Disposition", "attachment; filename= "+user.getName()+"_"+user.getEmpId()+".xls");
+				try (OutputStream outputStream = response.getOutputStream()) {
+					workbook.write(outputStream);
+				}
+			}
+	}
+	
+	public static String convertTime(LocalTime of) {
+		// To Get the Date in a format of dd-month-yyyy
+		String time = "" ;
+		int hour = of.getHour();
+		// Logic to convert time in 12 hour format
+		if (hour > 12) {
+			time += (hour - 12) + ":" + of.getMinute() + " PM.";
+		} else {
+			time += hour + ":" + of.getMinute() + " AM.";
+		}
+		return time;
+	}
+	
+	public static String convertDate(LocalDate localDate) {
+		
+		return " "+localDate.getDayOfMonth() + " - " + localDate.getMonth() + " - " + localDate.getYear() + " " ;
+
+	}
+	
+	
+
 }

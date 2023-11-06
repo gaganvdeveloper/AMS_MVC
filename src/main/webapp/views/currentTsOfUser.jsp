@@ -41,6 +41,7 @@ nav a:hover {
 </head>
 <body>
 	<h1>${userName }'s&rArr;Current-MonthTimeSheet</h1>
+	<a href="converttoxl?id=${timeSheet.getTimesheetId()}"><button type="submit">Export to XL</button></a>
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>timesheet id</th>
