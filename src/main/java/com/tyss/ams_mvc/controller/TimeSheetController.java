@@ -211,7 +211,7 @@ public class TimeSheetController {
 			if (user.getUserRole().equals("TRAINER")) {
 				mv.addObject("userName", user.getName());
 			} else {
-				mv.addObject("userName", userService.findUserById(id).getName());
+				mv.addObject("user1", userService.findUserById(id));
 
 			}
 			mv.setViewName("currentTsOfUser");

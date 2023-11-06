@@ -40,8 +40,10 @@ nav a:hover {
 
 </head>
 <body>
-	<h1>${userName }'s&rArr;Current-MonthTimeSheet</h1>
-	<a href="converttoxl?id=${timeSheet.getTimesheetId()}"><button type="submit">Export to XL</button></a>
+	<h1>${user1.getName()}'s&rArr;Current-MonthTimeSheet</h1>
+	<a
+		href="converttoxl?id=${timeSheet.getTimesheetId()}&userId=${user1.getUserId()}"><button
+			type="submit">Export to XL</button></a>
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>timesheet id</th>
@@ -55,7 +57,8 @@ nav a:hover {
 			<td>${timeSheet.getStart_date()}</td>
 			<td>${timeSheet.getEnd_date() }</td>
 			<c:if test="${timeSheet.getTimesheetId()!= null}">
-				<td><a href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
+				<td><a
+					href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 			</c:if>
 
 		</tr>
@@ -70,7 +73,6 @@ nav a:hover {
 	<h3>Fetch your Time Sheet by :</h3>
 	<nav>
 		<a class="ts-user"
-
 			href="/ams_mvc/views/TSOfUserOnCustomDate.jsp?id=${userId }">
 			Custom Dates</a> <br> <br> <a class="ts-user"
 			href="/ams_mvc/display/user?id=${userId }">All TimeSheets</a> <br>

@@ -268,6 +268,10 @@ public class AttendanceController {
 			
 			List<Attendance> infoList = timesheet.getAttendences() ;
 			
+			System.out.println(request.getParameter("userId"));
+			
+			User user2 = userService.findUserById(Integer.parseInt(request.getParameter("userId")));
+			
 			try (HSSFWorkbook workbook = new HSSFWorkbook()) {
 				HSSFSheet sheet = workbook.createSheet("Attendance Data");
 				HSSFRow headerRow = sheet.createRow(0);
@@ -291,7 +295,7 @@ public class AttendanceController {
 //					dataRow.createCell(1).setCellValue(attendance.get);
 				}
 				response.setContentType("application/vnd.ms-excel");
-				response.setHeader("Content-Disposition", "attachment; filename= "+user.getName()+"_"+user.getEmpId()+".xls");
+				response.setHeader("Content-Disposition", "attachment; filename= "+user2.getName()+"_"+user2.getEmpId()+".xls");
 				try (OutputStream outputStream = response.getOutputStream()) {
 					workbook.write(outputStream);
 				}
