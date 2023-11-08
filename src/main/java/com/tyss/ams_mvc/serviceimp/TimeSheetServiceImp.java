@@ -45,7 +45,6 @@ public class TimeSheetServiceImp implements TimeSheetService {
 			sheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), startDate));
 			sheet.setEnd_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), endDate));
 			timeSheetDao.updateTimeSheet(sheet);
-//			userDao.updateUser(user);
 			return sheet;
 		}
 	}
@@ -65,18 +64,28 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				if (timesheet.isPresent()) {
 					throw new TimeSheetAlreadyExists();
 				} else {
+					// start date
+
 					timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
 							admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+
+					// end date
+
 					timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
+
 					timeSheetDao.saveTimeSheet(timeSheet);
 					user.getTimeSheets().add(timeSheet);
 					userDao.saveUser(user);
 					return timeSheet;
 				}
 			} else {
+				// start date
 				timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
 						admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
+				// end date
+
 				timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
+
 				timeSheetDao.saveTimeSheet(timeSheet);
 				List<TimeSheet> sheets = new ArrayList<TimeSheet>();
 				sheets.add(timeSheet);
@@ -92,36 +101,33 @@ public class TimeSheetServiceImp implements TimeSheetService {
 	public LocalDate endDate(TimeSheet timeSheet, User admin) {
 		Optional<TimeSheet> adminTimeSheet = admin.getTimeSheets().stream().findAny();
 		int month = timeSheet.getStart_date().getMonthValue();
+		System.out.println(month + "month value");
 		int year = timeSheet.getStart_date().getYear();
+		System.out.println(year + "year value");
 		int endDate = adminTimeSheet.get().getEnd_date().getDayOfMonth();
-		System.out.println(month);
 		DateTimeFormatter inputFormatter = null;
 		if (month <= 9 && month >= 1 && endDate <= 9 && endDate >= 1) {
-			System.out.println(1);
+			month += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d");
 		}
 
-		if (month <= 9 && month >= 1 && endDate >= 10 && endDate <= 31) {
-			System.out.println(2);
+		else if (month <= 9 && month >= 1 && endDate >= 10 && endDate <= 31) {
+			month += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-dd");
 		}
 
-		if (month == 10 || month == 11 && endDate >= 10 && endDate <= 31) {
-			System.out.println(2);
+		else if (month == 10 || month == 11 && endDate >= 10 && endDate <= 31) {
+			month += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		}
-		if (month == 10 || month == 11 && endDate <= 9 && endDate >= 1) {
-			System.out.println(3);
+		} else if (month == 10 || month == 11 && endDate <= 9 && endDate >= 1) {
+			month += 1;
+			System.out.println("four " + 3);
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
-		}
-		if (month == 12 && endDate <= 9 && endDate >= 1) {
-			System.out.println(4);
+		} else if (month == 12 && endDate <= 9 && endDate >= 1) {
 			month = 1;
 			year += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
-		}
-		if (month == 12 && endDate >= 10 && endDate <= 31) {
-			System.out.println(5);
+		} else if (month == 12 && endDate >= 10 && endDate <= 31) {
 			month = 1;
 			year += 1;
 			inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
