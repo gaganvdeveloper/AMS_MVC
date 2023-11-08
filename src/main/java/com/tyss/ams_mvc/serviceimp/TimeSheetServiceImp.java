@@ -64,28 +64,18 @@ public class TimeSheetServiceImp implements TimeSheetService {
 				if (timesheet.isPresent()) {
 					throw new TimeSheetAlreadyExists();
 				} else {
-					// start date
-
 					timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
 							admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
-
-					// end date
-
 					timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
-
 					timeSheetDao.saveTimeSheet(timeSheet);
 					user.getTimeSheets().add(timeSheet);
 					userDao.saveUser(user);
 					return timeSheet;
 				}
 			} else {
-				// start date
 				timeSheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
 						admin.get().getTimeSheets().stream().findAny().get().getStart_date().getDayOfMonth()));
-				// end date
-
 				timeSheet.setEnd_date(endDate(timeSheet, admin.get()));
-
 				timeSheetDao.saveTimeSheet(timeSheet);
 				List<TimeSheet> sheets = new ArrayList<TimeSheet>();
 				sheets.add(timeSheet);
