@@ -41,15 +41,18 @@ nav a:hover {
 </head>
 <body>
 	<h1>${user1.getName()}'s&rArr;Current-MonthTimeSheet</h1>
-	<a
-		href="converttoxl?id=${timeSheet.getTimesheetId()}&userId=${user1.getUserId()}"><button
-			type="submit">Export to XL</button></a>
+	
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>timesheet id</th>
 			<th>timesheet start date</th>
 			<th>timesheet end date</th>
 			<th>attendence details</th>
+			<th>Batch1</th>
+			<th>Batch2</th>
+			<th>Batch3</th>
+			<th>Export to Excel</th>
+			
 		</tr>
 		<tr>
 
@@ -60,7 +63,19 @@ nav a:hover {
 				<td><a
 					href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 			</c:if>
-
+			
+			<c:if test="${batchs.size() > 0 }">
+			
+				<c:forEach var="batch" items="${batchs}" >
+				
+				<td>${batch.getSubjectName()}</td>
+				
+				</c:forEach>
+			
+			</c:if>
+			
+			<td><a href="converttoxl?id=${timeSheet.getTimesheetId()}&userId=${user1.getUserId()}"><button
+			type="submit">Export to XL</button></a></td>
 		</tr>
 
 	</table>
