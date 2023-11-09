@@ -52,7 +52,9 @@ public class TimeSheetController {
 	@GetMapping("/saveAdminTs")
 	public ModelAndView createAdminTimeSheet(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
+
 		if (user != null) {
+			System.out.println(user.getUserRole());
 			timeSheetService.saveAdminTimeSheet(Integer.parseInt(req.getParameter("startDate")),
 					Integer.parseInt(req.getParameter("endDate")), user);
 			mv.addObject("msg", "time sheet generated");

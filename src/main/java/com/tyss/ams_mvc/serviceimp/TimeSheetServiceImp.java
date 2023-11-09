@@ -32,16 +32,18 @@ public class TimeSheetServiceImp implements TimeSheetService {
 
 	public TimeSheet saveAdminTimeSheet(int startDate, int endDate, User user) {
 		List<TimeSheet> sheets = user.getTimeSheets();
-		if (sheets.isEmpty()) {
+		if (sheets == null || sheets.isEmpty()) {
+			ArrayList<TimeSheet> new_sheets = new ArrayList<TimeSheet>();
 			TimeSheet timesheet = new TimeSheet();
 			timesheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), startDate));
 			timesheet.setEnd_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), endDate));
 			timeSheetDao.saveTimeSheet(timesheet);
-			user.setTimeSheets(Arrays.asList(timesheet));
+			new_sheets.add(timesheet);
+			user.setTimeSheets(new_sheets);
 			userDao.updateUser(user);
 			return timesheet;
 		} else {
-			TimeSheet sheet = user.getTimeSheets().stream().findAny().get();
+			TimeSheet sheet = sheets.stream().findAny().get();
 			sheet.setStart_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), startDate));
 			sheet.setEnd_date(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), endDate));
 			timeSheetDao.updateTimeSheet(sheet);
