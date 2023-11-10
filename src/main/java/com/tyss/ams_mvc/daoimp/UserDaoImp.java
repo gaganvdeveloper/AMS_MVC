@@ -34,7 +34,7 @@ public class UserDaoImp implements UserDao {
 	public User updateUser(User user) {
 		EntityTransaction transaction = manager.getTransaction();
 		transaction.begin();
-		manager.merge(user);
+		manager.merge(user);	
 		transaction.commit();
 		return user;
 	}

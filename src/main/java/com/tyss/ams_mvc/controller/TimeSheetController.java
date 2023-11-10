@@ -30,6 +30,7 @@ public class TimeSheetController {
 
 	@GetMapping("/create")
 	public ModelAndView createTimeSheet(TimeSheet timeSheet,
+
 			@SessionAttribute(name = "user", required = false) User user, ModelAndView mv) {
 		if (user != null) {
 			try {
@@ -38,10 +39,26 @@ public class TimeSheetController {
 				mv.addObject("msg", "timesheet saved successfully");
 				mv.setViewName("trainerhome");
 			} catch (Exception e) {
-				e.printStackTrace();
 				mv.addObject("msg", "timesheet already existed");
 				mv.setViewName("trainerhome");
 			}
+		} else {
+			mv.addObject("msg", "user not existed");
+			mv.setViewName("login");
+		}
+		return mv;
+	}
+
+	@GetMapping("/saveAdminTs")
+	public ModelAndView createAdminTimeSheet(HttpServletRequest req, ModelAndView mv,
+			@SessionAttribute(name = "user", required = false) User user) {
+
+		if (user != null) {
+			System.out.println(user.getUserRole());
+			timeSheetService.saveAdminTimeSheet(Integer.parseInt(req.getParameter("startDate")),
+					Integer.parseInt(req.getParameter("endDate")), user);
+			mv.addObject("msg", "time sheet generated");
+			mv.setViewName("adminhome");
 		} else {
 			mv.addObject("msg", "user not existed");
 			mv.setViewName("login");
@@ -172,6 +189,11 @@ public class TimeSheetController {
 	public ModelAndView findTimeSheetOnCustomDates(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
 		if (user != null) {
+			System.out.println(req.getParameter("fMonth"));
+			System.out.println(req.getParameter("fYear"));
+			System.out.println(req.getParameter("tMonth"));
+			System.out.println(req.getParameter("tYear"));
+
 			mv.addObject("timeSheets",
 					timeSheetService.findTimeSheetOnCustomDates(req.getParameter("fMonth"),
 							Integer.parseInt(req.getParameter("fYear")), req.getParameter("tMonth"),
@@ -211,7 +233,7 @@ public class TimeSheetController {
 			if (user.getUserRole().equals("TRAINER")) {
 				mv.addObject("userName", user.getName());
 			} else {
-				mv.addObject("userName", userService.findUserById(id).getName());
+				mv.addObject("user1", userService.findUserById(id));
 
 			}
 			mv.setViewName("currentTsOfUser");

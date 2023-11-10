@@ -23,7 +23,8 @@
 					<td>${timesheet.getTimesheetId() }</td>
 					<td>${timesheet.getStart_date() }</td>
 					<td>${timesheet.getEnd_date() }</td>
-					<td><a href="#">attendance</a></td>
+					<td><a
+						href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 				</tr>
 			</c:forEach>
 		</tr>
