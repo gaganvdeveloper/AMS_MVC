@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="refresh" content="10">
 <title>Login Page</title>
 <style>
 body {
@@ -63,7 +64,7 @@ button[type="submit"]:hover {
 	<h1 style="font-size: 4vw;font-family: cursive;color: rgb(142, 250, 0);color:darkgreen;text-shadow: 0px 0px 40px;margin-left:3%;cursor: pointer;">AlphaAttendance.com</h1>
 	<p>${msg }</p>
 	<h2>Login Here!!!...</h2>
-	<form action="userloginvalidate">
+	<form action="userloginvalidate" method="post">
 		Email : <input type="text" name="email" placeholder="Enter Your Email"
 			value="prajwala@gmail.com"> Password : <input type="password"
 			name="password" placeholder="Enter Password" value="123">

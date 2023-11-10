@@ -36,6 +36,14 @@ public class UserController {
 	@Autowired
 	private BatchService batchService;
 
+	public boolean isSessionPresent(HttpServletRequest req) {
+		User user = (User) req.getSession().getAttribute("user");
+		System.out.println(user);
+		if (user == null)
+			return false;
+		return true;
+	}
+
 	@RequestMapping(value = "/adminhome")
 	public ModelAndView gotoAdminHome(HttpServletRequest req, ModelAndView mv) {
 		mv.setViewName("createtimesheet");
@@ -49,7 +57,7 @@ public class UserController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/userloginvalidate", method = RequestMethod.GET)
+	@RequestMapping(value = "/userloginvalidate", method = RequestMethod.POST)
 	public ModelAndView userVerification(HttpServletRequest req, ModelAndView mv) {
 		User user = userService.findUserByEmailAndPassword(req.getParameter("email"), req.getParameter("password"));
 		if (user == null) {
@@ -111,6 +119,13 @@ public class UserController {
 
 	@RequestMapping(value = "/hrhome")
 	public ModelAndView gotoHrHomePage(ModelAndView mv, HttpServletRequest req) {
+		System.out.println(req.getSession().getAttribute("user"));
+		if (!isSessionPresent(req)) {
+			System.out.println("Hiiiiiiiiiiii");
+			mv.addObject("msg", "Session Time Out...");
+			mv.setViewName("login");
+			return mv;
+		}
 		User user = (User) req.getSession().getAttribute("user");
 		mv.addObject("user", user);
 		mv.addObject("msg", "Welcome Back " + user.getName());
@@ -120,6 +135,13 @@ public class UserController {
 
 	@RequestMapping(value = "/trainerhome")
 	public ModelAndView gotoTrainerHomePage(ModelAndView mv, HttpServletRequest req) {
+		System.out.println(req.getSession().getAttribute("user"));
+		if (!isSessionPresent(req)) {
+			System.out.println("Hiiiiiiiiiiii");
+			mv.addObject("msg", "Session Time Out...");
+			mv.setViewName("login");
+			return mv;
+		}
 		User user = (User) req.getSession().getAttribute("user");
 		mv.addObject("user", user);
 		mv.addObject("msg", "Welcome Back " + user.getName());
@@ -188,6 +210,11 @@ public class UserController {
 
 	@RequestMapping(value = "/allemployees")
 	public ModelAndView findAllEmployees(ModelAndView mv, HttpServletRequest req) {
+		if (!isSessionPresent(req)) {
+			mv.addObject("msg", "Session Time Out...");
+			mv.setViewName("login");
+			return mv;
+		}
 		mv.addObject("user", (User) req.getSession().getAttribute("user"));
 		mv.addObject("users", userService.findAllUsers());
 		mv.addObject("msg", "All Employees Found Successfully...");
@@ -257,6 +284,7 @@ public class UserController {
 		mv.setViewName("allemployees");
 		return findAllActiveUsers(mv);
 	}
+	
 
 	public ModelAndView userDetails(ModelAndView mv, User user) {
 		try {
@@ -265,7 +293,7 @@ public class UserController {
 			mv.addObject("ongoingbatchs", user.getBatchs().stream()
 					.filter(b -> b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
 		} catch (Exception e) {
-			mv.setViewName("userdetails");
+			mv.setViewName("login");
 			return mv;
 		}
 		mv.setViewName("userdetails");
@@ -315,23 +343,34 @@ public class UserController {
 			batchs.add(batch);
 		}
 		user1.setBatchs(batchs);
-		user1 = userService.updateUser(user1);
 		batch = batchService.updateBatch(batch);
+		user1 = userService.updateUser(user1);
 		mv.addObject("msg", batch.getSubjectName() + " Batch Assigned to " + user1.getName());
 		mv.addObject("user1", user1);
 		mv.addObject("batchs", batchs);
-		mv.addObject("user", (User) req.getAttribute("user"));
+		mv.addObject("user", (User) req.getSession().getAttribute("user"));
 		mv.setViewName("userdetails");
 		return userDetails(mv, user1);
 	}
 
-	@RequestMapping(value = "/logout")
-	public ModelAndView userLogout(ModelAndView mv, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		session.invalidate();
-		mv.addObject("msg", "Logout Successfull...");
-		mv.setViewName("login");
-		return mv;
+	
+	@RequestMapping(value = "/markbatchcompleted")
+	public ModelAndView markBarchCompleted(HttpServletRequest req, ModelAndView mv) {
+		Batch batch = batchService.findBatchById(Integer.parseInt(req.getParameter("id")));
+//		User user=batch.getUser();
+//		List<Batch> batchs = user.getBatchs();
+//		batchs.remove(batch);
+		batch.setBatchStatus(BatchStatus.valueOf("COMPLETED"));
+//		batchs.add(batch);
+//		user.setBatchs(batchs);
+//		user = userService.updateUser(user);
+		batch = batchService.updateBatch(batch);
+		mv.addObject("msg", batch.getSubjectName() + " Batch Status Updated to COMPLETED");
+		mv.addObject("batchs", batch.getUser().getBatchs());
+		mv.addObject("user", (User) req.getSession().getAttribute("user"));
+		mv.setViewName("userdetails");
+		return userDetails(mv, batch.getUser());
 	}
-
+	
+	
 }

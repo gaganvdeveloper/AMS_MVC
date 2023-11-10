@@ -51,7 +51,7 @@
             <a href="user">Create a User</a>
         </div>
     </div>
-    
+    <!-- 
     <div><a href="createattendance">Create Attendance</a></div><br>
     <div><a href="findAttendance">FindAttendance</a></div><br>
     <div><a href= "deleteAttendance">Delete Attendance</a></div><br>
@@ -60,6 +60,6 @@
     <div><a href= "findAllattendance">findAllattendance</a></div><br>
     <div><a href= "update">update</a></div><br>
     <div><a href= "findallattendancebystatusanddate">findallattendancebystatusanddate</a></div><br>
-    
+     -->
 </body>
 </html>
