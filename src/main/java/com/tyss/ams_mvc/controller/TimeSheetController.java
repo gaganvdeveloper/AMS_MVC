@@ -49,24 +49,12 @@ public class TimeSheetController {
 		return mv;
 	}
 
-//	@RequestMapping(value = "/adminhome")
-//	public ModelAndView gotoAdminHome(HttpServletRequest req, ModelAndView mv) {
-//		mv.setViewName("createtimesheet");
-//		mv.addObject("user", (User) req.getSession().getAttribute("user"));
-//		return mv;
-//	}
-
-//	@RequestMapping(value = "/createtimesheet1")
-//	public ModelAndView gotoCreateTimeSheet(ModelAndView mv, HttpServletRequest req) {
-//		mv.addObject("user", (User) req.getSession().getAttribute("user"));
-//		mv.addObject("msg", "Update The TimeSheet Dates");
-//		mv.setViewName("createtimesheet");
-//		return mv;
-//	}
 	@GetMapping("/saveAdminTs")
 	public ModelAndView createAdminTimeSheet(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
+
 		if (user != null) {
+			System.out.println(user.getUserRole());
 			timeSheetService.saveAdminTimeSheet(Integer.parseInt(req.getParameter("startDate")),
 					Integer.parseInt(req.getParameter("endDate")), user);
 			mv.addObject("msg", "time sheet generated");
@@ -201,6 +189,11 @@ public class TimeSheetController {
 	public ModelAndView findTimeSheetOnCustomDates(HttpServletRequest req, ModelAndView mv,
 			@SessionAttribute(name = "user", required = false) User user) {
 		if (user != null) {
+			System.out.println(req.getParameter("fMonth"));
+			System.out.println(req.getParameter("fYear"));
+			System.out.println(req.getParameter("tMonth"));
+			System.out.println(req.getParameter("tYear"));
+
 			mv.addObject("timeSheets",
 					timeSheetService.findTimeSheetOnCustomDates(req.getParameter("fMonth"),
 							Integer.parseInt(req.getParameter("fYear")), req.getParameter("tMonth"),
@@ -240,7 +233,7 @@ public class TimeSheetController {
 			if (user.getUserRole().equals("TRAINER")) {
 				mv.addObject("userName", user.getName());
 			} else {
-				mv.addObject("userName", userService.findUserById(id).getName());
+				mv.addObject("user1", userService.findUserById(id));
 
 			}
 			mv.setViewName("currentTsOfUser");

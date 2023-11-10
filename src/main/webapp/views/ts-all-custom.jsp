@@ -36,7 +36,7 @@
 				<td>${timesheet.getStart_date() }</td>
 				<td>${timesheet.getEnd_date() }</td>
 				<c:if test="${timesheet.getTimesheetId()!=null}">
-					<td><a href="#">attendance</a></td>
+					<td><a href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 				</c:if>
 			</tr>
 		</c:forEach>

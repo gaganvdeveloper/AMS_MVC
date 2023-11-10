@@ -248,23 +248,27 @@ public class AttendanceController {
 	}
 
 	@RequestMapping("/converttoxl")
-	public void getXlSheet(HttpServletRequest request, HttpServletResponse response,
-
-			@SessionAttribute(name = "user", required = false) User user) throws IOException {
-
-		TimeSheet timesheet = timeSheetService.findTimeSheetById(Integer.valueOf(request.getParameter("id")));
-
-		List<Attendance> infoList = timesheet.getAttendences();
-
-		try (HSSFWorkbook workbook = new HSSFWorkbook()) {
-			HSSFSheet sheet = workbook.createSheet("Attendance Data");
-			HSSFRow headerRow = sheet.createRow(0);
-			headerRow.createCell(0).setCellValue("Sl NO");
-			headerRow.createCell(1).setCellValue("Date");
-			headerRow.createCell(2).setCellValue("Login Time");
-			headerRow.createCell(3).setCellValue("Logout Time");
-			headerRow.createCell(4).setCellValue("Attendance Status");
-			headerRow.createCell(5).setCellValue("Total Working Hours");
+		public void getXlSheet(HttpServletRequest request, HttpServletResponse response,
+				
+				@SessionAttribute(name = "user", required = false) User user)throws IOException{
+			
+			TimeSheet timesheet = timeSheetService.findTimeSheetById(Integer.valueOf(request.getParameter("id"))) ;
+			
+			List<Attendance> infoList = timesheet.getAttendences() ;
+			
+			System.out.println(request.getParameter("userId"));
+			
+			User user2 = userService.findUserById(Integer.parseInt(request.getParameter("userId")));
+			
+			try (HSSFWorkbook workbook = new HSSFWorkbook()) {
+				HSSFSheet sheet = workbook.createSheet("Attendance Data");
+				HSSFRow headerRow = sheet.createRow(0);
+				headerRow.createCell(0).setCellValue("Sl NO");
+				headerRow.createCell(1).setCellValue("Date");
+				headerRow.createCell(2).setCellValue("Login Time");
+				headerRow.createCell(3).setCellValue("Logout Time");
+				headerRow.createCell(4).setCellValue("Attendance Status");
+				headerRow.createCell(5).setCellValue("Total Working Hours");
 //				headerRow.createCell(6).setCellValue("batchs");
 			int rowNum = 1, slno = 1;
 
@@ -277,13 +281,13 @@ public class AttendanceController {
 				dataRow.createCell(4).setCellValue(String.valueOf(attendance.getAttendanceStatus()));
 				dataRow.createCell(5).setCellValue(String.valueOf(attendance.getTotalWorkingHours()));
 //					dataRow.createCell(1).setCellValue(attendance.get);
-			}
-			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition",
-					"attachment; filename= " + user.getName() + "_" + user.getEmpId() + ".xls");
-			try (OutputStream outputStream = response.getOutputStream()) {
-				workbook.write(outputStream);
-			}
+				}
+				response.setContentType("application/vnd.ms-excel");
+				response.setHeader("Content-Disposition", "attachment; filename= "+user2.getName()+"_"+user2.getEmpId()+".xls");
+				try (OutputStream outputStream = response.getOutputStream()) {
+					workbook.write(outputStream);
+				}
+				
 		}
 	}
 
