@@ -40,6 +40,8 @@ public interface BatchDao {
 
 	List<Batch> findAllNotAssignedBatchs();
 
+	List<Batch> findAllBatchsOfAUserId(int userId);
+
 	
 	
 

@@ -287,12 +287,14 @@ public class UserController {
 	
 
 	public ModelAndView userDetails(ModelAndView mv, User user) {
+		List<Batch> batchs1 = batchService.findAllBatchsOfAUserById(user.getUserId());
 		try {
-			mv.addObject("completedbatchs", user.getBatchs().stream()
+			mv.addObject("completedbatchs", batchs1.stream()
 					.filter(b -> b.getBatchStatus().toString().equals("COMPLETED")).collect(Collectors.toList()));
-			mv.addObject("ongoingbatchs", user.getBatchs().stream()
+			mv.addObject("ongoingbatchs", batchs1.stream()
 					.filter(b -> b.getBatchStatus().toString().equals("ON_GOING")).collect(Collectors.toList()));
 		} catch (Exception e) {
+			mv.addObject("msg", "Session Time Out");
 			mv.setViewName("login");
 			return mv;
 		}
@@ -357,19 +359,15 @@ public class UserController {
 	@RequestMapping(value = "/markbatchcompleted")
 	public ModelAndView markBarchCompleted(HttpServletRequest req, ModelAndView mv) {
 		Batch batch = batchService.findBatchById(Integer.parseInt(req.getParameter("id")));
-//		User user=batch.getUser();
-//		List<Batch> batchs = user.getBatchs();
-//		batchs.remove(batch);
 		batch.setBatchStatus(BatchStatus.valueOf("COMPLETED"));
-//		batchs.add(batch);
-//		user.setBatchs(batchs);
-//		user = userService.updateUser(user);
-		batch = batchService.updateBatch(batch);
+		batchService.updateBatch(batch);
+		User user1 = batch.getUser();
 		mv.addObject("msg", batch.getSubjectName() + " Batch Status Updated to COMPLETED");
+		mv.addObject("user1", user1);
 		mv.addObject("batchs", batch.getUser().getBatchs());
 		mv.addObject("user", (User) req.getSession().getAttribute("user"));
 		mv.setViewName("userdetails");
-		return userDetails(mv, batch.getUser());
+		return userDetails(mv, user1);
 	}
 	
 	

@@ -108,5 +108,10 @@ public class BatchServiceImp implements BatchService {
 		return batchDao.findAllNotAssignedBatchs();
 	}
 
+	@Override
+	public List<Batch> findAllBatchsOfAUserById(int userId) {
+		return batchDao.findAllBatchsOfAUserId(userId);
+	}
+
 	
 }
