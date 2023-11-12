@@ -25,9 +25,19 @@ public class BatchController {
 
 	@Autowired
 	BatchService batchService;
-
+	
 	@Autowired
 	UserService userService;
+	
+	public boolean isSessionPresent(HttpServletRequest req) {
+		User user = (User) req.getSession().getAttribute("user");
+		System.out.println(user);
+		if (user == null)
+			return false;
+		return true;
+	}
+	
+	
 	
 	@RequestMapping("/createbatch")
 	public ModelAndView saveBatch() {
@@ -71,6 +81,14 @@ public class BatchController {
 	
 	@RequestMapping("/allnonassignedbatchs")
 	public ModelAndView displayAllNotAssignedBatches(ModelAndView mv,HttpServletRequest req) {
+		
+		System.out.println(req.getSession().getAttribute("user"));
+		if (!isSessionPresent(req)) {
+			System.out.println("Hiiiiiiiiiiii");
+			mv.addObject("msg", "Session Time Out...");
+			mv.setViewName("login");
+			return mv;
+		}
 		mv.addObject("user",req.getSession().getAttribute("user"));
 		mv.addObject("batchs",batchService.findAllNotAssignedBatches());
 		mv.addObject("msg","All NON_ASSIGNED Batchs");
@@ -80,6 +98,11 @@ public class BatchController {
 	
 	@RequestMapping(value = "/allongoingbatchs")
 	public ModelAndView allOnGoingBatchs(ModelAndView mv,HttpServletRequest req) {
+		if (!isSessionPresent(req)) {
+			mv.addObject("msg", "Session Time Out...");
+			mv.setViewName("login");
+			return mv;
+		}
 		mv.addObject("batchs",batchService.findAllOnGoingBatchs());
 		mv.addObject("user",req.getSession().getAttribute("user"));
 		mv.addObject("msg","All ON_GOING Batchs");
@@ -138,5 +161,11 @@ public class BatchController {
 		mv.setViewName("allbatchs");
 		return findAllbatchs(mv);
 	}
+	
+	
+	
+	
+	
+	
 
 }

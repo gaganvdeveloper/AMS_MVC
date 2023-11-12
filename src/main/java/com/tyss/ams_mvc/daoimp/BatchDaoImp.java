@@ -127,4 +127,11 @@ public class BatchDaoImp implements BatchDao {
 		return manager.createQuery("select b from Batch b where b.batchStatus='NOT_YET_ASSIGNED'").getResultList();
 	}
 
+	@Override
+	public List<Batch> findAllBatchsOfAUserId(int userId) {
+		Query query= manager.createQuery("select b from Batch b where b.user.userId=?1");
+		query.setParameter(1, userId);
+		return query.getResultList();
+	}
+
 }

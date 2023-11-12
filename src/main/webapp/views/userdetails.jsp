@@ -355,104 +355,12 @@ body {
 	color: black;
 }
 
-@
-keyframes animate { 0% {
-	background-position: 0% 50%;
+@keyframes animate {
+0% {background-position: 0% 50%;}
+50%{background-position 100% 50%;}
+100%{background-position 0% 50%;}
 }
 
-50
-
-
-
-
-
-
-
-
-%
-{
-background-position
-
-
-
-
-
-
-
-
-:
-
-
-
-
-
-
-
-
-100
-
-
-
-
-
-
-%
-50
-
-
-
-
-
-
-%;
-}
-100
-
-
-
-
-
-
-
-
-%
-{
-background-position
-
-
-
-
-
-
-
-
-:
-
-
-
-
-
-
-
-
-0
-
-
-
-
-
-
-%
-50
-
-
-
-
-
-
-%;
-}
-}
 .card-buttons {
 	font-size: 1vw;
 	border: none;
@@ -680,8 +588,8 @@ background-position
 				<p class="status">${batch.getBatchStatus() }</p>
 				<br>
 				<div style="display: flex; justify-content: space-evenly;">
-					<a href="updatebatch?id=${batch.getBatchId() }"><button
-							class="card-buttons" type="button">Update</button></a>
+					<a href="markbatchcompleted?id=${batch.getBatchId() }"><button
+							class="card-buttons" type="button">Mark Batch Completed</button></a>
 				</div>
 			</div>
 		</c:forEach>

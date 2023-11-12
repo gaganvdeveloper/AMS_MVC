@@ -1,3 +1,4 @@
+<%@page import="com.tyss.ams_mvc.entity.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -251,6 +252,13 @@ body {
 }
 </style>
 </head>
+<% 	
+	
+	User user=(User)session.getAttribute("user");
+	
+	if(user!=null){
+	
+%>	
 <body>
 	<nav class="navbar">
 		<a href="trainerhome"><h1 class="logo">AlphaAttendance.com</h1></a>
@@ -353,4 +361,8 @@ body {
 
 
 </body>
+<%}else{
+	request.getRequestDispatcher("login.jsp").forward(request, response);
+} %>
+
 </html>

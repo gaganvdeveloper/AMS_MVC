@@ -140,5 +140,8 @@ public class UserDaoImp implements UserDao {
 	public List<User> findAllInActiveUsers() {
 		return manager.createQuery("select u from User u where u.userStatus='IN_ACTIVE' and u.userRole='TRAINER'").getResultList();
 	}
+	
+	
+	
 
 }
