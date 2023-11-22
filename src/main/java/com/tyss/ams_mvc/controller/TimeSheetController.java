@@ -232,6 +232,9 @@ public class TimeSheetController {
 			mv.addObject("userId", id);
 			if (user.getUserRole().equals("TRAINER")) {
 				mv.addObject("userName", user.getName());
+				mv.addObject("batchs", user.getBatchs()) ;
+				System.err.println(user.getBatchs().get(0));
+				System.err.println(user.getBatchs().get(01));
 			} else {
 				mv.addObject("user1", userService.findUserById(id));
 

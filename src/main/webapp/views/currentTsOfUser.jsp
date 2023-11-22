@@ -41,7 +41,7 @@ nav a:hover {
 </head>
 <body>
 	<h1>${user1.getName()}'s&rArr;Current-MonthTimeSheet</h1>
-	
+
 	<table border="2" cellpadding="10" cellmargin="15">
 		<tr>
 			<th>timesheet id</th>
@@ -51,8 +51,9 @@ nav a:hover {
 			<th>Batch1</th>
 			<th>Batch2</th>
 			<th>Batch3</th>
+			<th>Batch4</th>
 			<th>Export to Excel</th>
-			
+
 		</tr>
 		<tr>
 
@@ -63,19 +64,32 @@ nav a:hover {
 				<td><a
 					href="findAllattendance?id=${timeSheet.getTimesheetId()}">attendance</a></td>
 			</c:if>
-			
-			<c:if test="${batchs.size() > 0 }">
+
+			<c:choose>
+				<c:when test="${condition}">
+					<c:forEach var="batch" items="${batchs}">
+						<td>${batch.getSubjectName()}</td>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<h2
+						style="color: rgb(0, 100, 0, 0.4); margin =auto; padding-left: 1vw;">NO_BATCH</h2>
+				</c:otherwise>
+			</c:choose>
+
+			<%-- <c:if test="${batchs.size() > 0 }">
 			
 				<c:forEach var="batch" items="${batchs}" >
 				
 				<td>${batch.getSubjectName()}</td>
 				
-				</c:forEach>
+				 
 			
-			</c:if>
-			
-			<td><a href="converttoxl?id=${timeSheet.getTimesheetId()}&userId=${user1.getUserId()}"><button
-			type="submit">Export to XL</button></a></td>
+			</c:if> --%>
+
+			<td><a
+				href="converttoxl?id=${timeSheet.getTimesheetId()}&userId=${user1.getUserId()}"><button
+						type="submit">Export to XL</button></a></td>
 		</tr>
 
 	</table>

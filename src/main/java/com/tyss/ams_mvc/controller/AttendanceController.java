@@ -52,6 +52,8 @@ public class AttendanceController {
 			timesheet = timeSheetService.saveTimeSheet(new TimeSheet(), user.getUserId());
 		}
 		mv.addObject("userId", user.getUserId());
+		mv.addObject("batches", user.getBatchs()) ;
+		System.err.println("The following are the Batches of the User : "+user.getBatchs());
 		mv.addObject("timeSheetId", timesheet.getTimesheetId());
 		mv.setViewName("createattendance");
 		return mv;
