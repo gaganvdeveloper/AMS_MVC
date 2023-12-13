@@ -312,7 +312,9 @@ public class UserController {
 	@RequestMapping(value = "/uploadprofilepic", method = RequestMethod.POST)
 	public ModelAndView uploadProfilePic(HttpServletRequest req, ModelAndView mv,
 			@RequestParam("file") MultipartFile file) throws IOException, ServletException {
+		
 		User user = userService.findUserById(Integer.parseInt(req.getParameter("id")));
+		
 		user.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
 		userService.updateUser(user);
 		mv.addObject("msg", "Profile Picture Added Successfully...");
@@ -338,9 +340,9 @@ public class UserController {
 		batch.setUser(user1);
 		batch.setBatchStatus(BatchStatus.valueOf("ON_GOING"));
 		List<Batch> batchs = user1.getBatchs();
-		if (!batchs.isEmpty()) {
+		try{
 			batchs.add(batch);
-		} else {
+		} catch(Exception e) {
 			batchs = new ArrayList<>();
 			batchs.add(batch);
 		}
@@ -354,7 +356,6 @@ public class UserController {
 		mv.setViewName("userdetails");
 		return userDetails(mv, user1);
 	}
-
 	
 	@RequestMapping(value = "/markbatchcompleted")
 	public ModelAndView markBarchCompleted(HttpServletRequest req, ModelAndView mv) {
