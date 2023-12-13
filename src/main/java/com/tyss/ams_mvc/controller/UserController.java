@@ -286,6 +286,7 @@ public class UserController {
 	}
 	
 
+	
 	public ModelAndView userDetails(ModelAndView mv, User user) {
 		List<Batch> batchs1 = batchService.findAllBatchsOfAUserById(user.getUserId());
 		try {
